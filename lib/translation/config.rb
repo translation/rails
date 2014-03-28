@@ -7,7 +7,7 @@ module Translation
       self.text_domain    = 'app'
       self.locales_path   = File.join('config', 'locales', 'gettext')
       self.source_locale  = [:en]
-      self.target_locales = [:fr, :nl]
+      self.target_locales = [:fr, :nl, :de]
     end
 
     def to_s

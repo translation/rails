@@ -10,7 +10,7 @@ module Translation
       yield @config = Config.new
 
       Object.send(:include, GetText)
-      bindtextdomain(@config.text_domain, :path => @config.locales_path)
+      bindtextdomain(@config.text_domain, :path => @config.locales_path, :charset => 'utf-8')
       Object.textdomain(Translation.config.text_domain)
     end
   end
