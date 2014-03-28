@@ -13,5 +13,5 @@ Gem::Specification.new do |s|
   s.has_rdoc         = false
   s.license          = "MIT"
 
-  s.add_dependency('gettext', '> 3.1.1')
+  s.add_dependency('gettext', '> 3.0.0')
 end
