@@ -1,0 +1,20 @@
+= Description
+
+...
+
+= Basic Usage
+
+...
+
+= Installation
+
+In your project's Gemfile :
+
+gem 'translation'
+
+= Credits
+
+This plugin in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
+file).
+
+(c) http://rails.translation.io

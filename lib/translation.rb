@@ -1,0 +1,2 @@
+module Translation
+end
