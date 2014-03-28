@@ -5,19 +5,29 @@ namespace :translation do
     puts Translation.config
   end
 
-  task :find do
+  task :update_pot => :environment do
+    pot_path     = "#{Translation.config.locales_path}/app.pot"
+    source_files = Dir['**/*.{rb,erb}']
 
+    GetText::Tools::XGetText.run(*source_files, '-o', pot_path)
   end
 
-  task :make_mo => :environment do
-    Dir["#{Translation.config.locales_path}/*"].each do |dir|
-      if File.directory?(dir) && Translation.config.target_locales.map(&:to_s).include?(File.basename(dir))
-        po_path = "#{dir}/app.po"
-        mo_path = "#{dir}/LC_MESSAGES/app.mo"
+  task :update_pos => :environment do
+    pot_path = "#{Translation.config.locales_path}/app.pot"
 
-        FileUtils.mkdir_p("#{dir}/LC_MESSAGES")
-        GetText::Tools::MsgFmt.run(po_path, '-o', mo_path)
-      end
+    Translation.locale_paths.each do |locale_path|
+      po_path = "#{locale_path}/app.po"
+      GetText::Tools::MsgMerge.run(po_path, pot_path, '-o', po_path)
+    end
+  end
+
+  task :make_mos => :environment do
+    Translation.locale_paths.each do |locale_path|
+      po_path = "#{locale_path}/app.po"
+      mo_path = "#{locale_path}/LC_MESSAGES/app.mo"
+
+      FileUtils.mkdir_p("#{locale_path}/LC_MESSAGES")
+      GetText::Tools::MsgFmt.run(po_path, '-o', mo_path)
     end
   end
 end
