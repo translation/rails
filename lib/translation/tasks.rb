@@ -13,11 +13,9 @@ namespace :translation do
   end
 
   task :update_pos => :environment do
-    pot_path = "#{Translation.config.locales_path}/app.pot"
-
     Translation.locale_paths.each do |locale_path|
       po_path = "#{locale_path}/app.po"
-      GetText::Tools::MsgMerge.run(po_path, pot_path, '-o', po_path)
+      GetText::Tools::MsgMerge.run(po_path, Translation.pot_path, '-o', po_path)
     end
   end
 
@@ -29,6 +27,10 @@ namespace :translation do
       FileUtils.mkdir_p("#{locale_path}/LC_MESSAGES")
       GetText::Tools::MsgFmt.run(po_path, '-o', mo_path)
     end
+  end
+
+  task :push => :environment do
+    Translation.webservice_client.push
   end
 end
 
