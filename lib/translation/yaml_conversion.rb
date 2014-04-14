@@ -57,9 +57,9 @@ module Translation
           msgid = value
 
           unless msgid.blank?
-            pot_entry         = GetText::POEntry.new(:normal)
+            pot_entry         = GetText::POEntry.new(:msgctxt)
             pot_entry.msgid   = msgid
-            pot_entry.comment = key
+            pot_entry.msgctxt = key
 
             pot_representation[pot_entry.msgctxt, pot_entry.msgid] = pot_entry
           end
@@ -80,10 +80,10 @@ module Translation
             msgid = source_translations[key]
 
             unless msgid.blank?
-              po_entry         = GetText::POEntry.new(:normal)
-              po_entry.msgid   = msgid # TODO : msgidplural, msgctxt
+              po_entry         = GetText::POEntry.new(:msgctxt)
+              po_entry.msgid   = msgid
               po_entry.msgstr  = value
-              po_entry.comment = key
+              po_entry.msgctxt = key
 
               po_representation[po_entry.msgctxt, po_entry.msgid] = po_entry
             end

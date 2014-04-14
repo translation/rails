@@ -26,5 +26,17 @@ module Translation
         Translation.info "Error."
       end
     end
+
+    def init
+
+    end
+
+    def sync
+
+    end
+
+    def purge
+
+    end
   end
 end
