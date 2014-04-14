@@ -26,6 +26,5 @@ module Translation
         Translation.info "Error."
       end
     end
-
   end
 end

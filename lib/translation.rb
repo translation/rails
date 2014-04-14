@@ -1,7 +1,10 @@
 require 'gettext'
+require 'gettext/po'
+
 require 'translation/config'
 require 'translation/railtie'
 require 'translation/webservice_client'
+require 'translation/yaml_conversion'
 
 module Translation
   class << self
