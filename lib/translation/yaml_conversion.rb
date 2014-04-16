@@ -1,100 +1,62 @@
+require 'translation/yaml_conversion/flat'
+
 module Translation
   module YAMLConversion
-    module Flat
-      class << self
-        def get_flat_translations_for_locale(locale)
-          flat_translations = {}
-
-          I18n.load_path.each do |load_path|
-            content           = File.read(load_path)
-            translations      = YAML::load(content)
-
-            if translations.has_key?(locale.to_s)
-              flat_translations.merge!(
-                get_flat_translations_for_level(translations[locale.to_s])
-              )
-            end
-          end
-
-          flat_translations
-        end
-
-        private
-
-        def get_flat_translations_for_level(translations, parent_key = nil)
-          flat_translations = {}
-
-          translations.each_pair do |key, value|
-            current_level_key = [ parent_key, key ].reject(&:blank?).join('.')
-
-            if value.is_a? Hash
-              flat_translations.merge!(
-                get_flat_translations_for_level(value, current_level_key)
-              )
-            elsif value.is_a? String
-              flat_translations[current_level_key] = value
-            else
-              # TODO : Boolean, Array, Integer
-              {}
-            end
-          end
-
-          flat_translations
-        end
-      end
-    end
-
     class << self
+
       def get_pot_data_from_yaml
         source_translations = Flat.get_flat_translations_for_locale(Translation.config.source_locale)
-
-        # POT file
-
-        pot_representation = GetText::PO.new
-        pot_path           = File.join(Translation.config.locales_path, 'yaml.pot')
+        pot_representation  = GetText::PO.new
 
         source_translations.each_pair do |key, value|
-          msgid = value
+          msgid = value[:translation]
 
           unless msgid.blank?
-            pot_entry         = GetText::POEntry.new(:msgctxt)
-            pot_entry.msgid   = msgid
-            pot_entry.msgctxt = key
+            pot_entry            = GetText::POEntry.new(:msgctxt)
+            pot_entry.msgid      = msgid
+            pot_entry.msgctxt    = key
+            pot_entry.references = [ value[:locale_file_path] ]
 
             pot_representation[pot_entry.msgctxt, pot_entry.msgid] = pot_entry
           end
         end
 
-        File.open(pot_path, 'w') do |f|
-          f.write(pot_representation.to_s)
+        pot_representation.to_s
+      end
+
+      def write_yaml_data_from_po(target_locale, po_data)
+        parser            = GetText::POParser.new
+        po_representation = GetText::PO.new
+        target_yaml_path  = Rails.root.join('config', 'locales', "translation.#{target_locale}.yml")
+        flat_translations = {}
+        translations      = {}
+
+        parser.parse(po_data, po_representation)
+
+        po_representation.each do |po_entry|
+          flat_translations[po_entry.msgctxt] = po_entry.msgstr
         end
 
-        # PO files
+        flat_translations.each_pair do |key, value|
+          key_parts = key.split('.')
 
-        Translation.config.target_locales.each do |locale|
-          po_representation   = GetText::PO.new
-          target_translations = Flat.get_flat_translations_for_locale(locale)
-          po_path             = File.join(Translation.config.locales_path, locale.to_s, 'yaml.po')
+          acc = translations
 
-          target_translations.each_pair do |key, value|
-            msgid = source_translations[key]
-
-            unless msgid.blank?
-              po_entry         = GetText::POEntry.new(:msgctxt)
-              po_entry.msgid   = msgid
-              po_entry.msgstr  = value
-              po_entry.msgctxt = key
-
-              po_representation[po_entry.msgctxt, po_entry.msgid] = po_entry
+          key_parts.each_with_index do |key_part, index|
+            if index < key_parts.size - 1
+              acc[key_part] = {} unless acc.has_key?(key_part)
+              acc = acc[key_part]
+            else
+              acc[key_part] = value
             end
           end
+        end
 
-          File.open(po_path, 'w') do |f|
-            f.write(po_representation.to_s)
-          end
+        File.open(target_yaml_path, 'w') do |f|
+          f.write({ target_locale.to_s => translations }.to_yaml)
         end
       end
-    end
 
+    end
   end
 end

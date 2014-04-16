@@ -3,12 +3,12 @@ require 'gettext/po'
 
 require 'translation/config'
 require 'translation/railtie'
-require 'translation/webservice_client'
+require 'translation/client'
 require 'translation/yaml_conversion'
 
 module Translation
   class << self
-    attr_reader :config, :webservice_client
+    attr_reader :config, :client
 
     def configure(&block)
       yield @config = Config.new
@@ -16,7 +16,7 @@ module Translation
       Object.send(:include, GetText)
       bindtextdomain(@config.text_domain, :path => @config.locales_path, :charset => 'utf-8')
       Object.textdomain(Translation.config.text_domain)
-      @webservice_client = WebserviceClient.new(@config.api_key, @config.endpoint)
+      @client = Client.new(@config.api_key, @config.endpoint)
 
       true
     end
@@ -32,7 +32,12 @@ module Translation
     end
 
     def info(message, level = 0)
-      puts "* #{message}"
+      indent = (1..level).to_a.collect { "   " }.join('')
+      puts "#{indent}* #{message}"
+    end
+
+    def version
+      Gem::Specification::find_by_name('translation').version.to_s
     end
   end
 end
