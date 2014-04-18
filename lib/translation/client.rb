@@ -1,6 +1,7 @@
-require 'translation/client/init'
-require 'translation/client/sync'
-require 'translation/client/purge'
+require 'translation/client/base_operation'
+require 'translation/client/init_operation'
+require 'translation/client/sync_operation'
+require 'translation/client/purge_operation'
 
 module Translation
   class Client
@@ -12,15 +13,15 @@ module Translation
     end
 
     def init
-      Translation::Client::Init.new(self).run
+      Translation::Client::InitOperation.new(self).run
     end
 
     def sync
-      Translation::Client::Sync.new(self).run
+      Translation::Client::SyncOperation.new(self).run
     end
 
     def purge
-      Translation::Client::Purge.new(self).run
+      Translation::Client::PurgeOperation.new(self).run
     end
   end
 end

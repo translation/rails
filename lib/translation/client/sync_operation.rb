@@ -1,6 +1,6 @@
 module Translation
   class Client
-    class Sync
+    class SyncOperation
       attr_accessor :client
 
       def initialize(client)

@@ -1,6 +1,6 @@
 module Translation
   class Client
-    class Init
+    class PurgeOperation
       attr_accessor :client
 
       def initialize(client)

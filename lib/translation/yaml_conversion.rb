@@ -24,10 +24,9 @@ module Translation
         pot_representation.to_s
       end
 
-      def write_yaml_data_from_po(target_locale, po_data)
+      def get_yaml_data_from_po_data(po_data)
         parser            = GetText::POParser.new
         po_representation = GetText::PO.new
-        target_yaml_path  = Rails.root.join('config', 'locales', "translation.#{target_locale}.yml")
         flat_translations = {}
         translations      = {}
 
@@ -52,9 +51,7 @@ module Translation
           end
         end
 
-        File.open(target_yaml_path, 'w') do |f|
-          f.write({ target_locale.to_s => translations }.to_yaml)
-        end
+        return translations.to_yaml
       end
 
     end
