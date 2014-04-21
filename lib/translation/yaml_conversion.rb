@@ -28,7 +28,6 @@ module Translation
         parser            = GetText::POParser.new
         po_representation = GetText::PO.new
         flat_translations = {}
-        translations      = {}
 
         parser.parse(po_data, po_representation)
 
@@ -36,22 +35,37 @@ module Translation
           flat_translations[po_entry.msgctxt] = po_entry.msgstr
         end
 
-        flat_translations.each_pair do |key, value|
-          key_parts = key.split('.')
+        # flat_translations.each_pair do |key, value|
+        #   key_parts = key.split('.')
 
-          acc = translations
+        #   acc = translations
 
-          key_parts.each_with_index do |key_part, index|
-            if index < key_parts.size - 1
-              acc[key_part] = {} unless acc.has_key?(key_part)
-              acc = acc[key_part]
-            else
-              acc[key_part] = value
-            end
-          end
-        end
+        #   key_parts.each_with_index do |key_part, index|
+        #     if index < key_parts.size - 1
+        #       unless acc.has_key?(key_part)
+        #         acc[key_part] = {}
+        #       end
 
-        return translations.to_yaml
+        #       acc = acc[key_part]
+        #     else
+        #       if key_part.end_with?(']')
+        #         key_part_prefix = key_part.split('[').first
+        #         item_index      = key_part.split('[').last.to_i
+
+        #         unless acc.has_key?(key_part_prefix)
+        #           acc[key_part_prefix] = []
+        #         end
+
+        #         acc[key_part_prefix][item_index] = value
+        #       else
+        #         acc[key_part] = value
+        #       end
+        #     end
+        #   end
+        # end
+        translations = YAMLConversion::Flat.get_yaml_from_flat_yaml(flat_translations)
+
+        return translations
       end
 
     end

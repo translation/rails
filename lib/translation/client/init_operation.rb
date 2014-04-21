@@ -131,8 +131,12 @@ module Translation
           all_flat_translations.merge!(YAMLConversion::Flat.get_flat_translations_for_yaml_file(file_path))
         end
 
+        all_flat_translations.each_pair do |key, value|
+          all_flat_translations[key] = value[:translation]
+        end
+
         all_flat_special_translations = all_flat_translations.select do |key, value|
-          not value[:translation].is_a?(String)
+          not value.is_a?(String)
         end
 
         source_flat_special_tanslations = all_flat_special_translations.select do |key|
