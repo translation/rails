@@ -10,9 +10,7 @@ module Translation
             translations      = YAML::load(content)
 
             if translations.has_key?(locale.to_s)
-              flat_translations.merge!(
-                get_flat_translations_for_level(translations[locale.to_s], locale_file_path)
-              )
+              flat_translations.merge!(get_flat_translations_for_level(translations[locale.to_s], locale_file_path))
             end
           end
 
@@ -24,41 +22,6 @@ module Translation
           translations = YAML::load(content)
           return get_flat_translations_for_level(translations, file_path)
         end
-
-        # def get_yaml_from_flat_yaml(flat_translations)
-        #   translations = {}
-
-        #   flat_translations.each_pair do |key, value|
-        #     key_parts = key.split('.')
-
-        #     acc = translations
-
-        #     key_parts.each_with_index do |key_part, index|
-        #       if index < key_parts.size - 1
-        #         unless acc.has_key?(key_part)
-        #           acc[key_part] = {}
-        #         end
-
-        #         acc = acc[key_part]
-        #       else
-        #         if key_part.end_with?(']')
-        #           key_part_prefix = key_part.split('[').first
-        #           item_index      = key_part.split('[').last.to_i
-
-        #           unless acc.has_key?(key_part_prefix)
-        #             acc[key_part_prefix] = []
-        #           end
-
-        #           acc[key_part_prefix][item_index] = value
-        #         else
-        #           acc[key_part] = value
-        #         end
-        #       end
-        #     end
-        #   end
-
-        #   return translations.to_yaml
-        # end
 
         def get_yaml_from_flat_yaml(flat_translations)
           translations = {}

@@ -71,7 +71,7 @@ module Translation
             end
           end
 
-          po_representation  = GetText::PO.new
+          po_representation = GetText::PO.new
 
           target_locale_translations.each_pair do |key, value|
             source_key = key.gsub(/\A#{target_locale}\./, "#{Translation.config.source_locale}.")
@@ -81,7 +81,7 @@ module Translation
               po_entry            = GetText::POEntry.new(:msgctxt)
               po_entry.msgid      = msgid
               po_entry.msgstr     = value[:translation]
-              po_entry.msgctxt    = key
+              po_entry.msgctxt    = key.split('.', 2).last
               po_entry.references = [ value[:locale_file_path] ]
 
               po_representation[po_entry.msgctxt, po_entry.msgid] = po_entry
@@ -112,9 +112,9 @@ module Translation
 
         Translation.config.target_locales.each do |target_locale|
           if params.has_key?("yaml_po_data_#{target_locale}")
-            yaml_path = File.join('config', "translation.#{target_locale}.yml")
+            yaml_path = File.join('config', 'locales', "translation.#{target_locale}.yml")
             Translation.info yaml_path, 2
-            yaml_data = YAMLConversion.get_yaml_data_from_po_data(params["yaml_po_data_#{target_locale}"])
+            yaml_data = YAMLConversion.get_yaml_data_from_po_data(params["yaml_po_data_#{target_locale}"], target_locale)
 
             File.open(yaml_path, 'wb') do |file|
               file.write(yaml_data)
@@ -144,7 +144,7 @@ module Translation
         end
 
         Translation.config.target_locales.each do |target_locale|
-          yaml_path = File.join('config', "localization.#{target_locale}.yml")
+          yaml_path = File.join('config', 'locales', "localization.#{target_locale}.yml")
           Translation.info yaml_path, 2
           flat_translations = {}
 
@@ -152,7 +152,7 @@ module Translation
             target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
 
             if all_flat_special_translations.has_key?(target_key)
-              flat_translations[key] = all_flat_special_translations[target_key]
+              flat_translations["#{target_locale}.#{key}"] = all_flat_special_translations[target_key]
             end
           end
 
