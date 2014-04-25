@@ -62,25 +62,17 @@ module Translation
         end
 
         Translation.config.target_locales.each do |target_locale|
-          target_locale_translations = all_flat_string_translations.select do |key|
-            if key.starts_with?("#{target_locale}.")
-              source_key = key.gsub(/\A#{target_locale}\./, "#{Translation.config.source_locale}.")
-              source_flat_string_tanslations.has_key?(source_key)
-            else
-              false
-            end
-          end
-
           po_representation = GetText::PO.new
 
-          target_locale_translations.each_pair do |key, value|
-            source_key = key.gsub(/\A#{target_locale}\./, "#{Translation.config.source_locale}.")
-            msgid      = source_flat_string_tanslations[source_key][:translation]
+          source_flat_string_tanslations.each_pair do |key, value|
+            target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
+            msgid      = value[:translation]
+            msgstr     = all_flat_string_translations[target_key]
 
             unless msgid.blank?
               po_entry            = GetText::POEntry.new(:msgctxt)
               po_entry.msgid      = msgid
-              po_entry.msgstr     = value[:translation]
+              po_entry.msgstr     = msgstr
               po_entry.msgctxt    = key.split('.', 2).last
               po_entry.references = [ value[:locale_file_path] ]
 

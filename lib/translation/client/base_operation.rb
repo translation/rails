@@ -15,7 +15,13 @@ module Translation
 
       def perform_request(uri, params)
         begin
-          response        = Net::HTTP.post_form(uri, params)
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.read_timeout = 500
+
+          request = Net::HTTP::Post.new(uri.request_uri)
+          request.set_form_data(params)
+
+          response        = http.request(request)
           parsed_response = JSON.parse(response.body)
 
           if response.code.to_i == 200
