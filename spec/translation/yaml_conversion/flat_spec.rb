@@ -38,14 +38,15 @@ describe Translation::YAMLConversion::Flat do
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
 
-      result.should == "---
+      result.should == <<EOS
+---
 en:
   hello: Hello world
   main:
     menu:
       stuff: This is stuff
   bye: Good bye world
-"
+EOS
     end
   end
 end
