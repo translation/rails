@@ -148,7 +148,7 @@ module Translation
             flat_translations[target_key] = all_flat_special_translations[target_key]
           end
 
-          yaml_data = YAMLConversion::Flat.get_yaml_from_flat_yaml(flat_translations)
+          yaml_data = YAMLConversion::Flat.get_yaml_data_from_flat_translations(flat_translations)
 
           File.open(yaml_path, 'wb') do |file|
             file.write(yaml_data)

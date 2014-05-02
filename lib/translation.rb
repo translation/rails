@@ -1,5 +1,7 @@
+require 'net/http'
 require 'gettext'
 require 'gettext/po'
+require 'gettext/po_parser'
 
 require 'translation/config'
 require 'translation/railtie'
