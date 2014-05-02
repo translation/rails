@@ -4,6 +4,7 @@ require 'gettext/po'
 require 'translation/config'
 require 'translation/railtie'
 require 'translation/client'
+require 'translation/flat_hash'
 require 'translation/yaml_conversion'
 
 module Translation
