@@ -132,7 +132,7 @@ module Translation
 
           source_flat_special_translations.each_pair do |key, value|
             target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
-            flat_translations["#{target_locale}.#{key}"] = all_flat_special_translations[target_key]
+            flat_translations[target_key] = all_flat_special_translations[target_key]
           end
 
           yaml_data = YAMLConversion::Flat.get_yaml_from_flat_yaml(flat_translations)

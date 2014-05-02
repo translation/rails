@@ -1,3 +1,5 @@
+require 'net/http'
+
 require 'translation/client/base_operation'
 require 'translation/client/init_operation'
 require 'translation/client/sync_operation'
