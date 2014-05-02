@@ -14,4 +14,7 @@ Gem::Specification.new do |s|
   s.license          = "MIT"
 
   s.add_dependency('gettext', '> 3.0.0')
+
+  s.add_development_dependency('rake')
+  s.add_development_dependency('rspec')
 end
