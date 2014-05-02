@@ -40,18 +40,6 @@ module Translation
       Gem::Specification::find_by_name('translation').version.to_s
     end
   end
-
-  module I18nExtensions
-    def locale=(locale)
-      # super(locale)
-      # GetText.locale = @locale
-      raise "yey"
-    end
-
-    def brol
-      "brol 42"
-    end
-  end
 end
 
 require 'i18n'
@@ -59,6 +47,10 @@ require 'i18n/config'
 
 module I18n
   class Config
-    include Translation::I18nExtensions
+    def locale=(locale)
+      I18n.enforce_available_locales!(locale)
+      @locale        = locale.to_sym rescue nil
+      GetText.locale = locale.to_sym rescue nil
+    end
   end
 end
