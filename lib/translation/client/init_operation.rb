@@ -53,7 +53,7 @@ module Translation
 
         I18n.load_path.each do |file_path|
           Translation.info file_path, 2
-          all_flat_translations.merge!(YAMLConversion::Flat.get_flat_translations_for_yaml_file(file_path))
+          all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
         end
 
         all_flat_string_translations = all_flat_translations.select do |key, value|
@@ -123,7 +123,7 @@ module Translation
         all_flat_translations = {}
 
         I18n.load_path.each do |file_path|
-          all_flat_translations.merge!(YAMLConversion::Flat.get_flat_translations_for_yaml_file(file_path))
+          all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
         end
 
         all_flat_translations.each_pair do |key, value|
@@ -148,7 +148,7 @@ module Translation
             flat_translations[target_key] = all_flat_special_translations[target_key]
           end
 
-          yaml_data = YAMLConversion::Flat.get_yaml_data_from_flat_translations(flat_translations)
+          yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(flat_translations)
 
           File.open(yaml_path, 'wb') do |file|
             file.write(yaml_data)
