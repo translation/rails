@@ -14,8 +14,8 @@ module Translation
       yield @config = Config.new
 
       Object.send(:include, GetText)
-      bindtextdomain(@config.text_domain, :path => @config.locales_path, :charset => 'utf-8')
-      Object.textdomain(Translation.config.text_domain)
+      bindtextdomain('app', :path => @config.locales_path, :charset => 'utf-8')
+      Object.textdomain('app')
       @client = Client.new(@config.api_key, @config.endpoint)
 
       true
@@ -38,19 +38,6 @@ module Translation
 
     def version
       Gem::Specification::find_by_name('translation').version.to_s
-    end
-  end
-end
-
-require 'i18n'
-require 'i18n/config'
-
-module I18n
-  class Config
-    def locale=(locale)
-      I18n.enforce_available_locales!(locale)
-      @locale        = locale.to_sym rescue nil
-      GetText.locale = locale.to_sym rescue nil
     end
   end
 end
