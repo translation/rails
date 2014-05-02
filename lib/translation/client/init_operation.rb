@@ -57,7 +57,7 @@ module Translation
         end
 
         all_flat_string_translations = all_flat_translations.select do |key, value|
-          value[:translation].is_a?(String)
+          value.is_a?(String)
         end
 
         source_flat_string_tanslations = all_flat_string_translations.select do |key|
@@ -69,8 +69,8 @@ module Translation
 
           source_flat_string_tanslations.each_pair do |key, value|
             target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
-            msgid      = value[:translation]
-            msgstr     = all_flat_string_translations[target_key].try(:[], :translation)
+            msgid      = value
+            msgstr     = all_flat_string_translations[target_key]
 
             unless msgid.blank?
               po_entry            = GetText::POEntry.new(:msgctxt)
@@ -126,9 +126,9 @@ module Translation
           all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
         end
 
-        all_flat_translations.each_pair do |key, value|
-          all_flat_translations[key] = value[:translation]
-        end
+        # all_flat_translations.each_pair do |key, value|
+        #   all_flat_translations[key] = value
+        # end
 
         all_flat_special_translations = all_flat_translations.select do |key, value|
           not value.is_a?(String)

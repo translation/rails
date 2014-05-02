@@ -38,13 +38,13 @@ module Translation
         end
 
         source_flat_string_tanslations = all_flat_translations.select do |key, value|
-          value[:translation].is_a?(String) && key.starts_with?("#{Translation.config.source_locale}.")
+          value.is_a?(String) && key.starts_with?("#{Translation.config.source_locale}.")
         end
 
         pot_representation = GetText::PO.new
 
         source_flat_string_tanslations.each_pair do |key, value|
-          msgid = value[:translation]
+          msgid = value
 
           unless msgid.blank?
             pot_entry            = GetText::POEntry.new(:msgctxt)
@@ -113,9 +113,9 @@ module Translation
           all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
         end
 
-        all_flat_translations.each_pair do |key, value|
-          all_flat_translations[key] = value[:translation]
-        end
+        # all_flat_translations.each_pair do |key, value|
+        #   all_flat_translations[key] = value
+        # end
 
         all_flat_special_translations = all_flat_translations.select do |key, value|
           not value.is_a?(String)
