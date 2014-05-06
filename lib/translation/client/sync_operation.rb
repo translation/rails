@@ -38,7 +38,7 @@ module Translation
         end
 
         source_flat_string_tanslations = all_flat_translations.select do |key, value|
-          value.is_a?(String) && key.starts_with?("#{Translation.config.source_locale}.")
+          value.is_a?(String) && key.start_with?("#{Translation.config.source_locale}.")
         end
 
         pot_representation = GetText::PO.new
@@ -122,7 +122,7 @@ module Translation
         end
 
         source_flat_special_translations = all_flat_special_translations.select do |key|
-          key.starts_with?("#{Translation.config.source_locale}.")
+          key.start_with?("#{Translation.config.source_locale}.")
         end
 
         Translation.config.target_locales.each do |target_locale|

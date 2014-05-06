@@ -1,10 +1,21 @@
+require 'translation/client/init_operation/update_pot_file_step'
+require 'translation/client/init_operation/update_and_collect_po_files_step'
+require 'translation/client/init_operation/create_yaml_po_files_step'
+
 module Translation
   class Client
     class InitOperation < BaseOperation
 
       def run
-        update_pot_file
-        update_and_collect_po_files
+        pot_path        = Translation.pot_path
+        target_locales  = Translation.target_locales
+        locales_path    = Translation.locales_path
+        yaml_file_paths = I18n.load_path
+
+        UpdatePotFileStep.new(pot_path, Dir['**/*.{rb,erb}']).run
+        UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run
+        CreateYamlPoFilesStep.new(target_locales, yaml_file_paths).run
+
         create_yaml_po_files
 
         Translation.info "Sending data to server"
@@ -20,72 +31,6 @@ module Translation
       end
 
       private
-
-      def update_pot_file
-        Translation.info "Updating POT file."
-        pot_path = Translation.pot_path
-        FileUtils.mkdir_p(File.dirname(pot_path))
-        source_files = Dir['**/*.{rb,erb}']
-        GetText::Tools::XGetText.run(*source_files, '-o', pot_path)
-      end
-
-      def update_and_collect_po_files
-        Translation.info "Updating PO files."
-
-        Translation.config.target_locales.each do |target_locale|
-          po_path = "#{Translation.config.locales_path}/#{target_locale}/app.po"
-          Translation.info po_path, 2
-
-          if File.exist?(po_path)
-            GetText::Tools::MsgMerge.run(po_path, Translation.pot_path, '-o', po_path)
-          else
-            FileUtils.mkdir_p(File.dirname(po_path))
-            FileUtils.copy(Translation.pot_path, po_path)
-          end
-
-          params["po_data_#{target_locale}"] = File.read(po_path)
-        end
-      end
-
-      def create_yaml_po_files
-        Translation.info "Importing translations from YAML files."
-        all_flat_translations = {}
-
-        I18n.load_path.each do |file_path|
-          Translation.info file_path, 2
-          all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
-        end
-
-        all_flat_string_translations = all_flat_translations.select do |key, value|
-          value.is_a?(String)
-        end
-
-        source_flat_string_tanslations = all_flat_string_translations.select do |key|
-          key.starts_with?("#{Translation.config.source_locale}.")
-        end
-
-        Translation.config.target_locales.each do |target_locale|
-          po_representation = GetText::PO.new
-
-          source_flat_string_tanslations.each_pair do |key, value|
-            target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
-            msgid      = value
-            msgstr     = all_flat_string_translations[target_key]
-
-            unless msgid.blank?
-              po_entry            = GetText::POEntry.new(:msgctxt)
-              po_entry.msgid      = msgid
-              po_entry.msgstr     = msgstr
-              po_entry.msgctxt    = key.split('.', 2).last
-              po_entry.references = [ value[:locale_file_path] ]
-
-              po_representation[po_entry.msgctxt, po_entry.msgid] = po_entry
-            end
-          end
-
-          params["yaml_po_data_#{target_locale}"] = po_representation.to_s
-        end
-      end
 
       def save_new_po_files(parsed_response)
         Translation.info "Saving new PO files."
@@ -135,7 +80,7 @@ module Translation
         end
 
         source_flat_special_translations = all_flat_special_translations.select do |key|
-          key.starts_with?("#{Translation.config.source_locale}.")
+          key.start_with?("#{Translation.config.source_locale}.")
         end
 
         Translation.config.target_locales.each do |target_locale|

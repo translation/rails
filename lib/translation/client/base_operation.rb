@@ -3,7 +3,7 @@ module Translation
     class BaseOperation
       attr_accessor :client, :params
 
-      def initialize(client)
+      def initialize(client, perform_real_requests = true)
         @client = client
         @params = {
           'gem_version'        => Translation.version,
@@ -37,7 +37,7 @@ module Translation
       end
 
       def locale_file_path_in_project?(locale_file_path)
-        locale_file_path.starts_with?(Rails.root.join('config', 'locale').to_s)
+        locale_file_path.start_with?(Rails.root.join('config', 'locale').to_s)
       end
     end
   end

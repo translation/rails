@@ -12,6 +12,11 @@ In your project's Gemfile :
 
 gem 'translation'
 
+= Tests
+
+    bundle
+    bundle exec rspec
+
 = Credits
 
 This plugin in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
