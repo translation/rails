@@ -1,6 +1,7 @@
 require 'translation/client/init_operation/update_pot_file_step'
 require 'translation/client/init_operation/update_and_collect_po_files_step'
 require 'translation/client/init_operation/create_yaml_po_files_step'
+require 'translation/client/init_operation/save_new_po_files_step'
 
 module Translation
   class Client
@@ -16,14 +17,12 @@ module Translation
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run
         CreateYamlPoFilesStep.new(target_locales, yaml_file_paths).run
 
-        create_yaml_po_files
-
         Translation.info "Sending data to server"
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/init")
         parsed_response = perform_request(uri, params)
 
         unless parsed_response.nil?
-          save_new_po_files(parsed_response)
+          SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
           save_new_yaml_files(parsed_response)
           save_special_yaml_files
           cleanup_yaml_files
@@ -32,20 +31,20 @@ module Translation
 
       private
 
-      def save_new_po_files(parsed_response)
-        Translation.info "Saving new PO files."
+      # def save_new_po_files(parsed_response)
+      #   Translation.info "Saving new PO files."
 
-        Translation.config.target_locales.each do |target_locale|
-          if parsed_response.has_key?("po_data_#{target_locale}")
-            po_path = File.join(Translation.config.locales_path, target_locale.to_s, 'app.po')
-            Translation.info po_path, 2
+      #   Translation.config.target_locales.each do |target_locale|
+      #     if parsed_response.has_key?("po_data_#{target_locale}")
+      #       po_path = File.join(Translation.config.locales_path, target_locale.to_s, 'app.po')
+      #       Translation.info po_path, 2
 
-            File.open(po_path, 'wb') do |file|
-              file.write(parsed_response["po_data_#{target_locale}"])
-            end
-          end
-        end
-      end
+      #       File.open(po_path, 'wb') do |file|
+      #         file.write(parsed_response["po_data_#{target_locale}"])
+      #       end
+      #     end
+      #   end
+      # end
 
       def save_new_yaml_files(parsed_response)
         Translation.info "Saving new translation YAML files."
