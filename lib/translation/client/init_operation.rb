@@ -2,16 +2,18 @@ require 'translation/client/init_operation/update_pot_file_step'
 require 'translation/client/init_operation/update_and_collect_po_files_step'
 require 'translation/client/init_operation/create_yaml_po_files_step'
 require 'translation/client/init_operation/save_new_po_files_step'
+require 'translation/client/init_operation/save_new_yaml_files_step'
 
 module Translation
   class Client
     class InitOperation < BaseOperation
 
       def run
-        pot_path        = Translation.pot_path
-        target_locales  = Translation.target_locales
-        locales_path    = Translation.locales_path
-        yaml_file_paths = I18n.load_path
+        pot_path          = Translation.pot_path
+        target_locales    = Translation.target_locales
+        locales_path      = Translation.locales_path
+        yaml_locales_path = 'config/locales'
+        yaml_file_paths   = I18n.load_path
 
         UpdatePotFileStep.new(pot_path, Dir['**/*.{rb,erb}']).run
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run
@@ -23,28 +25,13 @@ module Translation
 
         unless parsed_response.nil?
           SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          save_new_yaml_files(parsed_response)
+          SaveNewYamlFileStep.new(target_locales, yaml_locales_path, parsed_response).run
           save_special_yaml_files
           cleanup_yaml_files
         end
       end
 
       private
-
-      # def save_new_po_files(parsed_response)
-      #   Translation.info "Saving new PO files."
-
-      #   Translation.config.target_locales.each do |target_locale|
-      #     if parsed_response.has_key?("po_data_#{target_locale}")
-      #       po_path = File.join(Translation.config.locales_path, target_locale.to_s, 'app.po')
-      #       Translation.info po_path, 2
-
-      #       File.open(po_path, 'wb') do |file|
-      #         file.write(parsed_response["po_data_#{target_locale}"])
-      #       end
-      #     end
-      #   end
-      # end
 
       def save_new_yaml_files(parsed_response)
         Translation.info "Saving new translation YAML files."
