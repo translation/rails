@@ -35,10 +35,6 @@ module Translation
           $stderr.puts "[Error] Server not responding."
         end
       end
-
-      def locale_file_path_in_project?(locale_file_path)
-        locale_file_path.start_with?(Rails.root.join('config', 'locale').to_s)
-      end
     end
   end
 end

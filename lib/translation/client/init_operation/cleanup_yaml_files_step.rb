@@ -15,8 +15,8 @@ module Translation
 
             protected_file = @target_locales.any? do |target_locale|
               paths = [
-                Rails.root.join(@yaml_locales_path, "translation.#{target_locale}.yml").to_s,
-                Rails.root.join(@yaml_locales_path, "localization.#{target_locale}.yml").to_s
+                File.join(@yaml_locales_path, "translation.#{target_locale}.yml").to_s,
+                File.join(@yaml_locales_path, "localization.#{target_locale}.yml").to_s
               ]
 
               paths.include?(locale_file_path)
@@ -37,6 +37,12 @@ module Translation
               end
             end
           end
+        end
+
+        private
+
+        def locale_file_path_in_project?(locale_file_path)
+          locale_file_path.start_with?(@yaml_locales_path)
         end
       end
     end
