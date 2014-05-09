@@ -19,14 +19,16 @@ EOS
       file.write(pot_data)
     end
 
+    params = {}
+
     operation_step = Translation::Client::InitOperation::UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path)
-    operation_step.run
+    operation_step.run(params)
 
     File.read('tmp/fr/app.po').should == pot_data
     File.read('tmp/nl/app.po').should == pot_data
 
-    operation_step.params["po_data_fr"].should == pot_data
-    operation_step.params["po_data_nl"].should == pot_data
+    params["po_data_fr"].should == pot_data
+    params["po_data_nl"].should == pot_data
   end
 
 end

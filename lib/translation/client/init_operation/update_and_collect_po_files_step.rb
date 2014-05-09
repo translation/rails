@@ -2,16 +2,13 @@ module Translation
   class Client
     class InitOperation < BaseOperation
       class UpdateAndCollectPoFilesStep
-        attr_reader :params
-
         def initialize(target_locales, pot_path, locales_path)
           @target_locales = target_locales
           @pot_path       = pot_path
           @locales_path   = locales_path
-          @params         = {}
         end
 
-        def run
+        def run(params)
           Translation.info "Updating PO files."
 
           @target_locales.each do |target_locale|
@@ -25,7 +22,7 @@ module Translation
               FileUtils.copy(@pot_path, po_path)
             end
 
-            @params["po_data_#{target_locale}"] = File.read(po_path)
+            params["po_data_#{target_locale}"] = File.read(po_path)
           end
 
           return self

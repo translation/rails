@@ -26,19 +26,21 @@ fr:
 EOS
     end
 
+    source_locale   = 'en'
     target_locales  = ['fr', 'nl']
     yaml_file_paths = Dir["#{yaml_root_path}/*.yml"]
+    params          = {}
 
-    operation_step = Translation::Client::InitOperation::CreateYamlPoFilesStep.new(target_locales, yaml_file_paths)
-    operation_step.run
+    operation_step = Translation::Client::InitOperation::CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
+    operation_step.run(params)
 
-    operation_step.params['yaml_po_data_fr'].should == <<EOS
+    params['yaml_po_data_fr'].should == <<EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
 msgstr "Titre génial"
 EOS
 
-    operation_step.params['yaml_po_data_nl'].should == <<EOS
+    params['yaml_po_data_nl'].should == <<EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
 msgstr ""

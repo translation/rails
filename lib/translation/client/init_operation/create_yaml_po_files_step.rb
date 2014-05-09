@@ -2,15 +2,13 @@ module Translation
   class Client
     class InitOperation < BaseOperation
       class CreateYamlPoFilesStep
-        attr_reader :params
-
-        def initialize(target_locales, yaml_file_paths)
+        def initialize(source_locale, target_locales, yaml_file_paths)
+          @source_locale   = source_locale
           @target_locales  = target_locales
           @yaml_file_paths = yaml_file_paths
-          @params          = {}
         end
 
-        def run
+        def run(params)
           Translation.info "Importing translations from YAML files."
           all_flat_translations = {}
 
@@ -24,7 +22,7 @@ module Translation
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
-            key.start_with?("#{Translation.config.source_locale}.")
+            key.start_with?("#{@source_locale}.")
           end
 
           @target_locales.each do |target_locale|
@@ -46,7 +44,7 @@ module Translation
               end
             end
 
-            @params["yaml_po_data_#{target_locale}"] = po_representation.to_s
+            params["yaml_po_data_#{target_locale}"] = po_representation.to_s
           end
         end
       end
