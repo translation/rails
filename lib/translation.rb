@@ -16,7 +16,8 @@ module Translation
     attr_reader :config, :client
 
     def configure(&block)
-      yield @config = Config.new
+      @config ||= Config.new
+      yield @config
 
       Object.send(:include, GetText)
       bindtextdomain('app', :path => @config.locales_path, :charset => 'utf-8')
@@ -37,8 +38,10 @@ module Translation
     end
 
     def info(message, level = 0)
-      indent = (1..level).to_a.collect { "   " }.join('')
-      puts "#{indent}* #{message}"
+      if @config.verbose
+        indent = (1..level).to_a.collect { "   " }.join('')
+        puts "#{indent}* #{message}"
+      end
     end
 
     def version
