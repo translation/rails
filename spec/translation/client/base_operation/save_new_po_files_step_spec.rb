@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation::SaveNewPoFilesStep do
+describe Translation::Client::BaseOperation::SaveNewPoFilesStep do
 
   it do
     target_locales = ['fr', 'nl']
@@ -11,7 +11,7 @@ describe Translation::Client::InitOperation::SaveNewPoFilesStep do
       'po_data_nl' => '<GETTEXT DATA NL>'
     }
 
-    operation_step = Translation::Client::InitOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response)
+    operation_step = Translation::Client::BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response)
     operation_step.run
 
     File.read('tmp/fr/app.po').should == '<GETTEXT DATA FR>'

@@ -1,6 +1,5 @@
-require 'translation/client/sync_operation/update_pot_file_step'
+require 'translation/client/sync_operation/update_and_collect_pot_file_step'
 require 'translation/client/sync_operation/create_yaml_pot_file_step'
-require 'translation/client/sync_operation/save_new_po_files_step'
 require 'translation/client/sync_operation/create_new_mo_files_step'
 
 module Translation
@@ -15,7 +14,7 @@ module Translation
         yaml_locales_path = 'config/locales'
         yaml_file_paths   = I18n.load_path
 
-        UpdatePotFileStep.new(pot_path, source_files).run
+        UpdateAndCollectPotFileStep.new(pot_path, source_files).run
         CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run
 
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/sync")

@@ -1,7 +1,6 @@
 require 'translation/client/init_operation/update_pot_file_step'
 require 'translation/client/init_operation/update_and_collect_po_files_step'
 require 'translation/client/init_operation/create_yaml_po_files_step'
-require 'translation/client/init_operation/save_new_po_files_step'
 require 'translation/client/init_operation/cleanup_yaml_files_step'
 
 module Translation

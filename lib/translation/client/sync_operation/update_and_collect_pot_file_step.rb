@@ -1,7 +1,7 @@
 module Translation
   class Client
     class SyncOperation < BaseOperation
-      class UpdatePotFileStep
+      class UpdateAndCollectPotFileStep
         def initialize(pot_path, source_files)
           @pot_path     = pot_path
           @source_files = source_files
