@@ -1,3 +1,4 @@
+require 'translation/client/base_operation/save_new_po_files_step'
 require 'translation/client/base_operation/save_new_yaml_files_step'
 require 'translation/client/base_operation/save_special_yaml_files_step'
 

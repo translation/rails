@@ -25,7 +25,7 @@ module Translation
         parsed_response = perform_request(uri, params)
 
         unless parsed_response.nil?
-          SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
           BaseOperation::SaveNewYamlFileStep.new(target_locales, yaml_locales_path, parsed_response).run
           BaseOperation::SaveSpecialYamlFilesStep.new(target_locales, yaml_locales_path, yaml_file_paths).run
           CleanupYamlFilesStep.new(target_locales, yaml_file_paths).run
