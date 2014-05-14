@@ -10,21 +10,21 @@ module Translation
         pot_path          = Translation.pot_path
         source_locale     = Translation.config.source_locale
         target_locales    = Translation.config.target_locales
-        locales_path      = Translation.locales_path
+        locales_path      = Translation.config.locales_path
         yaml_locales_path = 'config/locales'
         yaml_file_paths   = I18n.load_path
 
-        UpdateAndCollectPotFileStep.new(pot_path, source_files).run
-        CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run
+        UpdateAndCollectPotFileStep.new(pot_path, source_files).run(params)
+        CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
 
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/sync")
         parsed_response = perform_request(uri, params)
 
         unless parsed_response.nil?
-          BaseOperation::SaveNewPoFiles.new(target_locales, locales_path, parsed_response).run
-          CreateNewMoFiles.new(locales_path).run
-          BaseOperation::SaveNewYamlFiles.new(target_locales, yaml_locales_path, parsed_response).run
-          BaseOperation::SaveSpecialYamlFiles.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+          CreateNewMoFilesStep.new(locales_path).run
+          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
         end
       end
     end

@@ -11,13 +11,13 @@ module Translation
         pot_path          = Translation.pot_path
         source_locale     = Translation.config.source_locale
         target_locales    = Translation.config.target_locales
-        locales_path      = Translation.locales_path
+        locales_path      = Translation.config.locales_path
         yaml_locales_path = 'config/locales'
         yaml_file_paths   = I18n.load_path
 
         UpdatePotFileStep.new(pot_path, source_files).run
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
-        CreateYamlPoFilesStep.new(target_locales, yaml_file_paths).run(params)
+        CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths).run(params)
 
         Translation.info "Sending data to server"
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/init")
@@ -25,9 +25,9 @@ module Translation
 
         unless parsed_response.nil?
           BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          BaseOperation::SaveNewYamlFileStep.new(target_locales, yaml_locales_path, parsed_response).run
-          BaseOperation::SaveSpecialYamlFilesStep.new(target_locales, yaml_locales_path, yaml_file_paths).run
-          CleanupYamlFilesStep.new(target_locales, yaml_file_paths).run
+          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+          CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
         end
       end
     end
