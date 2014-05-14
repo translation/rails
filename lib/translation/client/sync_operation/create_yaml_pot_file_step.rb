@@ -1,7 +1,7 @@
 module Translation
   class Client
     class SyncOperation < BaseOperation
-      class CreateYamlPoFilesStep
+      class CreateYamlPotFileStep
         def initialize(source_locale, yaml_file_paths)
           @source_locale   = source_locale
           @yaml_file_paths = yaml_file_paths
