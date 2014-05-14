@@ -7,9 +7,10 @@ describe Translation::Client::SyncOperation::UpdatePotFileStep do
     source_files = Dir['spec/support/**/*.{rb,erb}']
 
     step_operation = Translation::Client::SyncOperation::UpdatePotFileStep.new(pot_path, source_files)
-    step_operation.run
+    params = {}
+    step_operation.run(params)
 
-    step_operation.params['pot_data'].should end_with <<EOS
+    params['pot_data'].should end_with <<EOS
 #: ../spec/support/rails_app/app/models/fake_model.rb:3
 msgid "Hi kids, do you like violence ?"
 msgstr ""

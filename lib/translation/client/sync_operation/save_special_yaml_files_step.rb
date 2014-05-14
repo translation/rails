@@ -2,12 +2,21 @@ module Translation
   class Client
     class SyncOperation < BaseOperation
       class SaveSpecialYamlFilesStep
+        def initialize(source_locale, target_locales, yaml_locales_path, yaml_file_paths)
+          @source_locale     = source_locale
+          @target_locales    = target_locales
+          @yaml_locales_path = yaml_locales_path
+          @yaml_file_paths   = yaml_file_paths
+        end
+
         def run
           Translation.info "Saving new localization YAML files (with non-string values)."
           all_flat_translations = {}
 
-          I18n.load_path.each do |file_path|
-            all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
+          @yaml_file_paths.each do |file_path|
+            all_flat_translations.merge!(
+              YAMLConversion.get_flat_translations_for_yaml_file(file_path)
+            )
           end
 
           all_flat_special_translations = all_flat_translations.select do |key, value|
@@ -15,11 +24,11 @@ module Translation
           end
 
           source_flat_special_translations = all_flat_special_translations.select do |key|
-            key.start_with?("#{Translation.config.source_locale}.")
+            key.start_with?("#{@source_locale}.")
           end
 
-          Translation.config.target_locales.each do |target_locale|
-            yaml_path = File.join('config', 'locales', "localization.#{target_locale}.yml")
+          @target_locales.each do |target_locale|
+            yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
             Translation.info yaml_path, 2
             flat_translations = {}
 

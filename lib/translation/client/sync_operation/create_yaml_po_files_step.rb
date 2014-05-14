@@ -2,15 +2,12 @@ module Translation
   class Client
     class SyncOperation < BaseOperation
       class CreateYamlPoFilesStep
-        attr_reader :params
-
         def initialize(source_locale, yaml_file_paths)
           @source_locale   = source_locale
           @yaml_file_paths = yaml_file_paths
-          @params          = {}
         end
 
-        def run
+        def run(params)
           Translation.info "Generation POT file from YAML files."
           all_flat_translations  = {}
 
