@@ -1,6 +1,6 @@
 module Translation
   class Client
-    class InitOperation < BaseOperation
+    class BaseOperation
       class SaveNewYamlFilesStep
         def initialize(target_locales, yaml_locales_path, parsed_response)
           @target_locales    = target_locales

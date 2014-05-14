@@ -2,8 +2,6 @@ require 'translation/client/init_operation/update_pot_file_step'
 require 'translation/client/init_operation/update_and_collect_po_files_step'
 require 'translation/client/init_operation/create_yaml_po_files_step'
 require 'translation/client/init_operation/save_new_po_files_step'
-require 'translation/client/init_operation/save_new_yaml_files_step'
-require 'translation/client/init_operation/save_special_yaml_files_step'
 require 'translation/client/init_operation/cleanup_yaml_files_step'
 
 module Translation
@@ -28,8 +26,8 @@ module Translation
 
         unless parsed_response.nil?
           SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          SaveNewYamlFileStep.new(target_locales, yaml_locales_path, parsed_response).run
-          SaveSpecialYamlFilesStep.new(target_locales, yaml_locales_path, yaml_file_paths).run
+          BaseOperation::SaveNewYamlFileStep.new(target_locales, yaml_locales_path, parsed_response).run
+          BaseOperation::SaveSpecialYamlFilesStep.new(target_locales, yaml_locales_path, yaml_file_paths).run
           CleanupYamlFilesStep.new(target_locales, yaml_file_paths).run
         end
       end

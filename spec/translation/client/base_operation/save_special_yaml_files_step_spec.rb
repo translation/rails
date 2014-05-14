@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation::SaveSpecialYamlFilesStep do
+describe Translation::Client::BaseOperation::SaveSpecialYamlFilesStep do
 
   it do
     yaml_locales_path = 'tmp/config/locales'
@@ -37,7 +37,7 @@ EOS
     source_locale   = 'en'
     target_locales  = ['fr']
 
-    operation_step = Translation::Client::InitOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths)
+    operation_step = Translation::Client::BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths)
     operation_step.run
 
     expected_yaml_content_fr = <<EOS
