@@ -25,7 +25,7 @@ module Translation
 
         unless parsed_response.nil?
           SaveNewPoFiles.new(target_locales, locales_path, parsed_response).run
-          CreateNewMoFiles.new(target_locales, locales_path, parsed_response).run
+          CreateNewMoFiles.new(locales_path).run
           SaveNewYamlFiles.new(target_locales, yaml_locales_path, parsed_response).run
           SaveSpecialYamlFiles.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
         end

@@ -2,24 +2,18 @@ module Translation
   class Client
     class SyncOperation < BaseOperation
       class CreateNewMoFilesStep
-        def initialize(target_locales, locales_path, parsed_response)
-          @target_locales  = target_locales
-          @locales_path    = locales_path
-          @parsed_response = parsed_response
+        def initialize(locales_path)
+          @locales_path = locales_path
         end
 
         def run
-          Translation.info "Saving new PO files."
+          Translation.info "Creating new MO files."
 
-          @target_locales.each do |target_locale|
-            if parsed_response.has_key?("po_data_#{target_locale}")
-              po_path = File.join(@locales_path, target_locale.to_s, 'app.po')
-              Translation.info po_path, 2
-
-              File.open(po_path, 'wb') do |file|
-                file.write(parsed_response["po_data_#{target_locale}"])
-              end
-            end
+          Dir["#{@locales_path}/*/app.po"].each do |po_path|
+            mo_path = "#{File.dirname(po_path)}/LC_MESSAGES/app.mo"
+            Translation.info mo_path, 2
+            FileUtils.mkdir_p(File.dirname(mo_path))
+            GetText::Tools::MsgFmt.run(po_path, '-o', mo_path)
           end
         end
       end
