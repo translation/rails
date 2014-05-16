@@ -9,54 +9,64 @@ module Translation
         hash = {}
 
         flat_hash.each_pair do |key, value|
-          recursive_call(hash, nil, key, value)
-          puts hash
+          recursive_call(hash, key, value)
         end
 
         hash
       end
 
-      def recursive_call(current_object, current_key, key_string, value)
-        if key_string == ''
-          if current_object.is_a? Hash
-            current_object[current_key] = value
-          elsif current_object.is_a? Array
-            current_object << value
-          end
-        elsif key_string[0] == '['
-          array_pos = key_string.split(']', 2)[0]
-          array_pos = array_pos.split('[', 2)[1]
+      def recursive_call(hash, key_string, value)
+        current_object = hash
+        current_key    = key_string.split(/\.|\[/, 2)[0] # first is always a hash
 
-          next_key  = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
-          next_key = next_key[1..-1] if next_key[0] == '.'
+        while key_string != ''
+          #puts hash.inspect
+          #puts key_string
+          if key_string[0] == '['
+            array_pos = key_string.split(']', 2)[0]
+            array_pos = array_pos.split('[', 2)[1].to_i
 
-          if current_object.is_a? Hash
-            current_object[current_key] = []
-            recursive_call(current_object[current_key], nil, next_key, value)
-          elsif current_object.is_a? Array
-            current_object << []
-            recursive_call(current_object.last, nil, next_key, value)
-          end
-        elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
-          new_key  = key_string.split(/\.|\[/, 2)[0]
-          next_key = key_string.split(/\.|\[/, 2)[1]
+            key_string = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
+            key_string = key_string[1..-1] if key_string[0] == '.'
 
-          if next_key.count(']') > next_key.count('[')
-            next_key = '[' + next_key
-          end
+            if current_object.is_a? Hash
+              if !current_object.has_key?(current_key)
+                current_object[current_key] = []
+              end
+              current_object = current_object[current_key]
+              current_key    = nil # next is array
+            elsif current_object.is_a? Array
+              if !current_object[array_pos]
+                current_object[array_pos] = []
+              end
+              current_object = current_object[array_pos]
+              current_key    = nil # next is array
+            end
+          elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
+            new_key    = key_string.split(/\.|\[/, 2)[0]
+            key_string = key_string.split(/\.|\[/, 2)[1]
 
-          if current_object.is_a? Hash
-            current_object[current_key] = { new_key => '' }
-            recursive_call(current_object[current_key], new_key, next_key, value)
-          elsif current_object.is_a? Array
-            current_object << [ { new_key => '' } ]
-            recursive_call(current_object.last, new_key, next_key, value)
-          end
-        else
-          if current_object.is_a? Hash
-            current_object[current_key] = { key_string => value }
-          elsif current_object.is_a? Array
-            current_object << { key_string => value }
+            # Put back '[' if needed
+            if key_string.count(']') > key_string.count('[')
+              key_string = '[' + key_string
+            end
+
+            if current_object.is_a? Hash
+              if !current_object.has_key?(new_key)
+                current_object[new_key] = {}
+              end
+              current_object = current_object[new_key]
+              current_key    = new_key
+            elsif current_object.is_a? Array
+              current_object = current_object[0]
+            end
+          else
+            if current_object.is_a? Hash
+              current_object[key_string] = value
+            elsif current_object.is_a? Array
+              current_object << { key_string => value }
+            end
+            key_string = ''
           end
         end
       end
@@ -87,7 +97,7 @@ module Translation
 end
 
 Translation::FlatHash.to_hash({
-  'en.hello[1].salut'  => 'Hello world',
+  'en.hello.salut'     => 'Hello world',
   'en.main.menu.stuff' => 'This is stuff',
   'fr.salut'           => 'blabla'
 })
