@@ -25,7 +25,6 @@ module Translation
             a = hash_or_array.values.collect do |value|
               better(value)
             end
-            puts a.inspect
             return a
           else
             a = {}
@@ -37,7 +36,7 @@ module Translation
         elsif hash_or_array.is_a? Array
           a = []
           hash_or_array.each_with_index do |value, i|
-            a << better(hash_or_array[i])
+            a << better(value)
           end
           return a
         else
