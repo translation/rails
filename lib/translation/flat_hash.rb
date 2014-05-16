@@ -14,7 +14,35 @@ module Translation
           hash.deeper_merge!( recursive_call(key, value))
         end
 
-        hash
+        new_hash = better(hash)
+
+        new_hash
+      end
+
+      def better(hash_or_array)
+        if hash_or_array.is_a? Hash
+          if hash_or_array.keys[0] == '0' || hash_or_array.keys[0] == '1'
+            a = hash_or_array.values.collect do |value|
+              better(value)
+            end
+            puts a.inspect
+            return a
+          else
+            a = {}
+            hash_or_array.keys.each do |key|
+              a.merge!( key => better(hash_or_array[key]) )
+            end
+            return a
+          end
+        elsif hash_or_array.is_a? Array
+          a = []
+          hash_or_array.each_with_index do |value, i|
+            a << better(hash_or_array[i])
+          end
+          return a
+        else
+          return hash_or_array
+        end
       end
 
       def recursive_call(key_string, value)
@@ -27,7 +55,7 @@ module Translation
           next_key  = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
           next_key = next_key[1..-1] if next_key[0] == '.'
 
-          [recursive_call(next_key, value)]
+          [array_pos => recursive_call(next_key, value)]
         elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
           new_key  = key_string.split(/\.|\[/, 2)[0]
           next_key = key_string.split(/\.|\[/, 2)[1]
@@ -73,7 +101,11 @@ end
 #  'fr.salut'           => 'blabla'
 #})
 
-Translation::FlatHash.recursive_call('en.family[0][0]', 'Ta mère')
-Translation::FlatHash.recursive_call('en.family[0][1]', 'Ta soeur')
-Translation::FlatHash.recursive_call('en.family[1][0]', 'Ton père')
-Translation::FlatHash.recursive_call('en.family[1][1]', 'Ton frère')
+#Translation::FlatHash.recursive_call('en.family[0][0]', 'Ta mère')
+#Translation::FlatHash.recursive_call('en.family[0][1]', 'Ta soeur')
+#Translation::FlatHash.recursive_call('en.family[1][0]', 'Ton père')
+#Translation::FlatHash.recursive_call('en.family[1][1]', 'Ton frère')
+
+Translation::FlatHash.better({ 'key'       => { "0" => [{"0" => "houh"}, {'1' => "blah"}],
+                                                "1" => [{"0" => "hihi"}, {'1' => "haha"}] },
+                               'other_key' => 'hello world' })
