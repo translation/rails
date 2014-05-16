@@ -39,25 +39,34 @@ module Translation
         return hash
       end
 
+      def brol(source_hash, current_level_key = '', target_hash = {})
+        key_parts = current_level_key.split('.')
+
+        if key_parts.first.end_with?(']')
+          # array
+        else
+          # hash
+        end
+      end
+
+      end
+
       private
 
-      def get_flat_hash_for_level(hash, parent_key = nil)
+      def get_flat_hash_for_level(value, parent_key = nil)
         flat_hash = {}
 
-        hash.each_pair do |key, value|
-          current_level_key = [ parent_key, key ].reject(&:blank?).join('.')
-
-          if value.is_a? Hash
-            flat_hash.merge!(
-              get_flat_hash_for_level(value, current_level_key)
-            )
-          elsif value.is_a? Array
-            value.each_with_index do |item, index|
-              flat_hash["#{current_level_key}[#{index}]"] = item.to_s
-            end
-          else
-            flat_hash[current_level_key] = value
+        if value.is_a? Hash
+          value.each_pair do |key, value|
+            current_level_key = [ parent_key, key ].reject(&:blank?).join('.')
+            flat_hash.merge!(get_flat_hash_for_level(value, current_level_key))
           end
+        elsif value.is_a? Array
+          value.each_with_index do |item, index|
+            flat_hash.merge!(get_flat_hash_for_level(item, "#{parent_key}[#{index}]"))
+          end
+        else
+          flat_hash[parent_key] = value
         end
 
         flat_hash

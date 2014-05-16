@@ -18,6 +18,20 @@ describe Translation::FlatHash do
           'bidules' => [
             'bidule 1',
             'bidule 2'
+          ],
+
+          'buzzwords' => [
+            ['Adaptive', 'Advanced' ],
+            ['24 hour', '4th generation']
+          ],
+
+          'age' => 42,
+
+          :address => 'Cour du Curé',
+
+          'names' => [
+            { 'first' => 'Aurélien', 'last' => 'Malisart' },
+            { 'first' => 'Michaël',  'last' => 'Hoste'    }
           ]
         }
       }
@@ -30,6 +44,16 @@ describe Translation::FlatHash do
         'en.bye'             => 'Good bye world',
         'en.bidules[0]'      => 'bidule 1',
         'en.bidules[1]'      => 'bidule 2',
+        'en.buzzwords[0][0]' => 'Adaptive',
+        'en.buzzwords[0][1]' => 'Advanced',
+        'en.buzzwords[1][0]' => '24 hour',
+        'en.buzzwords[1][1]' => '4th generation',
+        'en.age'             => 42,
+        'en.address'         => 'Cour du Curé',
+        'en.names[0].first'  => 'Aurélien',
+        'en.names[0].last'   => 'Malisart',
+        'en.names[1].first'  => 'Michaël',
+        'en.names[1].last'   => 'Hoste'
       }
     end
   end
@@ -42,6 +66,10 @@ describe Translation::FlatHash do
         'en.bye'             => 'Good bye world',
         'en.bidules[0]'      => 'bidule 1',
         'en.bidules[1]'      => 'bidule 2',
+        'en.family[0][0]'    => 'Ta mère',
+        'en.family[0][1]'    => 'Ta soeur',
+        'en.family[1][0]'    => 'Ton père',
+        'en.family[1][1]'    => 'Ton frère'
       }
 
       hash = subject.to_hash(flat_hash)
@@ -59,6 +87,11 @@ describe Translation::FlatHash do
           'bidules' => [
             'bidule 1',
             'bidule 2'
+          ],
+
+          'family' => [
+            ['Ta mère', 'Ta soeur'],
+            ['Ton père', 'Ton frère'],
           ]
         }
       }
