@@ -1,3 +1,5 @@
+require 'deep_merge/rails_compat'
+
 module Translation
   module FlatHash
     class << self
@@ -9,46 +11,35 @@ module Translation
         hash = {}
 
         flat_hash.each_pair do |key, value|
-          key_parts = key.split('.')
-          acc       = hash
+          hash.deeper_merge!( recursive_call(key, value))
+        end
 
-          key_parts.each_with_index do |key_part, index|
-            if index < key_parts.size - 1
-              unless acc.has_key?(key_part)
-                acc[key_part] = {}
-              end
+        hash
+      end
 
-              acc = acc[key_part]
-            else
-              if key_part.end_with?(']')
-                key_part_prefix = key_part.split('[').first
-                item_index      = key_part.split('[').last.to_i
+      def recursive_call(key_string, value)
+        if key_string == ''
+          value
+        elsif key_string[0] == '['
+          array_pos = key_string.split(']', 2)[0]
+          array_pos = array_pos.split('[', 2)[1]
 
-                unless acc.has_key?(key_part_prefix)
-                  acc[key_part_prefix] = []
-                end
+          next_key  = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
+          next_key = next_key[1..-1] if next_key[0] == '.'
 
-                acc[key_part_prefix][item_index] = value
-              else
-                acc[key_part] = value
-              end
-            end
+          [recursive_call(next_key, value)]
+        elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
+          new_key  = key_string.split(/\.|\[/, 2)[0]
+          next_key = key_string.split(/\.|\[/, 2)[1]
+
+          if next_key.count(']') > next_key.count('[')
+            next_key = '[' + next_key
           end
-        end
 
-        return hash
-      end
-
-      def brol(source_hash, current_level_key = '', target_hash = {})
-        key_parts = current_level_key.split('.')
-
-        if key_parts.first.end_with?(']')
-          # array
+          { new_key => recursive_call(next_key, value) }
         else
-          # hash
+          { key_string => value }
         end
-      end
-
       end
 
       private
@@ -75,3 +66,14 @@ module Translation
     end
   end
 end
+
+#Translation::FlatHash.to_hash({
+#  'en.hello'           => 'Hello world',
+#  'en.main.menu.stuff' => 'This is stuff',
+#  'fr.salut'           => 'blabla'
+#})
+
+Translation::FlatHash.recursive_call('en.family[0][0]', 'Ta mère')
+Translation::FlatHash.recursive_call('en.family[0][1]', 'Ta soeur')
+Translation::FlatHash.recursive_call('en.family[1][0]', 'Ton père')
+Translation::FlatHash.recursive_call('en.family[1][1]', 'Ton frère')

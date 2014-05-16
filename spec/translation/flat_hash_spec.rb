@@ -61,15 +61,15 @@ describe Translation::FlatHash do
   describe '#to_hash' do
     it 'returns a hash' do
       flat_hash = {
-        'en.hello'           => 'Hello world'   ,
-        'en.main.menu.stuff' => 'This is stuff' ,
-        'en.bye'             => 'Good bye world',
-        'en.bidules[0]'      => 'bidule 1',
-        'en.bidules[1]'      => 'bidule 2',
-        'en.family[0][0]'    => 'Ta mère',
-        'en.family[0][1]'    => 'Ta soeur',
-        'en.family[1][0]'    => 'Ton père',
-        'en.family[1][1]'    => 'Ton frère'
+        'en.hello'              => 'Hello world'   ,
+        'en.main.menu[0].stuff' => 'This is stuff' ,
+        'en.bye'                => 'Good bye world',
+        'en.bidules[0]'         => 'bidule 1',
+        'en.bidules[1]'         => 'bidule 2',
+        'en.family[0][0]'       => 'Ta mère',
+        'en.family[0][1]'       => 'Ta soeur',
+        'en.family[1][0]'       => 'Ton père',
+        'en.family[1][1]'       => 'Ton frère'
       }
 
       hash = subject.to_hash(flat_hash)
@@ -78,9 +78,9 @@ describe Translation::FlatHash do
         'en' => {
           'hello' => 'Hello world',
           'main'  => {
-            'menu' => {
+            'menu' => [
               'stuff' => 'This is stuff'
-            }
+            ]
           },
           'bye' => 'Good bye world',
 
