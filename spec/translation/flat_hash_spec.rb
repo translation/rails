@@ -59,6 +59,49 @@ describe Translation::FlatHash do
   end
 
   describe '#to_hash' do
+    it 'returns a simple hash' do
+      flat_hash = {
+        'en' => 'hello'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == { 'en' => 'hello' }
+    end
+
+    it 'returns a simple array' do
+      flat_hash = {
+        'en[0]' => 'hello'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == { 'en' => ['hello'] }
+    end
+
+    it 'returns a simple array with 2 elements' do
+      flat_hash = {
+        'en[0]' => 'hello',
+        'en[1]' => 'world'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == { 'en' => ['hello', 'world'] }
+    end
+
+
+    it 'returns a double array' do
+      flat_hash = {
+        'en[0][0]' => 'hello',
+        'en[0][1]' => 'world'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == { 'en' => [['hello', 'world']] }
+    end
+
     it 'returns a hash' do
       flat_hash = {
         'en.hello'              => 'Hello world'   ,
