@@ -48,20 +48,26 @@ module Translation
                   current_object[current_key] = []
                 end
                 current_object = current_object[current_key]
-                puts hash.inspect
-                puts current_object.inspect
                 current_key    = nil # next is array
               elsif current_object.is_a? Array
                 puts 'g'
-                puts hash.inspect
-                puts current_object.inspect
-                if !current_object[array_pos]
+                if defined?(previous) && previous && !previous[array_pos]
                   puts "h - #{array_pos}"
-                  current_object[array_pos] = []
+                  previous[array_pos] = []
+                  new_previous = current_object
+                  current_object = previous[array_pos]
+                  previous = new_previous
+
                   puts hash.inspect
                   puts current_object.inspect
+                elsif !current_object[array_pos]
+                  previous = current_object
+                  current_object[array_pos] = []
+                  current_object = current_object[array_pos]
+                else
+                  previous = current_object
+                  current_object = current_object[array_pos]
                 end
-                current_object = current_object[array_pos]
                 current_key    = nil # next is array
               end
 
@@ -71,6 +77,7 @@ module Translation
               end
             # next is hash
             elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
+              previous = nil
               puts 'j'
               new_key    = key_string.split(/\.|\[/, 2)[0]
               key_string = key_string.split(/\.|\[/, 2)[1]
@@ -111,9 +118,7 @@ module Translation
                 current_object[new_key] = value
               elsif current_object.is_a? Array
                 puts 's'
-                puts hash.inspect
                 current_object << { key_string => value }
-                puts hash.inspect
                 puts '-------'
               end
               key_string = ''
@@ -169,4 +174,6 @@ Translation::FlatHash.to_hash({ 'fr[0].bouh'  => 'blabla',
                                 'fr[1].hello' => 'blibli'})
 
 Translation::FlatHash.to_hash({ 'fr[0][0].bouh'  => 'blabla',
-                                'fr[0][1].hello' => 'blibli'})
+                                'fr[0][1].hello' => 'blibli',
+                                'fr[1][0].salut' => 'hahah',
+                                'fr[1][1].ha'    => 'maison' })
