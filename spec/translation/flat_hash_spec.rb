@@ -102,6 +102,55 @@ describe Translation::FlatHash do
       hash.should == { 'en' => [['hello', 'world']] }
     end
 
+    it 'returns a double array with hash in it' do
+      flat_hash = {
+        'en[0][0].hello'    => 'hello world',
+        'en[0][1].goodbye'  => 'goodbye world',
+        'en[1][0].hello2'   => 'hello lord',
+        'en[1][1].goodbye2' => 'goodbye lord'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == {
+        'en' => [
+          [
+            { 'hello'   => 'hello world'   },
+            { 'goodbye' => 'goodbye world' }
+          ],
+          [
+            { 'hello2'   => 'hello lord'   },
+            { 'goodbye2' => 'goodbye lord' }
+          ]
+        ]
+      }
+    end
+
+    it 'return a hash with arrays at many places' do
+      flat_hash = {
+        'fr[0][0].bouh.salut[0]'  => 'blabla',
+        'fr[0][0].bouh.salut[1]'  => 'blibli',
+        'fr[1][0].salut'          => 'hahah',
+        'fr[1][1].ha'             => 'house'
+      }
+
+      hash = subject.to_hash(flat_hash)
+
+      hash.should == {
+        'fr' => [
+          [{
+            'bouh' => {
+              'salut' => [ 'blabla', 'blibli' ]
+            }
+          }],
+          [
+            { 'salut' => 'hahah' },
+            { 'ha'    => 'house'}
+          ]
+        ]
+      }
+    end
+
     it 'returns a hash' do
       flat_hash = {
         'en.hello'              => 'Hello world'   ,

@@ -9,16 +9,19 @@ module Translation
         hash = {}
 
         flat_hash.each_pair do |key, value|
-          recursive_call(hash, key, value)
+          build_hash_with_flat(hash, key, value)
         end
 
         hash
       end
 
-      def recursive_call(hash, key_string, value)
+      private
+
+      def build_hash_with_flat(hash, key_string, value)
         current_object = hash
-        current_key    = key_string.split(/\.|\[/, 2)[0] # first is always a hash
-        key_string     = key_string.split(/\.|\[/, 2)[1]
+        splitted       = key_string.split(/\.|\[/, 2)
+        current_key    = splitted[0] # first is always a hash
+        key_string     = splitted[1]
 
         if !key_string or key_string == '' # if only one key like { 'en' => 'salut' }
           current_object[current_key] = value
@@ -37,27 +40,29 @@ module Translation
               key_string = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
               key_string = key_string[1..-1] if key_string[0] == '.'
 
-              if (current_object.is_a?(Hash) && !current_object.has_key?(current_key)) || !current_object[current_key]
+              if has_key?(current_object, current_key)
                 current_object[current_key] = []
               end
 
               current_object = current_object[current_key]
               current_key    = array_pos
 
+              # array is terminal
               if key_string == ''
                 current_object << value
               end
             # next is hash
             elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
-              new_key    = key_string.split(/\.|\[/, 2)[0]
-              key_string = key_string.split(/\.|\[/, 2)[1]
+              splitted   = key_string.split(/\.|\[/, 2)
+              new_key    = splitted[0]
+              key_string = splitted[1]
 
               # Put back '[' if needed
               if key_string.count(']') > key_string.count('[')
                 key_string = '[' + key_string
               end
 
-              if (current_object.is_a?(Hash) && !current_object.has_key?(current_key)) || !current_object[current_key]
+              if has_key?(current_object, current_key)
                 current_object[current_key] = {}
               end
               current_object = current_object[current_key]
@@ -66,7 +71,7 @@ module Translation
             else
               new_key = key_string
 
-              if (current_object.is_a?(Hash) && !current_object.has_key?(current_key)) || !current_object[current_key]
+              if has_key?(current_object, current_key)
                 current_object[current_key] = {}
               end
               current_object          = current_object[current_key]
@@ -78,8 +83,9 @@ module Translation
         end
       end
 
-
-      private
+      def has_key?(array_or_hash, key)
+        (array_or_hash.is_a?(Hash) && !array_or_hash.has_key?(key)) || !array_or_hash[key]
+      end
 
       def get_flat_hash_for_level(value, parent_key = nil)
         flat_hash = {}
@@ -104,41 +110,3 @@ module Translation
   end
 end
 
-#Translation::FlatHash.to_hash({ 'en.hello.salut' => 'Hello world' })
-#Translation::FlatHash.to_hash({ 'en.main.menu.stuff' => 'This is stuff' })
-#Translation::FlatHash.to_hash({ 'fr.salut' => 'blabla' })
-#Translation::FlatHash.to_hash({ 'fr[0]' => 'blabla', })
-
-#Translation::FlatHash.to_hash({ 'fr[0].bouh.salut' => 'blabla' })
-#
-#Translation::FlatHash.to_hash({
-#  'en.hello.salut'     => 'Hello world',
-#  'en.main.menu.stuff' => 'This is stuff',
-#  'fr.salut'           => 'blabla'
-#})
-
-
-
-#Translation::FlatHash.to_hash({ 'fr[0][0].bouh.salut[0]'  => 'blabla',
-#                                'fr[0][0].bouh.salut[1]'  => 'blibli',
-#                                'fr[1][0].salut' => 'hahah',
-#                                'fr[1][1].ha'    => 'maison' })
-
-#Translation::FlatHash.to_hash({ 'en.hello.salut' => 'Hello world',
-#                                'en.hello.haha'  => 'Bonjour monde',
-#                                'fr.hello.haha'  => 'bonjour LE monde' })
-#Translation::FlatHash.to_hash({ 'en.main.menu.stuff' => 'This is stuff' })
-#Translation::FlatHash.to_hash({ 'fr.salut' => 'blabla' })
-
-Translation::FlatHash.to_hash({ 'fr[0].bouh'  => 'blabla',
-                                'fr[1].hello' => 'blibli'})
-
-Translation::FlatHash.to_hash({ 'en[0][0]' => 'hello',
-                                'en[0][1]' => 'new',
-                                'en[0][2]' => 'world',
-                                'en[1][0]' => 'salut' })
-
-Translation::FlatHash.to_hash({ 'fr[0][0].bouh'  => 'blabla',
-                                'fr[0][1].hello' => 'blibli',
-                                'fr[1][0].salut' => 'hahah',
-                                'fr[1][1].ha'    => 'maison' })
