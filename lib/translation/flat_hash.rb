@@ -23,7 +23,7 @@ module Translation
         current_key    = splitted[0] # first is always a hash
         key_string     = splitted[1]
 
-        if !key_string or key_string == '' # if only one key like { 'en' => 'salut' }
+        if key_string.blank? # if only one key like { 'en' => 'salut' }
           current_object[current_key] = value
         else
           # Put back '[' if needed
@@ -40,7 +40,7 @@ module Translation
               key_string = key_string.split(']', 2).count == 2 ? key_string.split(']', 2)[1] : ""
               key_string = key_string[1..-1] if key_string[0] == '.'
 
-              if has_key?(current_object, current_key)
+              if no_key?(current_object, current_key)
                 current_object[current_key] = []
               end
 
@@ -62,7 +62,7 @@ module Translation
                 key_string = '[' + key_string
               end
 
-              if has_key?(current_object, current_key)
+              if no_key?(current_object, current_key)
                 current_object[current_key] = {}
               end
               current_object = current_object[current_key]
@@ -71,7 +71,7 @@ module Translation
             else
               new_key = key_string
 
-              if has_key?(current_object, current_key)
+              if no_key?(current_object, current_key)
                 current_object[current_key] = {}
               end
               current_object          = current_object[current_key]
@@ -83,7 +83,7 @@ module Translation
         end
       end
 
-      def has_key?(array_or_hash, key)
+      def no_key?(array_or_hash, key)
         (array_or_hash.is_a?(Hash) && !array_or_hash.has_key?(key)) || !array_or_hash[key]
       end
 
