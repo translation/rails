@@ -21,7 +21,7 @@ module Translation
     end
 
     def purge
-      Translation::Client::PurgeOperation.new(self).run
+      Translation::Client::SyncOperation.new(self).run(true)
     end
   end
 end

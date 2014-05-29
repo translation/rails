@@ -1,3 +1,5 @@
+# NOT USED
+
 module Translation
   class Client
     class PurgeOperation < BaseOperation

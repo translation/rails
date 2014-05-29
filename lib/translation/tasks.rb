@@ -13,6 +13,10 @@ namespace :translation do
     Translation.client.sync
   end
 
+  task :purge => :environment do
+    Translation.client.purge
+  end
+
   task :debug => :environment do
     Translation::YAMLConversion.get_pot_data_from_yaml
   end

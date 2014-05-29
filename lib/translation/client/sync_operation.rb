@@ -5,7 +5,7 @@ require 'translation/client/sync_operation/create_new_mo_files_step'
 module Translation
   class Client
     class SyncOperation < BaseOperation
-      def run
+      def run(purge = false)
         source_files      = Dir['**/*.{rb,erb}']
         pot_path          = Translation.pot_path
         source_locale     = Translation.config.source_locale
@@ -16,6 +16,10 @@ module Translation
 
         UpdateAndCollectPotFileStep.new(pot_path, source_files).run(params)
         CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
+
+        if purge
+          params['purge'] = 'true'
+        end
 
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/sync")
         parsed_response = perform_request(uri, params)
