@@ -8,7 +8,7 @@ module Translation
     def initialize
       self.locales_path   = File.join('config', 'locales', 'gettext')
       self.source_locale  = :en
-      self.target_locales = [:fr, :nl, :de]
+      self.target_locales = []
       self.endpoint       = 'rails.translation.io/api'
       self.verbose        = true
     end

@@ -13,7 +13,7 @@ module Translation
 
           @target_locales.each do |target_locale|
             if @parsed_response.has_key?("po_data_#{target_locale}")
-              po_path = File.join(@locales_path, target_locale.to_s, 'app.po')
+              po_path = File.join(@locales_path, target_locale.to_s.gsub('-', '_'), 'app.po')
               FileUtils.mkdir_p(File.dirname(po_path))
               Translation.info po_path, 2
 

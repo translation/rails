@@ -10,7 +10,7 @@ module Translation
         def run
           Translation.info "Updating POT file."
           FileUtils.mkdir_p(File.dirname(@pot_path))
-          GetText::Tools::XGetText.run(*@source_files, '-o', @pot_path)
+          GetText::Tools::XGetText.run(*@source_files, '-o', @pot_path, '--msgid-bugs-address', 'contact@translation.io',)
         end
       end
     end
