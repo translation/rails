@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Translation::Client::SyncOperation::CreateNewMoFilesStep do
+describe Translation::Client::BaseOperation::CreateNewMoFilesStep do
   it do
     locales_path = 'tmp/config/locales/gettext'
 
@@ -21,7 +21,7 @@ EOS
       file.write(po_data_fr)
     end
 
-    step_operation = Translation::Client::SyncOperation::CreateNewMoFilesStep.new(locales_path)
+    step_operation = Translation::Client::BaseOperation::CreateNewMoFilesStep.new(locales_path)
     step_operation.run
 
     File.exist?('tmp/config/locales/gettext/fr/LC_MESSAGES/app.mo').should be_true

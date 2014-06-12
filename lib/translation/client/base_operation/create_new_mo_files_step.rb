@@ -1,6 +1,6 @@
 module Translation
   class Client
-    class SyncOperation < BaseOperation
+    class BaseOperation
       class CreateNewMoFilesStep
         def initialize(locales_path)
           @locales_path = locales_path

@@ -28,6 +28,7 @@ module Translation
           BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
           BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
           CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
+          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
         end
       end
     end

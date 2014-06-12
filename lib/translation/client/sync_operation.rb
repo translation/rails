@@ -1,6 +1,5 @@
 require 'translation/client/sync_operation/update_and_collect_pot_file_step'
 require 'translation/client/sync_operation/create_yaml_pot_file_step'
-require 'translation/client/sync_operation/create_new_mo_files_step'
 
 module Translation
   class Client
@@ -26,7 +25,7 @@ module Translation
 
         unless parsed_response.nil?
           BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          CreateNewMoFilesStep.new(locales_path).run
+          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
           BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
           BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
         end
