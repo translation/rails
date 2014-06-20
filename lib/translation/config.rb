@@ -10,7 +10,7 @@ module Translation
       self.source_locale  = :en
       self.target_locales = []
       self.endpoint       = 'rails.translation.io/api'
-      self.verbose        = true
+      self.verbose        = 1
     end
 
     def to_s

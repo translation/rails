@@ -15,7 +15,7 @@ module Translation
             if @parsed_response.has_key?("po_data_#{target_locale}")
               po_path = File.join(@locales_path, target_locale.to_s.gsub('-', '_'), 'app.po')
               FileUtils.mkdir_p(File.dirname(po_path))
-              Translation.info po_path, 2
+              Translation.info po_path, 2, 2
 
               File.open(po_path, 'wb') do |file|
                 file.write(@parsed_response["po_data_#{target_locale}"])

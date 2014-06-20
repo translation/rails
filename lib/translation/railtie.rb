@@ -14,7 +14,7 @@ module I18n
     def locale=(locale)
       I18n.enforce_available_locales!(locale)
       @locale        = locale.to_sym rescue nil
-      GetText.locale = locale.to_s.gsub('-', '_').to_sym #rescue nil
+      GetText.locale = locale.to_s.gsub('-', '_').to_sym
     end
   end
 end

@@ -31,7 +31,7 @@ module Translation
           @target_locales.each do |target_locale|
             yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
-            Translation.info yaml_path, 2
+            Translation.info yaml_path, 2, 2
             flat_translations = {}
 
             source_flat_special_translations.each_pair do |key, value|

@@ -27,12 +27,12 @@ module Translation
               new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
 
               if new_content_hash.keys.any?
-                Translation.info("Rewriting #{locale_file_path}", 2)
+                Translation.info "Rewriting #{locale_file_path}", 2, 2
                 File.open(locale_file_path, 'wb') do |file|
                   file.write(new_content_hash.to_yaml)
                 end
               else
-                Translation.info("Removing #{locale_file_path}", 2)
+                Translation.info "Removing #{locale_file_path}", 2, 2
                 FileUtils.rm(locale_file_path)
               end
             end

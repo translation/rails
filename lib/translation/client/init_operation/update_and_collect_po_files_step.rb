@@ -13,7 +13,7 @@ module Translation
 
           @target_locales.each do |target_locale|
             po_path = "#{@locales_path}/#{target_locale.gsub('-', '_')}/app.po"
-            Translation.info po_path, 2
+            Translation.info po_path, 2, 2
 
             if File.exist?(po_path)
               GetText::Tools::MsgMerge.run(po_path, @pot_path, '-o', po_path)

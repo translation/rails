@@ -4,6 +4,7 @@ require 'gettext'
 require 'gettext/po'
 require 'gettext/po_parser'
 require 'gettext/tools'
+require 'gettext/text_domain_manager'
 
 require 'translation/config'
 require 'translation/railtie'
@@ -20,8 +21,14 @@ module Translation
       yield @config
 
       Object.send(:include, GetText)
+
+      if Rails.env.development?
+        GetText::TextDomainManager.cached = false
+      end
+
       bindtextdomain('app', :path => @config.locales_path, :charset => 'utf-8')
       Object.textdomain('app')
+
       @client = Client.new(@config.api_key, @config.endpoint)
 
       true
@@ -37,8 +44,8 @@ module Translation
       "#{Translation.config.locales_path}/app.pot"
     end
 
-    def info(message, level = 0)
-      if @config.verbose
+    def info(message, level = 0, verbose_level = 0)
+      if @config.verbose >= verbose_level
         indent = (1..level).to_a.collect { "   " }.join('')
         puts "#{indent}* #{message}"
       end

@@ -13,7 +13,7 @@ module Translation
           all_flat_translations = {}
 
           @yaml_file_paths.each do |file_path|
-            Translation.info file_path, 2
+            Translation.info file_path, 2, 2
             all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
           end
 
