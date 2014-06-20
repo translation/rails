@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.has_rdoc         = false
   s.license          = "MIT"
 
-  s.add_dependency('gettext', '> 3.0.0')
+  s.add_dependency('gettext', '>= 3.1.2')
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rspec')
