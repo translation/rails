@@ -6,18 +6,26 @@ namespace :translation do
   end
 
   task :init => :environment do
-    Translation.client.init
+    if Translation.client
+      Translation.client.init
+    else
+      Translation.info "[Error] Client cannot be built. Did you set up the initializer?"
+    end
   end
 
   task :sync => :environment do
-    Translation.client.sync
+    if Translation.client
+     Translation.client.sync
+   else
+    Translation.info "[Error] Client cannot be built. Did you set up the initializer?"
+   end
   end
 
   task :purge => :environment do
-    Translation.client.purge
-  end
-
-  task :debug => :environment do
-    Translation::YAMLConversion.get_pot_data_from_yaml
+    if Translation.client
+      Translation.client.purge
+    else
+      Translation.info "[Error] Client cannot be built. Did you set up the initializer?"
+    end
   end
 end

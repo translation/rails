@@ -8,7 +8,7 @@ module Translation
         end
 
         def run(params)
-          Translation.info "Generation POT file from YAML files."
+          Translation.info "Generating POT file from YAML files."
           all_flat_translations  = {}
 
           @yaml_file_paths.each do |file_path|

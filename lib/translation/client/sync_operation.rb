@@ -5,7 +5,11 @@ module Translation
   class Client
     class SyncOperation < BaseOperation
       def run(purge = false)
-        source_files      = Dir['**/*.{rb,erb}']
+        haml_source_files = Dir['**/*.{haml}']
+
+        BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
+
+        source_files      = Dir[SOURCE_FILES_PATTERN]
         pot_path          = Translation.pot_path
         source_locale     = Translation.config.source_locale
         target_locales    = Translation.config.target_locales

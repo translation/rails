@@ -13,6 +13,9 @@ require 'translation/flat_hash'
 require 'translation/yaml_conversion'
 
 module Translation
+
+  SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
+
   class << self
     attr_reader :config, :client
 
@@ -45,7 +48,8 @@ module Translation
     end
 
     def info(message, level = 0, verbose_level = 0)
-      if @config.verbose >= verbose_level
+      verbose = @config.try(:verbose) || 0
+      if verbose >= verbose_level
         indent = (1..level).to_a.collect { "   " }.join('')
         puts "#{indent}* #{message}"
       end
