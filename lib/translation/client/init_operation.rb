@@ -8,8 +8,10 @@ module Translation
     class InitOperation < BaseOperation
       def run
         haml_source_files = Dir['**/*.{haml}']
+        slim_source_files = Dir['**/*.{slim}']
 
         BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
+        BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
         source_files      = Dir[SOURCE_FILES_PATTERN]
         pot_path          = Translation.pot_path

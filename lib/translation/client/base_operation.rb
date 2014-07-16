@@ -3,6 +3,7 @@ require 'translation/client/base_operation/create_new_mo_files_step'
 require 'translation/client/base_operation/save_new_yaml_files_step'
 require 'translation/client/base_operation/save_special_yaml_files_step'
 require 'translation/client/base_operation/dump_haml_gettext_keys_step'
+require 'translation/client/base_operation/dump_slim_gettext_keys_step'
 
 module Translation
   class Client

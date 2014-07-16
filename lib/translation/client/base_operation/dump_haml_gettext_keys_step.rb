@@ -11,11 +11,13 @@ module Translation
         end
 
         def run
-          Translation.info "Extracting Gettext entries from HAML files."
+          if @haml_source_files.any? && defined?(Haml)
+            Translation.info "Extracting Gettext entries from HAML files."
 
-          File.open(File.join('tmp', 'translation-haml-gettext.rb'), 'w') do |file|
-            extracted_gettext_entries.each do |entry|
-              file.puts "#{entry}"
+            File.open(File.join('tmp', 'translation-haml-gettext.rb'), 'w') do |file|
+              extracted_gettext_entries.each do |entry|
+                file.puts "#{entry}"
+              end
             end
           end
         end
