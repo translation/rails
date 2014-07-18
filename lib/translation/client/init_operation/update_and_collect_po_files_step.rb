@@ -12,7 +12,7 @@ module Translation
           Translation.info "Updating PO files."
 
           @target_locales.each do |target_locale|
-            po_path = "#{@locales_path}/#{target_locale.gsub('-', '_')}/app.po"
+            po_path = "#{@locales_path}/#{target_locale.gsub('-', '_')}/#{TEXT_DOMAIN}.po"
             Translation.info po_path, 2, 2
 
             if File.exist?(po_path)

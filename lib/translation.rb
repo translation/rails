@@ -14,37 +14,41 @@ require 'translation/yaml_conversion'
 
 module Translation
 
+  TEXT_DOMAIN          = 'app'
   SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
+
+  module Proxy
+    include GetText
+  end
 
   class << self
     attr_reader :config, :client
 
     def configure(&block)
-      @config ||= Config.new
-      yield @config
-
-      Object.send(:include, GetText)
-
       if Rails.env.development?
         GetText::TextDomainManager.cached = false
       end
 
-      bindtextdomain('app', :path => @config.locales_path, :charset => 'utf-8')
-      Object.textdomain('app')
+      @config ||= Config.new
+
+      yield @config
+
+      Proxy.bindtextdomain(TEXT_DOMAIN, {
+        :path    => @config.locales_path,
+        :charset => 'utf-8'
+      })
+
+      Proxy.textdomain(TEXT_DOMAIN)
+
+      Object.delegate :_, :n_, :s_, :np_, :to => Proxy
 
       @client = Client.new(@config.api_key, @config.endpoint)
 
-      true
-    end
-
-    def locale_paths
-      Dir["#{config.locales_path}/*"].select do |dir|
-        File.directory?(dir) && Translation.config.target_locales.map(&:to_s).include?(File.basename(dir))
-      end
+      return true
     end
 
     def pot_path
-      "#{Translation.config.locales_path}/app.pot"
+      File.join(Translation.config.locales_path, "#{TEXT_DOMAIN}.pot")
     end
 
     def info(message, level = 0, verbose_level = 0)

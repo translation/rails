@@ -4,12 +4,12 @@ Gem::Specification.new do |s|
   s.description      = 'translation.io connector'
   s.homepage         = 'http://rails.translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '0.1'
-  s.date             = '2014-03-28'
+  s.version          = '0.2'
+  s.date             = '2014-07-18'
   s.authors          = ['Aurelien Malisart', 'Michaël Hoste']
   s.require_paths    = ["lib"]
-  s.files            = Dir["lib/**/*"] + ["README.rdoc"]
-  s.extra_rdoc_files = ["README.rdoc"]
+  s.files            = Dir["lib/**/*"] + ['README.rdoc']
+  s.extra_rdoc_files = ['README.rdoc']
   s.has_rdoc         = false
   s.license          = "MIT"
 
