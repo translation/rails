@@ -22,7 +22,7 @@ module Translation
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
-            key.start_with?("#{@source_locale}.")
+            key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
           end
 
           @target_locales.each do |target_locale|

@@ -17,6 +17,8 @@ en:
     stuff: This is string stuff
   value: 42
   other_value: 78
+  faker:
+    name: "Jorje Pina Puissant"
 EOS
     end
 

@@ -13,6 +13,8 @@ en:
   home:
     show:
       title: "Awesome Title"
+  faker:
+    blop: "blup"
 EOS
     end
 
@@ -23,6 +25,8 @@ fr:
   home:
     show:
       title: "Titre génial"
+  faker:
+    blop: "blup en français"
 EOS
     end
 
