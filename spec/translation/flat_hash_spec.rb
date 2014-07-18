@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Translation::FlatHash do
 
-
   describe '#to_flat_hash' do
     it 'returns a flat hash' do
       hash = {
@@ -55,6 +54,114 @@ describe Translation::FlatHash do
         'en.names[1].first'  => 'Michaël',
         'en.names[1].last'   => 'Hoste'
       }
+    end
+
+    it 'returns a flat hash with nil values' do
+      hash = {
+        "en" => {
+          "date" => {
+            "formats" => {
+              "default" => "%Y-%m-%d",
+              "long"    => "%B %d, %Y",
+              "short"   =>"%b %d"
+            },
+            "abbr_day_names"   => [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+            "abbr_month_names" => [ nil, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+            "day_names"        => [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
+          }
+        }
+      }
+
+      flat_hash = subject.to_flat_hash(hash)
+
+      flat_hash.should == {
+        "en.date.formats.default"      => "%Y-%m-%d",
+        "en.date.formats.long"         => "%B %d, %Y",
+        "en.date.formats.short"        => "%b %d",
+        "en.date.abbr_day_names[0]"    => "Sun",
+        "en.date.abbr_day_names[1]"    => "Mon",
+        "en.date.abbr_day_names[2]"    => "Tue",
+        "en.date.abbr_day_names[3]"    => "Wed",
+        "en.date.abbr_day_names[4]"    => "Thu",
+        "en.date.abbr_day_names[5]"    => "Fri",
+        "en.date.abbr_day_names[6]"    => "Sat",
+        "en.date.abbr_month_names[0]"  => nil,
+        "en.date.abbr_month_names[1]"  => "Jan",
+        "en.date.abbr_month_names[2]"  => "Feb",
+        "en.date.abbr_month_names[3]"  => "Mar",
+        "en.date.abbr_month_names[4]"  => "Apr",
+        "en.date.abbr_month_names[5]"  => "May",
+        "en.date.abbr_month_names[6]"  => "Jun",
+        "en.date.abbr_month_names[7]"  => "Jul",
+        "en.date.abbr_month_names[8]"  => "Aug",
+        "en.date.abbr_month_names[9]"  => "Sep",
+        "en.date.abbr_month_names[10]" => "Oct",
+        "en.date.abbr_month_names[11]" => "Nov",
+        "en.date.abbr_month_names[12]" => "Dec",
+        "en.date.day_names[0]"         => "Sunday",
+        "en.date.day_names[1]"         => "Monday",
+        "en.date.day_names[2]"         => "Tuesday",
+        "en.date.day_names[3]"         => "Wednesday",
+        "en.date.day_names[4]"         => "Thursday",
+        "en.date.day_names[5]"         => "Friday",
+        "en.date.day_names[6]"         => "Saturday"
+      }
+
+      subject.to_hash(flat_hash).should == hash
+    end
+
+    it 'returns another flash hash with nil values' do
+      hash =  {
+        "nl" => {
+          "date" => {
+            "abbr_day_names"   => [ "zon", "maa", "din", "woe", "don", "vri", "zat" ],
+            "abbr_month_names" => [ nil, "jan", "feb", "mar", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec" ],
+            "day_names"        => [ "zondag", "maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag" ],
+            "formats" => {
+              "default" => "%d/%m/%Y",
+              "long"    => "%e %B %Y",
+              "short"   => "%e %b"
+            }
+          }
+        }
+      }
+
+      flat_hash = subject.to_flat_hash(hash)
+
+      flat_hash.should == {
+        "nl.date.abbr_day_names[0]"    => "zon",
+        "nl.date.abbr_day_names[1]"    => "maa",
+        "nl.date.abbr_day_names[2]"    => "din",
+        "nl.date.abbr_day_names[3]"    => "woe",
+        "nl.date.abbr_day_names[4]"    => "don",
+        "nl.date.abbr_day_names[5]"    => "vri",
+        "nl.date.abbr_day_names[6]"    => "zat",
+        "nl.date.abbr_month_names[0]"  => nil,
+        "nl.date.abbr_month_names[1]"  => "jan",
+        "nl.date.abbr_month_names[2]"  => "feb",
+        "nl.date.abbr_month_names[3]"  => "mar",
+        "nl.date.abbr_month_names[4]"  => "apr",
+        "nl.date.abbr_month_names[5]"  => "mei",
+        "nl.date.abbr_month_names[6]"  => "jun",
+        "nl.date.abbr_month_names[7]"  => "jul",
+        "nl.date.abbr_month_names[8]"  => "aug",
+        "nl.date.abbr_month_names[9]"  => "sep",
+        "nl.date.abbr_month_names[10]" => "okt",
+        "nl.date.abbr_month_names[11]" => "nov",
+        "nl.date.abbr_month_names[12]" => "dec",
+        "nl.date.day_names[0]"         => "zondag",
+        "nl.date.day_names[1]"         => "maandag",
+        "nl.date.day_names[2]"         => "dinsdag",
+        "nl.date.day_names[3]"         => "woensdag",
+        "nl.date.day_names[4]"         => "donderdag",
+        "nl.date.day_names[5]"         => "vrijdag",
+        "nl.date.day_names[6]"         => "zaterdag",
+        "nl.date.formats.default"      => "%d/%m/%Y",
+        "nl.date.formats.long"         => "%e %B %Y",
+        "nl.date.formats.short"        => "%e %b"
+      }
+
+      subject.to_hash(flat_hash).should == hash
     end
   end
 
