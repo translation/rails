@@ -13,6 +13,10 @@ en:
   home:
     show:
       title: "Awesome Title"
+#     abbr_month_names:
+#     -
+#     - jan
+#     - feb
   faker:
     blop: "blup"
 EOS
@@ -25,6 +29,10 @@ fr:
   home:
     show:
       title: "Titre génial"
+#      abbr_month_names:
+#      -
+#      - jan
+#      - fev
   faker:
     blop: "blup en français"
 EOS
