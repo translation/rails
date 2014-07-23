@@ -16,7 +16,7 @@ module Translation
             Translation.info po_path, 2, 2
 
             if File.exist?(po_path)
-              GetText::Tools::MsgMerge.run(po_path, @pot_path, '-o', po_path)
+              GetText::Tools::MsgMerge.run(po_path, @pot_path, '-o', po_path, '--no-fuzzy-matching', '--no-obsolete-entries')
             else
               FileUtils.mkdir_p(File.dirname(po_path))
               GetText::Tools::MsgInit.run('-i', @pot_path, '-o', po_path, '-l', target_locale, '--no-translator')
