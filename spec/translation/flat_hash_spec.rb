@@ -296,4 +296,22 @@ describe Translation::FlatHash do
       }
     end
   end
+
+  it 'returns a hash with missing array values' do
+    flat_hash = {
+      "nl.date.abbr_month_names[1]"  => "jan",
+      "nl.date.abbr_month_names[2]"  => "feb",
+      "nl.date.abbr_month_names[3]"  => "mar"
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'nl' => {
+        'date' => {
+          'abbr_month_names' => [nil, 'jan', 'feb', 'mar']
+        }
+      }
+    }
+  end
 end

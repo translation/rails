@@ -13,10 +13,10 @@ en:
   home:
     show:
       title: "Awesome Title"
-#     abbr_month_names:
-#     -
-#     - jan
-#     - feb
+    abbr_month_names:
+    -
+    - jan
+    - feb
   faker:
     blop: "blup"
 EOS
@@ -29,10 +29,10 @@ fr:
   home:
     show:
       title: "Titre génial"
-#      abbr_month_names:
-#      -
-#      - jan
-#      - fev
+    abbr_month_names:
+    -
+    - jan
+    - fev
   faker:
     blop: "blup en français"
 EOS
@@ -50,11 +50,27 @@ EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
 msgstr "Titre génial"
+
+msgctxt "home.abbr_month_names[1]"
+msgid "jan"
+msgstr "jan"
+
+msgctxt "home.abbr_month_names[2]"
+msgid "feb"
+msgstr "fev"
 EOS
 
     params['yaml_po_data_nl'].should == <<EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
+msgstr ""
+
+msgctxt "home.abbr_month_names[1]"
+msgid "jan"
+msgstr ""
+
+msgctxt "home.abbr_month_names[2]"
+msgid "feb"
 msgstr ""
 EOS
   end

@@ -3,7 +3,7 @@ module Translation
     class BaseOperation
       class DumpSlimGettextKeysStep
 
-        GETTEXT_ENTRY_RE = /(?:n|p|s|np)?_\([^)]+\)?\)/
+        GETTEXT_ENTRY_RE = /(?:n|p|s|np|ns|N|Nn|gettext|sgettext|ngettext|nsgettext|pgettext|npgettext)?_\([^)]+\)?\)/
 
         def initialize(slim_source_files)
           @slim_source_files = slim_source_files

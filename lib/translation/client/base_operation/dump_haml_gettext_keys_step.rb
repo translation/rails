@@ -4,7 +4,7 @@ module Translation
       class DumpHamlGettextKeysStep
 
         #GETTEXT_ENTRY_RE = /((?:n|p|s|np)?_)\(\s*"([^"]+)"\s*(?:,\s*"([^"]+)"\s*)?\)/
-        GETTEXT_ENTRY_RE = /(?:n|p|s|np)?_\([^)]+\)?\)/
+        GETTEXT_ENTRY_RE = /(?:n|p|s|np|ns|N|Nn|gettext|sgettext|ngettext|nsgettext|pgettext|npgettext)?_\([^)]+\)?\)/
 
         def initialize(haml_source_files)
           @haml_source_files = haml_source_files

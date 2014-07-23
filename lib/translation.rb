@@ -42,7 +42,9 @@ module Translation
 
       Proxy.textdomain(TEXT_DOMAIN)
 
-      Object.delegate :_, :n_, :s_, :np_, :to => Proxy
+      Object.delegate :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn,
+                      :gettext, :sgettext, :ngettext, :nsgettext,
+                      :pgettext, :npgettext, :to => Proxy
 
       @client = Client.new(@config.api_key, @config.endpoint)
 

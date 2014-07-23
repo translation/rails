@@ -49,7 +49,7 @@ module Translation
 
               # array is terminal
               if key_string == ''
-                current_object << value
+                current_object[array_pos] = value
               end
             # next is hash
             elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
