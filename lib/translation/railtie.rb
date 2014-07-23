@@ -6,6 +6,10 @@ module Translation
     rake_tasks do
       require 'translation/tasks'
     end
+
+    initializer 'translation.rails_extensions' do
+
+    end
   end
 end
 

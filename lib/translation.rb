@@ -12,6 +12,8 @@ require 'translation/client'
 require 'translation/flat_hash'
 require 'translation/yaml_conversion'
 
+require 'translation/controller'
+
 module Translation
 
   TEXT_DOMAIN          = 'app'
