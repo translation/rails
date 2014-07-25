@@ -6,6 +6,16 @@ require 'gettext/po_parser'
 require 'gettext/tools'
 require 'gettext/text_domain_manager'
 
+module Translation
+  GETTEXT_METHODS = [
+    :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn,
+    :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext
+  ]
+
+  TEXT_DOMAIN          = 'app'
+  SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
+end
+
 require 'translation/config'
 require 'translation/railtie'
 require 'translation/client'
@@ -15,10 +25,6 @@ require 'translation/yaml_conversion'
 require 'translation/controller'
 
 module Translation
-
-  TEXT_DOMAIN          = 'app'
-  SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
-
   module Proxy
     include GetText
   end
@@ -41,10 +47,7 @@ module Translation
       })
 
       Proxy.textdomain(TEXT_DOMAIN)
-
-      Object.delegate :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn,
-                      :gettext, :sgettext, :ngettext, :nsgettext,
-                      :pgettext, :npgettext, :to => Proxy
+      Object.delegate *GETTEXT_METHODS, :to => Proxy
 
       @client = Client.new(@config.api_key, @config.endpoint)
 
@@ -61,6 +64,10 @@ module Translation
         indent = (1..level).to_a.collect { "   " }.join('')
         puts "#{indent}* #{message}"
       end
+    end
+
+    def normalize_path(relative_or_absolute_path)
+      File.expand_path(relative_or_absolute_path).gsub("#{Dir.pwd}/", '')
     end
 
     def version

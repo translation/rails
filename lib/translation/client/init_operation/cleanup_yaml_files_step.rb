@@ -42,7 +42,9 @@ module Translation
         private
 
         def locale_file_path_in_project?(locale_file_path)
-          locale_file_path.start_with?(@yaml_locales_path)
+          Translation.normalize_path(locale_file_path).start_with?(
+            Translation.normalize_path(@yaml_locales_path)
+          )
         end
       end
     end

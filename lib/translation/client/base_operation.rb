@@ -10,6 +10,8 @@ module Translation
     class BaseOperation
       attr_accessor :client, :params
 
+      GETTEXT_ENTRY_RE = Regexp.new('(?:' + Translation::GETTEXT_METHODS.join('|') + ')\([^)]+\)?\)')
+
       def initialize(client, perform_real_requests = true)
         @client = client
         @params = {
