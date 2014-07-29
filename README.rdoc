@@ -10,8 +10,8 @@ In your project's Gemfile :
 
     gem 'translation'
 
-+ Create a translation project from the UI.
-+ Copy the initializer into your Rails app (`config/initializers/translation.rb`)
+* Create a translation project from the UI.
+* Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 Inititalize your translation project :
 
