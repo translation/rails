@@ -44,7 +44,7 @@ To run the specs :
 
 ## Credits
 
-The [Translation gem](https://rubygems.org/gems/translation) in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
+The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by [Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see MIT-LICENSE
 file).
 
 (c) http://rails.translation.io
