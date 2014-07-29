@@ -1,8 +1,8 @@
-= gem for [http://rails.translation.io](Rails Translation)
+= gem for [Rails Translation](http://rails.translation.io)
 
 == Description
 
-Add this gem to your [http://rubyonrails.org](Rails) app to translate it with [http://rails.translation.io](Rails Translation).
+Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [Rails Translation](http://rails.translation.io).
 
 == Installation
 
