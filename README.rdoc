@@ -6,14 +6,16 @@ Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [R
 
 == Installation
 
-In your project's Gemfile :
+Add the gem to your project's Gemfile :
 
     gem 'translation'
+
+Then :
 
 * Create a translation project from the UI.
 * Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
-Inititalize your translation project :
+And finish by inititalizing your translation project :
 
     bundle exec rake translation:init
 

@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.date             = '2014-07-18'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
-  s.files            = Dir["lib/**/*"] + ['README.rdoc']
-  s.extra_rdoc_files = ['README.rdoc']
+  s.files            = Dir["lib/**/*"] + ['README.md']
+  s.extra_rdoc_files = []
   s.has_rdoc         = false
   s.license          = "MIT"
 
