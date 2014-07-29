@@ -1,23 +1,42 @@
-= Description
+= gem for [http://rails.translation.io](Rails Translation)
 
-TODO
+== Description
 
-= Basic Usage
+Add this gem to your [http://rubyonrails.org](Rails) app to translate it with [http://rails.translation.io](Rails Translation).
 
-TODO
-
-= Installation
+== Installation
 
 In your project's Gemfile :
 
-gem 'translation'
+    gem 'translation'
 
-= Tests
++ Create a translation project from the UI.
++ Copy the initializer into your Rails app (`config/initializers/translation.rb`)
+
+Inititalize your translation project :
+
+    bundle exec rake translation:init
+
+== Synchronization
+
+To get new translations from Rails Translation and to send new translatable strings, simply run :
+
+    bundle exec rake translation:sync
+
+== Purge
+
+If you need to remove unused keys taking the current branch as reference :
+
+    bundle exec rake translation:purge
+
+Warning : all keys that are not present in the current branch will be **permanently deleted both on Rails Translation and in your app**.
+
+== Tests
 
     bundle
     bundle exec rspec
 
-= Credits
+== Credits
 
 This plugin in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
 file).
