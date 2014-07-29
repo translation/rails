@@ -1,10 +1,10 @@
-= gem for [Rails Translation](http://rails.translation.io)
+# gem for [Rails Translation](http://rails.translation.io)
 
-== Description
+## Description
 
 Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [Rails Translation](http://rails.translation.io).
 
-== Installation
+## Installation
 
 Add the gem to your project's Gemfile :
 
@@ -19,13 +19,13 @@ And finish by inititalizing your translation project :
 
     bundle exec rake translation:init
 
-== Synchronization
+## Synchronization
 
 To get new translations from Rails Translation and to send new translatable strings, simply run :
 
     bundle exec rake translation:sync
 
-== Purge
+## Purge
 
 If you need to remove unused keys taking the current branch as reference :
 
@@ -33,12 +33,12 @@ If you need to remove unused keys taking the current branch as reference :
 
 Warning : all keys that are not present in the current branch will be **permanently deleted both on Rails Translation and in your app**.
 
-== Tests
+## Tests
 
     bundle
     bundle exec rspec
 
-== Credits
+## Credits
 
 This plugin in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
 file).
