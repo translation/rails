@@ -18,7 +18,7 @@ module Translation
           end
 
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            value.is_a?(String)
+            key.present? && value.is_a?(String) && !value.nil?
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|

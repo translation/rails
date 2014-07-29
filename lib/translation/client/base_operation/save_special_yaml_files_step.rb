@@ -21,7 +21,7 @@ module Translation
           end
 
           all_flat_special_translations = all_flat_translations.select do |key, value|
-            not value.is_a?(String)
+            !value.is_a?(String) && !value.nil?
           end
 
           source_flat_special_translations = all_flat_special_translations.select do |key|
