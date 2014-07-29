@@ -37,12 +37,14 @@ Warning : all keys that are not present in the current branch will be **permanen
 
 ## Tests
 
+To run the specs :
+
     bundle
     bundle exec rspec
 
 ## Credits
 
-This plugin in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
+The [Translation gem](https://rubygems.org/gems/translation) in released under MIT license by Aurélien Malisart and Michaël Hoste (see MIT-LICENSE
 file).
 
 (c) http://rails.translation.io
