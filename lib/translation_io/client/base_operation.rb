@@ -16,6 +16,7 @@ module TranslationIO
         @client = client
         @params = {
           'gem_version'        => TranslationIO.version,
+          'source_language'    => TranslationIO.config.source_locale.to_s,
           'target_languages[]' => TranslationIO.config.target_locales.map(&:to_s)
         }
       end
