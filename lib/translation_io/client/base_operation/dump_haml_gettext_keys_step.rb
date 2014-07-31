@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       class DumpHamlGettextKeysStep
@@ -8,7 +8,7 @@ module Translation
 
         def run
           if @haml_source_files.any? && defined?(Haml)
-            Translation.info "Extracting Gettext entries from HAML files."
+            TranslationIO.info "Extracting Gettext entries from HAML files."
 
             File.open(File.join('tmp', 'translation-haml-gettext.rb'), 'w') do |file|
               extracted_gettext_entries.each do |entry|
@@ -24,7 +24,7 @@ module Translation
           entries = []
 
           @haml_source_files.each do |haml_file_path|
-            Translation.info haml_file_path, 2, 2
+            TranslationIO.info haml_file_path, 2, 2
 
             haml_data = File.read(haml_file_path)
             ruby_data = Haml::Engine.new(haml_data).precompiled
@@ -34,7 +34,7 @@ module Translation
             end
           end
 
-          Translation.info "#{entries.size} entries found", 2, 2
+          TranslationIO.info "#{entries.size} entries found", 2, 2
 
           entries
         end

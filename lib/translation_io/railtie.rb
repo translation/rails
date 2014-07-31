@@ -5,14 +5,14 @@ require 'gettext'
 require 'gettext/po'
 require 'gettext/po_parser'
 
-module Translation
+module TranslationIO
   class Railtie < Rails::Railtie
     rake_tasks do
-      require 'translation/tasks'
+      require 'translation_io/tasks'
     end
 
     initializer 'translation.rails_extensions' do
-      ActionController::Base.send(:include, Translation::Controller)
+      ActionController::Base.send(:include, TranslationIO::Controller)
     end
   end
 end

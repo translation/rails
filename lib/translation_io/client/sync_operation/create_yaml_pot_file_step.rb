@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class SyncOperation < BaseOperation
       class CreateYamlPotFileStep
@@ -8,11 +8,11 @@ module Translation
         end
 
         def run(params)
-          Translation.info "Generating POT file from YAML files."
+          TranslationIO.info "Generating POT file from YAML files."
           all_flat_translations  = {}
 
           @yaml_file_paths.each do |file_path|
-            Translation.info file_path, 2, 2
+            TranslationIO.info file_path, 2, 2
             all_flat_translations.merge!(
               YAMLConversion.get_flat_translations_for_yaml_file(file_path)
             )

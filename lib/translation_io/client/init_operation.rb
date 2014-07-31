@@ -1,9 +1,9 @@
-require 'translation/client/init_operation/update_pot_file_step'
-require 'translation/client/init_operation/update_and_collect_po_files_step'
-require 'translation/client/init_operation/create_yaml_po_files_step'
-require 'translation/client/init_operation/cleanup_yaml_files_step'
+require 'translation_io/client/init_operation/update_pot_file_step'
+require 'translation_io/client/init_operation/update_and_collect_po_files_step'
+require 'translation_io/client/init_operation/create_yaml_po_files_step'
+require 'translation_io/client/init_operation/cleanup_yaml_files_step'
 
-module Translation
+module TranslationIO
   class Client
     class InitOperation < BaseOperation
       def run
@@ -14,10 +14,10 @@ module Translation
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
         source_files      = Dir[SOURCE_FILES_PATTERN]
-        pot_path          = Translation.pot_path
-        source_locale     = Translation.config.source_locale
-        target_locales    = Translation.config.target_locales
-        locales_path      = Translation.config.locales_path
+        pot_path          = TranslationIO.pot_path
+        source_locale     = TranslationIO.config.source_locale
+        target_locales    = TranslationIO.config.target_locales
+        locales_path      = TranslationIO.config.locales_path
         yaml_locales_path = 'config/locales'
         yaml_file_paths   = I18n.load_path
 
@@ -25,7 +25,7 @@ module Translation
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
         CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths).run(params)
 
-        Translation.info "Sending data to server"
+        TranslationIO.info "Sending data to server"
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/init")
         parsed_response = perform_request(uri, params)
 

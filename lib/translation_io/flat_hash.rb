@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   module FlatHash
     class << self
       def to_flat_hash(hash)

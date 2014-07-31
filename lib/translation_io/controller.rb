@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   module Controller
     def set_locale
       requested_locale = params[:locale]                     ||

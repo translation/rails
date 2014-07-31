@@ -1,9 +1,9 @@
-module Translation
+module TranslationIO
   module YAMLConversion
     class << self
 
       def get_pot_data_from_yaml(source_locale = nil, yaml_file_paths = nil)
-        source_locale   = Translation.config.source_locale if source_locale.blank?
+        source_locale   = TranslationIO.config.source_locale if source_locale.blank?
         yaml_file_paths = I18n.load_path                   if yaml_file_paths.nil?
 
         source_translations = YAMLConversion.get_flat_translations_for_locale(source_locale, yaml_file_paths)

@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       class SaveNewPoFilesStep
@@ -9,13 +9,13 @@ module Translation
         end
 
         def run
-          Translation.info "Saving new PO files."
+          TranslationIO.info "Saving new PO files."
 
           @target_locales.each do |target_locale|
             if @parsed_response.has_key?("po_data_#{target_locale}")
               po_path = File.join(@locales_path, target_locale.to_s.gsub('-', '_'), "#{TEXT_DOMAIN}.po")
               FileUtils.mkdir_p(File.dirname(po_path))
-              Translation.info po_path, 2, 2
+              TranslationIO.info po_path, 2, 2
 
               File.open(po_path, 'wb') do |file|
                 file.write(@parsed_response["po_data_#{target_locale}"])

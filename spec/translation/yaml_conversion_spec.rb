@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::YAMLConversion do
+describe TranslationIO::YAMLConversion do
   describe '#get_pot_data_from_yaml' do
     it 'returns correct PO data' do
       po_data = subject.get_pot_data_from_yaml(:en, [

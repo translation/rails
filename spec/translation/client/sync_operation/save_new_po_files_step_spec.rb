@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::SyncOperation::SaveNewPoFilesStep do
+describe TranslationIO::Client::SyncOperation::SaveNewPoFilesStep do
   it do
     target_locales = ['fr', 'nl']
     locales_path   = 'tmp/config/locales/gettext'
@@ -13,7 +13,7 @@ describe Translation::Client::SyncOperation::SaveNewPoFilesStep do
       'po_data_nl' => po_data_nl
     }
 
-    step_operation = Translation::Client::SyncOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response)
+    step_operation = TranslationIO::Client::SyncOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response)
     step_operation.run
 
     File.read('tmp/config/locales/gettext/fr/app.po').should == '<some gettext data fr>'

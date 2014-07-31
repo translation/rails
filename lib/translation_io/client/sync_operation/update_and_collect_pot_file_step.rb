@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class SyncOperation < BaseOperation
       class UpdateAndCollectPotFileStep
@@ -8,7 +8,7 @@ module Translation
         end
 
         def run(params)
-          Translation.info "Updating POT file."
+          TranslationIO.info "Updating POT file."
           GetText::Tools::XGetText.run(*@source_files, '-o', @pot_path)
           params['pot_data'] = File.read(@pot_path)
         end

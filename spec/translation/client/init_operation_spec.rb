@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation do
+describe TranslationIO::Client::InitOperation do
 
 end

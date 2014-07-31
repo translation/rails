@@ -1,8 +1,8 @@
-# gem for [Rails Translation](http://rails.translation.io)
+# gem for [Rails TranslationIO](http://rails.translation.io)
 
 ## Description
 
-Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [Rails Translation](http://rails.translation.io).
+Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [Rails TranslationIO](http://rails.translation.io).
 
 ## Installation
 
@@ -21,7 +21,7 @@ And finish by inititalizing your translation project with :
 
 ## Synchronization
 
-To get new translations from Rails Translation and to send new translatable strings, simply run :
+To get new translations from Rails TranslationIO and to send new translatable strings, simply run :
 
     bundle exec rake translation:sync
 
@@ -33,7 +33,7 @@ If you need to remove unused keys taking the current branch as reference :
 
 Note that this operation will also perform a sync at the same time.
 
-Warning : all keys that are not present in the current branch will be **permanently deleted both on Rails Translation and in your app**.
+Warning : all keys that are not present in the current branch will be **permanently deleted both on Rails TranslationIO and in your app**.
 
 ## Tests
 

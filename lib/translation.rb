@@ -6,7 +6,7 @@ require 'gettext/po_parser'
 require 'gettext/tools'
 require 'gettext/text_domain_manager'
 
-module Translation
+module TranslationIO
   GETTEXT_METHODS = [
     :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn,
     :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext
@@ -16,15 +16,15 @@ module Translation
   SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
 end
 
-require 'translation/config'
-require 'translation/railtie'
-require 'translation/client'
-require 'translation/flat_hash'
-require 'translation/yaml_conversion'
+require 'translation_io/config'
+require 'translation_io/railtie'
+require 'translation_io/client'
+require 'translation_io/flat_hash'
+require 'translation_io/yaml_conversion'
 
-require 'translation/controller'
+require 'translation_io/controller'
 
-module Translation
+module TranslationIO
   module Proxy
     include GetText
   end
@@ -55,7 +55,7 @@ module Translation
     end
 
     def pot_path
-      File.join(Translation.config.locales_path, "#{TEXT_DOMAIN}.pot")
+      File.join(TranslationIO.config.locales_path, "#{TEXT_DOMAIN}.pot")
     end
 
     def info(message, level = 0, verbose_level = 0)

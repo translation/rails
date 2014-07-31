@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation::CreateYamlPoFilesStep do
+describe TranslationIO::Client::InitOperation::CreateYamlPoFilesStep do
 
   it do
     yaml_root_path = 'tmp/config/locales'
@@ -43,7 +43,7 @@ EOS
     yaml_file_paths = Dir["#{yaml_root_path}/*.yml"]
     params          = {}
 
-    operation_step = Translation::Client::InitOperation::CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
+    operation_step = TranslationIO::Client::InitOperation::CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
     operation_step.run(params)
 
     params['yaml_po_data_fr'].should == <<EOS

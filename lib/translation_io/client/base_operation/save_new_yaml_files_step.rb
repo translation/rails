@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       class SaveNewYamlFilesStep
@@ -9,13 +9,13 @@ module Translation
         end
 
         def run
-          Translation.info "Saving new translation YAML files."
+          TranslationIO.info "Saving new translation YAML files."
 
           @target_locales.each do |target_locale|
             if @parsed_response.has_key?("yaml_po_data_#{target_locale}")
               FileUtils.mkdir_p(@yaml_locales_path)
               yaml_path = File.join(@yaml_locales_path, "translation.#{target_locale}.yml")
-              Translation.info yaml_path, 2, 2
+              TranslationIO.info yaml_path, 2, 2
               yaml_data = YAMLConversion.get_yaml_data_from_po_data(@parsed_response["yaml_po_data_#{target_locale}"], target_locale)
 
               top_comment = <<EOS
@@ -23,7 +23,7 @@ module Translation
 # IF YOU UPDATE IT, YOUR CHANGES WILL BE LOST AT THE NEXT SYNC.
 #
 # To update this file, use this translation interface :
-# #{@parsed_response['project_url']}
+# #{@parsed_response['project_url']}/#{target_locale}
 #
 EOS
 

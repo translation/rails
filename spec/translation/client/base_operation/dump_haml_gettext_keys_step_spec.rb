@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'action_view'
 require 'haml'
 
-describe Translation::Client::BaseOperation::DumpHamlGettextKeysStep do
+describe TranslationIO::Client::BaseOperation::DumpHamlGettextKeysStep do
   it do
     haml_path_1 = "tmp/#{Time.now.to_i}.haml"
     haml_path_2 = "tmp/#{Time.now.to_i}.html.haml"
@@ -40,7 +40,7 @@ EOS
       haml_path_1, haml_path_2
     ]
 
-    operation = Translation::Client::BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files)
+    operation = TranslationIO::Client::BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files)
 
     operation.send(:extracted_gettext_entries).should == [
       '_("I am a text")',

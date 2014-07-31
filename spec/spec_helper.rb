@@ -2,7 +2,7 @@ require 'rails'
 require 'yaml'
 require 'translation'
 
-Translation.configure do |config|
+TranslationIO.configure do |config|
   config.verbose = -1
 end
 

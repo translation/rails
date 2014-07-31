@@ -1,22 +1,22 @@
-require 'translation/client/base_operation/save_new_po_files_step'
-require 'translation/client/base_operation/create_new_mo_files_step'
-require 'translation/client/base_operation/save_new_yaml_files_step'
-require 'translation/client/base_operation/save_special_yaml_files_step'
-require 'translation/client/base_operation/dump_haml_gettext_keys_step'
-require 'translation/client/base_operation/dump_slim_gettext_keys_step'
+require 'translation_io/client/base_operation/save_new_po_files_step'
+require 'translation_io/client/base_operation/create_new_mo_files_step'
+require 'translation_io/client/base_operation/save_new_yaml_files_step'
+require 'translation_io/client/base_operation/save_special_yaml_files_step'
+require 'translation_io/client/base_operation/dump_haml_gettext_keys_step'
+require 'translation_io/client/base_operation/dump_slim_gettext_keys_step'
 
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       attr_accessor :client, :params
 
-      GETTEXT_ENTRY_RE = Regexp.new('(?:' + Translation::GETTEXT_METHODS.join('|') + ')\([^)]+\)?\)')
+      GETTEXT_ENTRY_RE = Regexp.new('(?:' + TranslationIO::GETTEXT_METHODS.join('|') + ')\([^)]+\)?\)')
 
       def initialize(client, perform_real_requests = true)
         @client = client
         @params = {
-          'gem_version'        => Translation.version,
-          'target_languages[]' => Translation.config.target_locales.map(&:to_s)
+          'gem_version'        => TranslationIO.version,
+          'target_languages[]' => TranslationIO.config.target_locales.map(&:to_s)
         }
       end
 

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'slim'
 
-describe Translation::Client::BaseOperation::DumpSlimGettextKeysStep do
+describe TranslationIO::Client::BaseOperation::DumpSlimGettextKeysStep do
   it do
     slim_path_1 = "tmp/#{Time.now.to_i}.haml"
     slim_path_2 = "tmp/#{Time.now.to_i}.html.haml"
@@ -57,7 +57,7 @@ EOS
       slim_path_1, slim_path_2
     ]
 
-    operation = Translation::Client::BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files)
+    operation = TranslationIO::Client::BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files)
 
     operation.send(:extracted_gettext_entries).should == [
       '_("I am a text from a SLIM file"))',

@@ -1,7 +1,7 @@
-require 'translation/client/sync_operation/update_and_collect_pot_file_step'
-require 'translation/client/sync_operation/create_yaml_pot_file_step'
+require 'translation_io/client/sync_operation/update_and_collect_pot_file_step'
+require 'translation_io/client/sync_operation/create_yaml_pot_file_step'
 
-module Translation
+module TranslationIO
   class Client
     class SyncOperation < BaseOperation
       def run(purge = false)
@@ -12,10 +12,10 @@ module Translation
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
         source_files      = Dir[SOURCE_FILES_PATTERN]
-        pot_path          = Translation.pot_path
-        source_locale     = Translation.config.source_locale
-        target_locales    = Translation.config.target_locales
-        locales_path      = Translation.config.locales_path
+        pot_path          = TranslationIO.pot_path
+        source_locale     = TranslationIO.config.source_locale
+        target_locales    = TranslationIO.config.target_locales
+        locales_path      = TranslationIO.config.locales_path
         yaml_locales_path = 'config/locales'
         yaml_file_paths   = I18n.load_path
 

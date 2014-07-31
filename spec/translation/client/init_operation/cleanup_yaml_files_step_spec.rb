@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation::CleanupYamlFilesStep do
+describe TranslationIO::Client::InitOperation::CleanupYamlFilesStep do
 
   it 'removes bad target files' do
     yaml_locales_path = 'tmp/config/locales'
@@ -39,7 +39,7 @@ EOS
     source_locale   = 'en'
     target_locales  = ['fr']
 
-    operation_step = Translation::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
+    operation_step = TranslationIO::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
     operation_step.run
 
     File.exist?("#{yaml_locales_path}/en.yml"   ).should be_true
@@ -84,7 +84,7 @@ EOS
     source_locale   = 'en'
     target_locales  = ['fr']
 
-    operation_step = Translation::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
+    operation_step = TranslationIO::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
     operation_step.run
 
     File.read("#{yaml_locales_path}/translation.en.yml").should == translation_en_yaml_data
@@ -121,7 +121,7 @@ EOS
     source_locale   = 'en'
     target_locales  = ['fr']
 
-    operation_step = Translation::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
+    operation_step = TranslationIO::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
     operation_step.run
 
     File.read("#{yaml_locales_path}/localization.en.yml").should == localization_en_yaml_data

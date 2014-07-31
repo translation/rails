@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::BaseOperation::SaveNewYamlFilesStep do
+describe TranslationIO::Client::BaseOperation::SaveNewYamlFilesStep do
 
   it do
     target_locales    = ['fr', 'nl']
@@ -33,7 +33,7 @@ EOS
       'project_url' => 'http://rails.translation.io/alfred/dummy'
     }
 
-    operation_step = Translation::Client::BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response)
+    operation_step = TranslationIO::Client::BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response)
     operation_step.run
 
     expected_yaml_content_fr = <<EOS
@@ -42,7 +42,7 @@ EOS
 # IF YOU UPDATE IT, YOUR CHANGES WILL BE LOST AT THE NEXT SYNC.
 #
 # To update this file, use this translation interface :
-# http://rails.translation.io/alfred/dummy
+# http://rails.translation.io/alfred/dummy/fr
 #
 fr:
   main:
@@ -57,7 +57,7 @@ EOS
 # IF YOU UPDATE IT, YOUR CHANGES WILL BE LOST AT THE NEXT SYNC.
 #
 # To update this file, use this translation interface :
-# http://rails.translation.io/alfred/dummy
+# http://rails.translation.io/alfred/dummy/nl
 #
 nl:
   main:

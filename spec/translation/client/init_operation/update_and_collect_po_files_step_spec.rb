@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::Client::InitOperation::UpdateAndCollectPoFilesStep do
+describe TranslationIO::Client::InitOperation::UpdateAndCollectPoFilesStep do
 
   it 'creates PO files when starting from blank slate' do
     target_locales = ['fr', 'nl']
@@ -34,7 +34,7 @@ EOS
 
     params = {}
 
-    operation_step = Translation::Client::InitOperation::UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path)
+    operation_step = TranslationIO::Client::InitOperation::UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path)
     operation_step.run(params)
 
     po_data_fr = <<EOS

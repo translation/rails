@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Config
     attr_accessor :api_key, :locales_path
     attr_accessor :source_locale, :target_locales

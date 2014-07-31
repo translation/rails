@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       class DumpSlimGettextKeysStep
@@ -8,7 +8,7 @@ module Translation
 
         def run
           if @slim_source_files.any? && defined?(Slim)
-            Translation.info "Extracting Gettext entries from SLIM files."
+            TranslationIO.info "Extracting Gettext entries from SLIM files."
 
             File.open(File.join('tmp', 'translation-slim-gettext.rb'), 'w') do |file|
               extracted_gettext_entries.each do |entry|
@@ -24,7 +24,7 @@ module Translation
           entries = []
 
           @slim_source_files.each do |slim_file_path|
-            Translation.info slim_file_path, 2, 2
+            TranslationIO.info slim_file_path, 2, 2
 
             ruby_data = Slim::Template.new(slim_file_path, {}).precompiled_template
 
@@ -33,7 +33,7 @@ module Translation
             end
           end
 
-          Translation.info "#{entries.size} entries found", 2, 2
+          TranslationIO.info "#{entries.size} entries found", 2, 2
 
           entries
         end

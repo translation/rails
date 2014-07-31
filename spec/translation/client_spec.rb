@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Translation::Client do
+describe TranslationIO::Client do
   before :each do
-    @client = Translation::Client.new('4242', 'bidule.com/api')
+    @client = TranslationIO::Client.new('4242', 'bidule.com/api')
   end
 
   it do

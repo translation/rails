@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Translation::Client::SyncOperation::UpdateAndCollectPotFileStep do
+describe TranslationIO::Client::SyncOperation::UpdateAndCollectPotFileStep do
 
   it do
     pot_path     = 'tmp/test.pot'
     source_files = Dir['spec/support/**/*.{rb,erb}']
 
-    step_operation = Translation::Client::SyncOperation::UpdateAndCollectPotFileStep.new(pot_path, source_files)
+    step_operation = TranslationIO::Client::SyncOperation::UpdateAndCollectPotFileStep.new(pot_path, source_files)
     params = {}
     step_operation.run(params)
 

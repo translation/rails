@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class InitOperation < BaseOperation
       class CreateYamlPoFilesStep
@@ -9,11 +9,11 @@ module Translation
         end
 
         def run(params)
-          Translation.info "Importing translations from YAML files."
+          TranslationIO.info "Importing translations from YAML files."
           all_flat_translations = {}
 
           @yaml_file_paths.each do |file_path|
-            Translation.info file_path, 2, 2
+            TranslationIO.info file_path, 2, 2
             all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
           end
 
@@ -29,7 +29,7 @@ module Translation
             po_representation = GetText::PO.new
 
             source_flat_string_tanslations.each_pair do |key, value|
-              target_key = key.gsub(/\A#{Translation.config.source_locale}\./, "#{target_locale}.")
+              target_key = key.gsub(/\A#{TranslationIO.config.source_locale}\./, "#{target_locale}.")
               msgid      = value
               msgstr     = all_flat_string_translations[target_key]
 

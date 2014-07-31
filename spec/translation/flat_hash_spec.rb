@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Translation::FlatHash do
+describe TranslationIO::FlatHash do
 
   describe '#to_flat_hash' do
     it 'returns a flat hash' do

@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class BaseOperation
       class SaveSpecialYamlFilesStep
@@ -11,7 +11,7 @@ module Translation
         end
 
         def run
-          Translation.info "Saving new localization YAML files (with non-string values)."
+          TranslationIO.info "Saving new localization YAML files (with non-string values)."
           all_flat_translations = {}
 
           @yaml_file_paths.each do |file_path|
@@ -31,7 +31,7 @@ module Translation
           @target_locales.each do |target_locale|
             yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
-            Translation.info yaml_path, 2, 2
+            TranslationIO.info yaml_path, 2, 2
             flat_translations = {}
 
             source_flat_special_translations.each_pair do |key, value|

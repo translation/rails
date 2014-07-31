@@ -1,4 +1,4 @@
-module Translation
+module TranslationIO
   class Client
     class InitOperation < BaseOperation
       class UpdateAndCollectPoFilesStep
@@ -9,11 +9,11 @@ module Translation
         end
 
         def run(params)
-          Translation.info "Updating PO files."
+          TranslationIO.info "Updating PO files."
 
           @target_locales.each do |target_locale|
             po_path = "#{@locales_path}/#{target_locale.gsub('-', '_')}/#{TEXT_DOMAIN}.po"
-            Translation.info po_path, 2, 2
+            TranslationIO.info po_path, 2, 2
 
             if File.exist?(po_path)
               GetText::Tools::MsgMerge.run(po_path, @pot_path, '-o', po_path, '--no-fuzzy-matching', '--no-obsolete-entries')
