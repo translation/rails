@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.description      = 'translation.io connector'
   s.homepage         = 'http://rails.translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '0.5'
+  s.version          = '0.6'
   s.date             = '2014-07-31'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]

@@ -40,12 +40,14 @@ html
               td.name = item.name
               td.price = item.price
               td = _("I am a text")
+              td = _("I am a (text)(text)")
       - else
         p
          | No items found.  Please add some inventory.
            Thank you!
         p = _("I am another text")
         p = n_("Un cheval", "%{num} chevaux", 42)
+        p = np_("Fruit", "Apple", "%{num} (App)les", 3)
 
     div id="footer"
       = render 'footer'
@@ -60,23 +62,27 @@ EOS
     operation = TranslationIO::Client::BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files)
 
     operation.send(:extracted_gettext_entries).should == [
-      '_("I am a text from a SLIM file"))',
-      '_("Title"))',
-      '_("I am a text"))',
-      '_("I am another text"))',
-      'n_("Un cheval", "%{num} chevaux", 42))',
-      'np_("Fruit", "Apple", "%{num} Apples", 3))'
+      '_("I am a text from a SLIM file")',
+      '_("Title")',
+      '_("I am a text")',
+      '_("I am a (text)(text)")',
+      '_("I am another text")',
+      'n_("Un cheval", "%{num} chevaux", 42)',
+      'np_("Fruit", "Apple", "%{num} (App)les", 3)',
+      'np_("Fruit", "Apple", "%{num} Apples", 3)'
     ]
 
    operation.run
 
     File.read('tmp/translation-slim-gettext.rb').should == <<EOS
-_("I am a text from a SLIM file"))
-_("Title"))
-_("I am a text"))
-_("I am another text"))
-n_("Un cheval", "%{num} chevaux", 42))
-np_("Fruit", "Apple", "%{num} Apples", 3))
+_("I am a text from a SLIM file")
+_("Title")
+_("I am a text")
+_("I am a (text)(text)")
+_("I am another text")
+n_("Un cheval", "%{num} chevaux", 42)
+np_("Fruit", "Apple", "%{num} (App)les", 3)
+np_("Fruit", "Apple", "%{num} Apples", 3)
 EOS
   end
 end
