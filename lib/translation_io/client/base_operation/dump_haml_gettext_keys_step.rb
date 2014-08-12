@@ -27,10 +27,15 @@ module TranslationIO
             TranslationIO.info haml_file_path, 2, 2
 
             haml_data = File.read(haml_file_path)
-            ruby_data = Haml::Engine.new(haml_data).precompiled
 
-            ruby_data.scan(GETTEXT_ENTRY_RE).each do |entry|
-              entries << entry
+            begin
+              ruby_data = Haml::Engine.new(haml_data).precompiled
+
+              ruby_data.scan(GETTEXT_ENTRY_RE).each do |entry|
+                entries << entry
+              end
+            rescue Haml::SyntaxError
+              TranslationIO.info "File cannot be parsed (SyntaxError): #{haml_file_path}", 1, 0
             end
           end
 
