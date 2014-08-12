@@ -5,27 +5,17 @@ namespace :translation do
     puts TranslationIO.config
   end
 
-  task :init => :environment do
-    if TranslationIO.client
-      TranslationIO.client.init
-    else
-      TranslationIO.info "[Error] Client cannot be built. Did you set up the initializer?"
-    end
-  end
-
-  task :sync => :environment do
-    if TranslationIO.client
-     TranslationIO.client.sync
-   else
-    TranslationIO.info "[Error] Client cannot be built. Did you set up the initializer?"
-   end
-  end
-
-  task :purge => :environment do
-    if TranslationIO.client
-      TranslationIO.client.purge
-    else
-      TranslationIO.info "[Error] Client cannot be built. Did you set up the initializer?"
+  [ :init, :sync, :purge ].each do |t|
+    task t => :environment do
+      if TranslationIO.client
+        TranslationIO.client.send(:t)
+      else
+        message = <<EOS
+[Error] Can't configure client. Did you set up the initializer?
+Read usage instructions here : http://translation.io/usage
+EOS
+        TranslationIO.info(message)
+      end
     end
   end
 end
