@@ -8,7 +8,7 @@ require 'gettext/text_domain_manager'
 
 module TranslationIO
   GETTEXT_METHODS = [
-    :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn,
+    :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn_,
     :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext
   ]
 

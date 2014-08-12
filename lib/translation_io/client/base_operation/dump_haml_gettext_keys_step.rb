@@ -31,8 +31,8 @@ module TranslationIO
             begin
               ruby_data = Haml::Engine.new(haml_data).precompiled
 
-              ruby_data.scan(GETTEXT_ENTRY_RE).each do |entry|
-                entries << entry
+              ruby_data.each_line do |line|
+                entries += extract_line(line)
               end
             rescue Haml::SyntaxError
               TranslationIO.info "File cannot be parsed (SyntaxError): #{haml_file_path}", 1, 0
@@ -42,6 +42,29 @@ module TranslationIO
           TranslationIO.info "#{entries.size} entries found", 2, 2
 
           entries
+        end
+
+        def extract_line(line)
+          entries = []
+
+          sorted_gettext_methods = [
+            :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext,
+            :np_, :ns_, :Nn_, :n_, :p_, :s_, :N_, :_
+          ]
+
+          sorted_gettext_methods.each do |method|
+            if index = line.index("#{method}(")
+              pos = index + "#{method}(".length
+              if line[pos] == '"' || ("#{method}"[0] == 'n' && line[pos] == '[')
+                end_pos = line[index...-1].index(')')
+                entries << line[index...index+end_pos+1]
+                entries += extract_line(line[index+end_pos+1...-1] + "\n")
+                break
+              end
+            end
+          end
+
+          return entries
         end
       end
     end
