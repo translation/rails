@@ -8,7 +8,7 @@ namespace :translation do
   [ :init, :sync, :purge ].each do |t|
     task t => :environment do
       if TranslationIO.client
-        TranslationIO.client.send(:t)
+        TranslationIO.client.send(t)
       else
         message = <<EOS
 [Error] Can't configure client. Did you set up the initializer?
