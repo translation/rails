@@ -11,7 +11,7 @@ module TranslationIO
         BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
-        source_files      = Dir[SOURCE_FILES_PATTERN]
+        source_files      = Dir[SOURCE_FILES_PATTERN].select { |p| !p.start_with?('vendor/') }
         pot_path          = TranslationIO.pot_path
         source_locale     = TranslationIO.config.source_locale
         target_locales    = TranslationIO.config.target_locales
