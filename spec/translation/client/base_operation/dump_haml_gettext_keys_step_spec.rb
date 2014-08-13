@@ -30,8 +30,8 @@ EOS
   %p= n_(["Apple", "%{num} Apples"], 3)   % { :num => 3 }
 
 
-  %p= p_("Printer", "Open") + ' — ' + p_("File", "Open")
-  %p= s_("Printer|Open") + ' — ' + s_("File|Open")
+  %p= p_("Printer", "Open") + ' - ' + p_("File", "Open")
+  %p= s_("Printer|Open") + ' - ' + s_("File|Open")
   %p= np_("Fruit", "Apple", "%{num} Apples", 3) % { :num => 3 }
 EOS
     end
