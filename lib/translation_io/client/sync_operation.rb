@@ -5,8 +5,8 @@ module TranslationIO
   class Client
     class SyncOperation < BaseOperation
       def run(purge = false)
-        haml_source_files = Dir['**/*.{haml}']
-        slim_source_files = Dir['**/*.{slim}']
+        haml_source_files = Dir['**/*.{haml}'].select { |p| !p.start_with?('vendor/') }
+        slim_source_files = Dir['**/*.{slim}'].select { |p| !p.start_with?('vendor/') }
 
         BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run

@@ -7,8 +7,8 @@ module TranslationIO
   class Client
     class InitOperation < BaseOperation
       def run
-        haml_source_files = Dir['**/*.{haml}']
-        slim_source_files = Dir['**/*.{slim}']
+        haml_source_files = Dir['**/*.{haml}'].select { |p| !p.start_with?('vendor/') }
+        slim_source_files = Dir['**/*.{slim}'].select { |p| !p.start_with?('vendor/') }
 
         BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
