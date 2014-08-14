@@ -28,10 +28,7 @@ module TranslationIO
 
             begin
               ruby_data = Slim::Template.new(slim_file_path, {}).precompiled_template
-
-              ruby_data.scan(GETTEXT_ENTRY_RE).each do |entry|
-                entries << entry
-              end
+              entries  += TranslationIO::Extractor.extract(ruby_data)
             rescue Slim::Parser::SyntaxError
               TranslationIO.info "File cannot be parsed (SyntaxError): #{slim_file_path}", 1, 0
             end

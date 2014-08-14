@@ -23,6 +23,7 @@ require 'translation_io/flat_hash'
 require 'translation_io/yaml_conversion'
 
 require 'translation_io/controller'
+require 'translation_io/extractor'
 
 module TranslationIO
   module Proxy
