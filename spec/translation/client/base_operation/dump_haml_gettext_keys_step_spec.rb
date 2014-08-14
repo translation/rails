@@ -12,6 +12,7 @@ describe TranslationIO::Client::BaseOperation::DumpHamlGettextKeysStep do
     File.open(haml_path_1, 'w') do |file|
       file.puts <<EOS
 %p= _("I am a text")
+%p= _('I am another text')
 EOS
     end
 
