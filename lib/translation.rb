@@ -8,8 +8,8 @@ require 'gettext/text_domain_manager'
 
 module TranslationIO
   GETTEXT_METHODS = [
-    :_, :n_, :p_, :s_, :np_, :ns_, :N_, :Nn_,
-    :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext
+    :gettext, :sgettext, :ngettext, :nsgettext, :pgettext, :npgettext,
+    :np_, :ns_, :Nn_, :n_, :p_, :s_, :N_, :_
   ]
 
   TEXT_DOMAIN          = 'app'

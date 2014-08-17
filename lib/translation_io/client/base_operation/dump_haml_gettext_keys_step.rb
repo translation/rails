@@ -27,13 +27,7 @@ module TranslationIO
             TranslationIO.info haml_file_path, 2, 2
 
             haml_data = File.read(haml_file_path)
-
-            begin
-              ruby_data = Haml::Engine.new(haml_data).precompiled
-              entries  += TranslationIO::Extractor.extract(ruby_data)
-            rescue Haml::SyntaxError
-              TranslationIO.info "File cannot be parsed (SyntaxError): #{haml_file_path}", 1, 0
-            end
+            entries  += TranslationIO::Extractor.extract(haml_data)
           end
 
           TranslationIO.info "#{entries.size} entries found", 2, 2

@@ -59,7 +59,7 @@ EOS
       'np_("Fruit", "Apple", "%{num} Apples", 3)'
     ]
 
-   operation.run
+    operation.run
 
     File.read('tmp/translation-haml-gettext.rb').should == <<EOS
 _("I am a text")
