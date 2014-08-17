@@ -112,12 +112,12 @@ describe TranslationIO::Extractor do
 
       it 'extracts ns_ with square brackets and mixed quotes' do
         extracted = subject.extract('%div= ns_(["Fruit|Apple",\'%{num} Apples\'], 3)')
-        extracted.should == ['ns_(["Fruit|Apple","%{num} Apples"], 3)']
+        extracted.should == ['ns_(["Fruit|Apple",\'%{num} Apples\'], 3)']
       end
 
       it 'extracts ns_ with square brackets and mixed quotes (inverted)' do
         extracted = subject.extract('%div= ns_([\'Fruit|Apple\',"%{num} Apples"], 3)')
-        extracted.should == ['ns_(["Fruit|Apple","%{num} Apples"], 3)']
+        extracted.should == ['ns_([\'Fruit|Apple\',"%{num} Apples"], 3)']
       end
     end
 
@@ -224,7 +224,7 @@ describe TranslationIO::Extractor do
 
       it 'extracts with additional space between " and )' do
         extracted = subject.extract('%div=_("Hi kids !" )')
-        extracted.should == ['=_("Hi kids !" )']
+        extracted.should == ['_("Hi kids !" )']
       end
 
       it 'extracts with spaces after ( and before )' do
