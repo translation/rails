@@ -1,4 +1,4 @@
-# gem for Rails and [Translation.io](http://translation.io).
+# Ruby/Rails gem for [Translation.io](http://translation.io).
 
 ## Description
 
