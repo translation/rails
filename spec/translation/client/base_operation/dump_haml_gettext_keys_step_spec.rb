@@ -45,6 +45,7 @@ EOS
 
     operation.send(:extracted_gettext_entries).should == [
       '_("I am a text")',
+      '_(\'I am another text\')',
       '_("I am a text from a HAML file")',
       '_("Hi kids. Do you like violence ?")',
       '_("%{name} is dead")',
@@ -63,6 +64,7 @@ EOS
 
     File.read('tmp/translation-haml-gettext.rb').should == <<EOS
 _("I am a text")
+_('I am another text')
 _("I am a text from a HAML file")
 _("Hi kids. Do you like violence ?")
 _("%{name} is dead")
