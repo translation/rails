@@ -7,7 +7,7 @@ module TranslationIO
         end
 
         def run
-          if @slim_source_files.any? && defined?(Slim)
+          if @slim_source_files.any?
             TranslationIO.info "Extracting Gettext entries from SLIM files."
 
             File.open(File.join('tmp', 'translation-slim-gettext.rb'), 'w') do |file|

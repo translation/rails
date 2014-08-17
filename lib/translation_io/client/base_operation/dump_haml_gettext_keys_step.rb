@@ -7,7 +7,7 @@ module TranslationIO
         end
 
         def run
-          if @haml_source_files.any? && defined?(Haml)
+          if @haml_source_files.any?
             TranslationIO.info "Extracting Gettext entries from HAML files."
 
             File.open(File.join('tmp', 'translation-haml-gettext.rb'), 'w') do |file|

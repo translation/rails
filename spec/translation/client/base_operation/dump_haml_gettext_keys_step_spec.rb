@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'action_view'
-require 'haml'
 
 describe TranslationIO::Client::BaseOperation::DumpHamlGettextKeysStep do
   it do

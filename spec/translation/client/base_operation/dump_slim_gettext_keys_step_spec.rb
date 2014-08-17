@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require 'spec_helper'
-require 'slim'
 
 describe TranslationIO::Client::BaseOperation::DumpSlimGettextKeysStep do
   it do
