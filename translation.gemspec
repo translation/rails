@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name             = 'translation'
-  s.summary          = 'translation.io connector'
-  s.description      = 'translation.io connector'
+  s.summary          = 'Rails translation made _("simple") with YAML and GetText.'
+  s.description      = 'Rails translation made _("simple") with YAML and GetText.'
   s.homepage         = 'http://rails.translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '0.7'
-  s.date             = '2014-07-31'
+  s.version          = '0.8.1'
+  s.date             = '2014-08-19'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
   s.files            = Dir["lib/**/*"] + ['README.md']
