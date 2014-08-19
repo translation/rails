@@ -94,6 +94,23 @@ describe TranslationIO::Extractor do
       end
     end
 
+    context 'HAML syntax - ' do
+      it 'extract _ in a html class' do
+        extracted = subject.extract("%div{:class => _('Hi kids !')}")
+        extracted.should == ["_('Hi kids !')"]
+      end
+
+      it 'extract _ after a html class (1)' do
+        extracted = subject.extract("%div{:class => 'hello_class'}= _('Hi kids !')")
+        extracted.should == ["_('Hi kids !')"]
+      end
+
+      it 'extract _ after a html class (2)' do
+        extracted = subject.extract("%div.hello_class= _('Hi kids !')")
+        extracted.should == ["_('Hi kids !')"]
+      end
+    end
+
     context 'mixed quotes - ' do
       it 'extract _ with single quotes' do
         extracted = subject.extract("%div= _('Hi kids !')")
