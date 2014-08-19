@@ -5,18 +5,18 @@ module TranslationIO
   class Client
     class SyncOperation < BaseOperation
       def run(purge = false)
-        haml_source_files = Dir['**/*.{haml}'].select { |p| !p.start_with?('vendor/') }
-        slim_source_files = Dir['**/*.{slim}'].select { |p| !p.start_with?('vendor/') }
+        haml_source_files = TranslationIO.config.haml_source_files
+        slim_source_files = TranslationIO.config.slim_source_files
 
         BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
         BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
-        source_files      = Dir[SOURCE_FILES_PATTERN].select { |p| !p.start_with?('vendor/') }
+        source_files      = TranslationIO.config.source_files
         pot_path          = TranslationIO.pot_path
         source_locale     = TranslationIO.config.source_locale
         target_locales    = TranslationIO.config.target_locales
         locales_path      = TranslationIO.config.locales_path
-        yaml_locales_path = 'config/locales'
+        yaml_locales_path = TranslationIO.config.yaml_locales_path
         yaml_file_paths   = I18n.load_path
 
         UpdateAndCollectPotFileStep.new(pot_path, source_files).run(params)

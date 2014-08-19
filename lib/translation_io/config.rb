@@ -13,6 +13,33 @@ module TranslationIO
       self.verbose        = 1
     end
 
+    def source_files
+      paths = Dir['**/*.{rb,erb,html.erb,xml.erb}'].select do |p|
+        !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      end
+
+      paths << "tmp/translation-haml-gettext.rb"
+      paths << "tmp/translation-slim-gettext.rb"
+
+      paths
+    end
+
+    def yaml_locales_path
+      'config/locales'
+    end
+
+    def haml_source_files
+      Dir['**/*.{haml}'].select do |p|
+        !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      end
+    end
+
+    def slim_source_files
+      Dir['**/*.{slim}'].select do |p|
+        !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      end
+    end
+
     def to_s
       "#{api_key} - #{source_locale} => #{target_locales.join(' + ')}"
     end

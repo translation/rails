@@ -12,8 +12,7 @@ module TranslationIO
     :np_, :ns_, :Nn_, :n_, :p_, :s_, :N_, :_
   ]
 
-  TEXT_DOMAIN          = 'app'
-  SOURCE_FILES_PATTERN = '**/*.{rb,erb,html.erb,xml.erb}'
+  TEXT_DOMAIN = 'app'
 end
 
 require 'translation_io/config'
