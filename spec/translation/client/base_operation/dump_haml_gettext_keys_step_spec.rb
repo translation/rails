@@ -61,21 +61,19 @@ EOS
 
     operation.run
 
-    File.read('tmp/translation-haml-gettext.rb').should == <<EOS
-_("I am a text")
-_('I am another text')
-_("I am a text from a HAML file")
-_("Hi kids. Do you like violence ?")
-_("%{name} is dead")
-n_("Apple", "%{num} Apples", 1)
-n_(["Orange", "%{num} Oranges"], 1)
-n_("Apple", "%{num} Apples", 3)
-n_(["Apple", "%{num} Apples"], 3)
-p_("Printer", "Open")
-p_("File", "Open")
-s_("Printer|Open")
-s_("File|Open")
-np_("Fruit", "Apple", "%{num} Apples", 3)
-EOS
+    File.read('tmp/translation/haml-gettext-00000000.rb').strip.should == '_("I am a text")'
+    File.read('tmp/translation/haml-gettext-00000001.rb').strip.should == "_('I am another text')"
+    File.read('tmp/translation/haml-gettext-00000002.rb').strip.should == '_("I am a text from a HAML file")'
+    File.read('tmp/translation/haml-gettext-00000003.rb').strip.should == '_("Hi kids. Do you like violence ?")'
+    File.read('tmp/translation/haml-gettext-00000004.rb').strip.should == '_("%{name} is dead")'
+    File.read('tmp/translation/haml-gettext-00000005.rb').strip.should == 'n_("Apple", "%{num} Apples", 1)'
+    File.read('tmp/translation/haml-gettext-00000006.rb').strip.should == 'n_(["Orange", "%{num} Oranges"], 1)'
+    File.read('tmp/translation/haml-gettext-00000007.rb').strip.should == 'n_("Apple", "%{num} Apples", 3)'
+    File.read('tmp/translation/haml-gettext-00000008.rb').strip.should == 'n_(["Apple", "%{num} Apples"], 3)'
+    File.read('tmp/translation/haml-gettext-00000009.rb').strip.should == 'p_("Printer", "Open")'
+    File.read('tmp/translation/haml-gettext-00000010.rb').strip.should == 'p_("File", "Open")'
+    File.read('tmp/translation/haml-gettext-00000011.rb').strip.should == 's_("Printer|Open")'
+    File.read('tmp/translation/haml-gettext-00000012.rb').strip.should == 's_("File|Open")'
+    File.read('tmp/translation/haml-gettext-00000013.rb').strip.should == 'np_("Fruit", "Apple", "%{num} Apples", 3)'
   end
 end
