@@ -54,10 +54,6 @@ module TranslationIO
       return true
     end
 
-    def pot_path
-      File.join(TranslationIO.config.locales_path, "#{TEXT_DOMAIN}.pot")
-    end
-
     def info(message, level = 0, verbose_level = 0)
       verbose = @config.try(:verbose) || 0
       if verbose >= verbose_level

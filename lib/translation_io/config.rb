@@ -13,6 +13,10 @@ module TranslationIO
       self.verbose        = 1
     end
 
+    def pot_path
+      File.join(locales_path, "#{TEXT_DOMAIN}.pot")
+    end
+
     def yaml_file_paths
       I18n.load_path.select do |p|
         File.exist?(p)
