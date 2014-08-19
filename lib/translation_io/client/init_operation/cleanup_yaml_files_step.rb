@@ -23,17 +23,19 @@ module TranslationIO
             end
 
             if in_project && !protected_file
-              content_hash     = YAML::load(File.read(locale_file_path))
-              new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
+              if File.exist?(locale_file_path)
+                content_hash     = YAML::load(File.read(locale_file_path))
+                new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
 
-              if new_content_hash.keys.any?
-                TranslationIO.info "Rewriting #{locale_file_path}", 2, 2
-                File.open(locale_file_path, 'wb') do |file|
-                  file.write(new_content_hash.to_yaml)
+                if new_content_hash.keys.any?
+                  TranslationIO.info "Rewriting #{locale_file_path}", 2, 2
+                  File.open(locale_file_path, 'wb') do |file|
+                    file.write(new_content_hash.to_yaml)
+                  end
+                else
+                  TranslationIO.info "Removing #{locale_file_path}", 2, 2
+                  FileUtils.rm(locale_file_path)
                 end
-              else
-                TranslationIO.info "Removing #{locale_file_path}", 2, 2
-                FileUtils.rm(locale_file_path)
               end
             end
           end
