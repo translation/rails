@@ -26,8 +26,8 @@ module TranslationIO
           @slim_source_files.each do |slim_file_path|
             TranslationIO.info slim_file_path, 2, 2
 
-            haml_data = File.read(slim_file_path)
-            entries  += TranslationIO::Extractor.extract(haml_data)
+            slim_data = File.read(slim_file_path)
+            entries  += TranslationIO::Extractor.extract(slim_data)
           end
 
           TranslationIO.info "#{entries.size} entries found", 2, 2

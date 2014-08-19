@@ -220,6 +220,16 @@ describe TranslationIO::Extractor do
         extracted = subject.extract('%div= _("Hi kids !") + _(\'Hi again kids !\')')
         extracted.should == ['_("Hi kids !")', '_(\'Hi again kids !\')']
       end
+
+      it 'extract 2 on the same line without () and with mixed quotes' do
+        extracted = subject.extract('%div= _"Hi kids !" + _\'Hi again kids !\'')
+        extracted.should == ['_"Hi kids !" ', '_\'Hi again kids !\'']
+      end
+
+      it 'extract 2 on same line (multiple aguments)' do
+        extracted = subject.extract('%div= p_("Eminem", "Hi kids !") + _(\'Hi again kids !\')')
+        extracted.should == ['p_("Eminem", "Hi kids !")', '_(\'Hi again kids !\')']
+      end
     end
 
     context "interpolation - " do
@@ -258,6 +268,11 @@ describe TranslationIO::Extractor do
       it 'extracts with no ()' do
         extracted = subject.extract('%div= _"Hi kids !"')
         extracted.should == ['_"Hi kids !"']
+      end
+
+      it 'extracts with no () and spaces' do
+        extracted = subject.extract('%div= _ "Hi kids !"')
+        extracted.should == ['_ "Hi kids !"']
       end
 
       it 'extracts with HAML parameter' do
