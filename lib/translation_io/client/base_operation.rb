@@ -43,6 +43,10 @@ module TranslationIO
           $stderr.puts "[Error] Server not responding."
         end
       end
+
+      def cleanup
+        FileUtils.rm_rf(File.join('tmp', 'translation'))
+      end
     end
   end
 end

@@ -19,7 +19,7 @@ module TranslationIO
         target_locales    = TranslationIO.config.target_locales
         locales_path      = TranslationIO.config.locales_path
         yaml_locales_path = TranslationIO.config.yaml_locales_path
-        yaml_file_paths   = I18n.load_path
+        yaml_file_paths   = TranslationIO.config.yaml_file_paths
 
         UpdatePotFileStep.new(pot_path, source_files).run
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
@@ -36,6 +36,8 @@ module TranslationIO
           CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
           BaseOperation::CreateNewMoFilesStep.new(locales_path).run
         end
+
+        cleanup
       end
     end
   end

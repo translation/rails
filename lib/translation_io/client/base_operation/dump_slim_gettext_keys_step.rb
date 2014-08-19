@@ -10,8 +10,10 @@ module TranslationIO
           if @slim_source_files.any?
             TranslationIO.info "Extracting Gettext entries from SLIM files."
 
-            File.open(File.join('tmp', 'translation-slim-gettext.rb'), 'w') do |file|
-              extracted_gettext_entries.each do |entry|
+            FileUtils.mkdir_p(File.join('tmp', 'translation'))
+
+            extracted_gettext_entries.each_with_index do |entry, index|
+              File.open(File.join('tmp', 'translation', "slim-gettext-#{index.to_s.rjust(8,'0')}.rb"), 'w') do |file|
                 file.puts "#{entry}"
               end
             end

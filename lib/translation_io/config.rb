@@ -13,13 +13,18 @@ module TranslationIO
       self.verbose        = 1
     end
 
+    def yaml_file_paths
+      I18n.load_path.select do |p|
+        File.exist?(p)
+      end
+    end
+
     def source_files
       paths = Dir['**/*.{rb,erb,html.erb,xml.erb}'].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
       end
 
-      paths << "tmp/translation-haml-gettext.rb"
-      paths << "tmp/translation-slim-gettext.rb"
+      paths += Dir['tmp/translation/*.rb']
 
       paths
     end
