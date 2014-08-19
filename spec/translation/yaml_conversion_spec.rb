@@ -1,28 +1,6 @@
 require 'spec_helper'
 
 describe TranslationIO::YAMLConversion do
-  describe '#get_pot_data_from_yaml' do
-    it 'returns correct PO data' do
-      po_data = subject.get_pot_data_from_yaml(:en, [
-        'spec/support/data/en.yml'
-      ])
-
-      po_data.should == <<EOS
-msgctxt "hello"
-msgid "Hello world"
-msgstr ""
-
-msgctxt "main.menu.stuff"
-msgid "This is stuff"
-msgstr ""
-
-msgctxt "bye"
-msgid "Good bye world"
-msgstr ""
-EOS
-    end
-  end
-
   describe '#get_yaml_data_from_po_data' do
     it 'returns correct YAML data' do
       po_data = <<EOS
@@ -50,20 +28,6 @@ fr:
       stuff: Ce sont des choses
   bye: Au revoir le monde
 EOS
-    end
-  end
-
-  describe '#get_flat_translations_for_locale' do
-    it do
-      result = subject.get_flat_translations_for_locale(:en, [
-        'spec/support/data/en.yml'
-      ])
-
-      result.should == {
-        "en.hello"           => "Hello world",
-        "en.main.menu.stuff" => "This is stuff",
-        "en.bye"             => "Good bye world"
-      }
     end
   end
 
