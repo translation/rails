@@ -223,7 +223,7 @@ describe TranslationIO::Extractor do
 
       it 'extract 2 on the same line without () and with mixed quotes' do
         extracted = subject.extract('%div= _"Hi kids !" + _\'Hi again kids !\'')
-        extracted.should == ['_"Hi kids !" ', '_\'Hi again kids !\'']
+        extracted.should == ['_"Hi kids !"', '_\'Hi again kids !\'']
       end
 
       it 'extract 2 on same line (multiple aguments)' do

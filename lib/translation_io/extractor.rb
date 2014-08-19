@@ -15,7 +15,6 @@ module TranslationIO
     GETTEXT_REGEXP = Regexp.new('(?:' + REGEXP_3 + '|' + REGEXP_2B + '|' + REGEXP_2 + '|' + REGEXP_1 + ')')
 
     def self.extract(code_to_parse)
-      puts GETTEXT_REGEXP
       code_to_parse.scan(GETTEXT_REGEXP)
     end
   end
