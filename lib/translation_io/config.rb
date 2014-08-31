@@ -19,7 +19,7 @@ module TranslationIO
 
     def yaml_file_paths
       I18n.load_path.select do |p|
-        File.exist?(p)
+        File.exist?(p) && File.extname(p).in? ['.yml', '.yaml']
       end
     end
 

@@ -19,7 +19,6 @@ module TranslationIO
           end
 
           source_flat_string_tanslations = all_flat_translations.select do |key, value|
-            TranslationIO.info "#{key} - #{value}"
             value.is_a?(String) && key.present? && key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
           end
 
