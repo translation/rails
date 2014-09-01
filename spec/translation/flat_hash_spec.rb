@@ -314,4 +314,16 @@ describe TranslationIO::FlatHash do
       }
     }
   end
+
+  it 'handles empty/nil keys' do
+    flat_hash = {
+      ""  => "jan"
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      nil => "jan"
+    }
+  end
 end
