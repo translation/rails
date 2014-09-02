@@ -89,7 +89,7 @@ en:
     menu:
       stuff: This is stuff
   bye: Good bye world
-  empty: " "
+  empty: ' '
 EOS
     end
   end
