@@ -81,7 +81,7 @@ EOS
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
 
-      result.should == <<EOS
+      expected_result_1 = <<EOS
 ---
 en:
   hello: Hello world
@@ -91,6 +91,19 @@ en:
   bye: Good bye world
   empty: ' '
 EOS
+
+      expected_result_2 = <<EOS
+---
+en:
+  hello: Hello world
+  main:
+    menu:
+      stuff: This is stuff
+  bye: Good bye world
+  empty: " "
+EOS
+
+      ((result == expected_result_1) || (result == expected_result_2)).should be_true
     end
   end
 end
