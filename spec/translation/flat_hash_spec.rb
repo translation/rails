@@ -163,6 +163,43 @@ describe TranslationIO::FlatHash do
 
       subject.to_hash(flat_hash).should == hash
     end
+
+    it 'return hash with jokers instead of square brackets' do
+      hash = {
+        'helpers' => {
+          'label' => {
+            'startup[attachments_attributes][new_attachments]' => {
+              'permissions' => 'Permissions'
+            },
+
+            'startup[startup_financing_information_attributes]' => {
+              '_transaction' => 'Transaction'
+            }
+          }
+        }
+      }
+
+      flat_hash = subject.to_flat_hash(hash)
+
+      flat_hash.should == {
+        'helpers.label.startup<@~<attachments_attributes>@~><@~<new_attachments>@~>.permissions' => 'Permissions',
+        'helpers.label.startup<@~<startup_financing_information_attributes>@~>._transaction'     => 'Transaction'
+      }
+
+      subject.to_hash(flat_hash).should == {
+        'helpers' => {
+          'label' => {
+            'startup[attachments_attributes][new_attachments]' => {
+              'permissions' => 'Permissions'
+            },
+
+            'startup[startup_financing_information_attributes]' => {
+              '_transaction' => 'Transaction'
+            }
+          }
+        }
+      }
+    end
   end
 
   describe '#to_hash' do
@@ -325,5 +362,52 @@ describe TranslationIO::FlatHash do
     hash.should == {
       nil => "jan"
     }
+  end
+
+  it 'handles joker square brackets in hash keys' do
+    flat_hash = {
+      'helpers.label.startup<@~<attachments_attributes>@~><@~<new_attachments>@~>.permissions' => 'Permissions',
+      'helpers.label.startup<@~<startup_financing_information_attributes>@~>._transaction'     => 'Transaction'
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'helpers' => {
+        'label' => {
+          'startup[attachments_attributes][new_attachments]' => {
+            'permissions' => 'Permissions'
+          },
+
+          'startup[startup_financing_information_attributes]' => {
+            '_transaction' => 'Transaction'
+          }
+        }
+      }
+    }
+  end
+
+  it 'handles joker square brackets and normal brackets (arrays) in hash keys' do
+    flat_hash = {
+      'helpers[0].startup<@~<first_key>@~>[0]' => 'blabla1',
+      'helpers[0].startup<@~<first_key>@~>[1]' => 'blabla2',
+      'helpers[1].startup<@~<second_key>@~>[0]' => 'blibli1',
+      'helpers[1].startup<@~<second_key>@~>[1]' => 'blibli2',
+      'helpers[2].startup<@~<third_key>@~>.key' => 'bloblo',
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'helpers' => [
+        { 'startup[first_key]'  => [ 'blabla1', 'blabla2' ] },
+        { 'startup[second_key]' => [ 'blibli1', 'blibli2' ] },
+        { 'startup[third_key]'  => {
+          'key' => 'bloblo'
+        }}
+      ]
+    }
+
+    subject.to_flat_hash(hash).should == flat_hash
   end
 end

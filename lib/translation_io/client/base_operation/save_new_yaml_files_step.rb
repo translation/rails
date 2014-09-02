@@ -16,10 +16,6 @@ module TranslationIO
               FileUtils.mkdir_p(@yaml_locales_path)
               yaml_path = File.join(@yaml_locales_path, "translation.#{target_locale}.yml")
               TranslationIO.info yaml_path, 2, 2
-              TranslationIO.info "------------ debug start ------------"
-              TranslationIO.info @parsed_response["yaml_po_data_#{target_locale}"]
-              TranslationIO.info target_locale
-              TranslationIO.info "------------ debug end ------------"
               yaml_data = YAMLConversion.get_yaml_data_from_po_data(@parsed_response["yaml_po_data_#{target_locale}"], target_locale)
 
               top_comment = <<EOS

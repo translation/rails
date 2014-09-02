@@ -15,6 +15,22 @@ msgstr "Ce sont des choses"
 msgctxt "bye"
 msgid "Good bye world"
 msgstr "Au revoir le monde"
+
+msgctxt "helpers.label.startup<@~<attachments_attributes>@~><@~<new_attachments>@~>.permissions"
+msgid "Permissions"
+msgstr "permissions"
+
+msgctxt "helpers.label.startup<@~<startup_financing_information_attributes>@~>._transaction"
+msgid "Transaction"
+msgstr "transaction"
+
+msgctxt "helpers.labelarray[0].startup<@~<first_key>@~>"
+msgid "Blabla"
+msgstr "blabla"
+
+msgctxt "helpers.labelarray[1].startup<@~<second_key>@~>"
+msgid "Blibli"
+msgstr "blibli"
 EOS
 
       yaml_data = subject.get_yaml_data_from_po_data(po_data, :fr)
@@ -27,6 +43,15 @@ fr:
     menu:
       stuff: Ce sont des choses
   bye: Au revoir le monde
+  helpers:
+    label:
+      startup[attachments_attributes][new_attachments]:
+        permissions: permissions
+      startup[startup_financing_information_attributes]:
+        _transaction: transaction
+    labelarray:
+    - startup[first_key]: blabla
+    - startup[second_key]: blibli
 EOS
     end
   end
