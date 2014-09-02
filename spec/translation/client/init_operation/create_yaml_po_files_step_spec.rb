@@ -19,6 +19,8 @@ en:
     - feb
   faker:
     blop: "blup"
+  empty:
+    empty_string: " "
 EOS
     end
 
@@ -35,6 +37,8 @@ fr:
     - fev
   faker:
     blop: "blup en français"
+  empty:
+    empty_string: " "
 EOS
     end
 
@@ -58,6 +62,10 @@ msgstr "jan"
 msgctxt "home.abbr_month_names[2]"
 msgid "feb"
 msgstr "fev"
+
+msgctxt "empty.empty_string"
+msgid " "
+msgstr " "
 EOS
 
     params['yaml_po_data_nl'].should == <<EOS
@@ -71,6 +79,10 @@ msgstr ""
 
 msgctxt "home.abbr_month_names[2]"
 msgid "feb"
+msgstr ""
+
+msgctxt "empty.empty_string"
+msgid " "
 msgstr ""
 EOS
   end

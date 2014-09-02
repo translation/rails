@@ -18,7 +18,7 @@ module TranslationIO
           end
 
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            key.present? && value.is_a?(String) && !value.nil?
+            key.present? && value.is_a?(String)
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
@@ -33,7 +33,7 @@ module TranslationIO
               msgid      = value
               msgstr     = all_flat_string_translations[target_key]
 
-              unless msgid.blank?
+              unless msgid.to_s.empty?
                 po_entry            = GetText::POEntry.new(:msgctxt)
                 po_entry.msgid      = msgid
                 po_entry.msgstr     = msgstr

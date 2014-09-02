@@ -18,7 +18,9 @@ en:
   value: 42
   other_value: 78
   faker:
-    name: "Jorje Pina Puissant"
+    name: "Jorge Pina Puissant"
+  empty:
+    empty_string: " "
 EOS
     end
 
@@ -36,6 +38,10 @@ msgstr ""
 
 msgctxt "other.stuff"
 msgid "This is string stuff"
+msgstr ""
+
+msgctxt "empty.empty_string"
+msgid " "
 msgstr ""
 EOS
   end

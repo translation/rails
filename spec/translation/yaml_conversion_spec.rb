@@ -64,7 +64,8 @@ EOS
       result.should == {
         "en.hello"           => "Hello world",
         "en.main.menu.stuff" => "This is stuff",
-        "en.bye"             => "Good bye world"
+        "en.bye"             => "Good bye world",
+        "en.empty"           => " "
       }
     end
   end
@@ -74,7 +75,8 @@ EOS
       flat_data = {
         "en.hello"           => "Hello world",
         "en.main.menu.stuff" => "This is stuff",
-        "en.bye"             => "Good bye world"
+        "en.bye"             => "Good bye world",
+        "en.empty"           => " "
       }
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
@@ -87,6 +89,7 @@ en:
     menu:
       stuff: This is stuff
   bye: Good bye world
+  empty: " "
 EOS
     end
   end

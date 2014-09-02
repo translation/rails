@@ -108,14 +108,14 @@ module TranslationIO
       end
 
       def brackets_to_joker(h)
-        gsub_keys(h, '[', ']', '<@~<', '>@~>')
+        gsub_keys!(h, '[', ']', '<@~<', '>@~>')
       end
 
       def joker_to_brackets(h)
-        gsub_keys(h, '<@~<', '>@~>', '[', ']')
+        gsub_keys!(h, '<@~<', '>@~>', '[', ']')
       end
 
-      def gsub_keys(h, from_1, from_2, to_1, to_2)
+      def gsub_keys!(h, from_1, from_2, to_1, to_2)
         if h.is_a?(Hash)
           h.keys.each do |key|
             if key.to_s.include?(from_1) || key.to_s.include?(from_2)
@@ -124,10 +124,10 @@ module TranslationIO
               new_key = key
             end
             h[new_key] = h.delete(key)
-            gsub_keys(h[new_key], from_1, from_2, to_1, to_2)
+            gsub_keys!(h[new_key], from_1, from_2, to_1, to_2)
           end
         elsif h.respond_to?(:each)
-          h.each { |e| gsub_keys(e, from_1, from_2, to_1, to_2) }
+          h.each { |e| gsub_keys!(e, from_1, from_2, to_1, to_2) }
         end
         h
       end

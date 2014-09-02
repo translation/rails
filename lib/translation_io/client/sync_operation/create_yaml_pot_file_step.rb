@@ -19,7 +19,7 @@ module TranslationIO
           end
 
           source_flat_string_tanslations = all_flat_translations.select do |key, value|
-            value.is_a?(String) && key.present? && key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
+            key.present? && value.is_a?(String) && key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
           end
 
           pot_representation = GetText::PO.new
@@ -27,7 +27,7 @@ module TranslationIO
           source_flat_string_tanslations.each_pair do |key, value|
             msgid = value
 
-            unless msgid.blank?
+            unless msgid.to_s.empty?
               pot_entry            = GetText::POEntry.new(:msgctxt)
               pot_entry.msgid      = msgid
               pot_entry.msgstr     = ''
