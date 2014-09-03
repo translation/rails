@@ -11,18 +11,7 @@ module TranslationIO
 
         def run
           @yaml_file_paths.each do |locale_file_path|
-            in_project = locale_file_path_in_project?(locale_file_path)
-
-            protected_file = @target_locales.any? do |target_locale|
-              paths = [
-                File.join(@yaml_locales_path, "translation.#{target_locale}.yml").to_s,
-                File.join(@yaml_locales_path, "localization.#{target_locale}.yml").to_s
-              ]
-
-              paths.include?(locale_file_path)
-            end
-
-            if in_project && !protected_file
+            if locale_file_removable?(locale_file_path)
               if File.exist?(locale_file_path)
                 content_hash     = YAML::load(File.read(locale_file_path))
                 new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
@@ -42,6 +31,21 @@ module TranslationIO
         end
 
         private
+
+        def locale_file_removable?(locale_file_path)
+          in_project = locale_file_path_in_project?(locale_file_path)
+
+          protected_file = @target_locales.any? do |target_locale|
+            paths = [
+              TranslationIO.normalize_path(File.join(@yaml_locales_path, "translation.#{target_locale}.yml" ).to_s),
+              TranslationIO.normalize_path(File.join(@yaml_locales_path, "localization.#{target_locale}.yml").to_s)
+            ]
+
+            paths.include?(TranslationIO.normalize_path(locale_file_path))
+          end
+
+          in_project && !protected_file
+        end
 
         def locale_file_path_in_project?(locale_file_path)
           TranslationIO.normalize_path(locale_file_path).start_with?(
