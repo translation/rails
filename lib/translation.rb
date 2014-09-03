@@ -33,13 +33,8 @@ module TranslationIO
     attr_reader :config, :client
 
     def configure(&block)
-      if ENV['LANG'].blank?
-        ENV['LANG'] = 'en_US.UTF-8'
-      end
-
-      if ENV['LC_CTYPE'].blank?
-        ENV['LC_CTYPE'] = 'UTF-8'
-      end
+      ENV['LANG']     = 'en_US.UTF-8' if ENV['LANG'].blank?
+      ENV['LC_CTYPE'] = 'UTF-8'       if ENV['LC_CTYPE'].blank?
 
       if Rails.env.development?
         GetText::TextDomainManager.cached = false
