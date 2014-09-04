@@ -19,7 +19,7 @@ module TranslationIO
           end
 
           source_flat_string_tanslations = all_flat_translations.select do |key, value|
-            key.present? && value.is_a?(String) && key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
+            YamlEntry.string?(key, value) && YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key, @source_locale)
           end
 
           pot_representation = GetText::PO.new

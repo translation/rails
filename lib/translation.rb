@@ -23,6 +23,7 @@ require 'translation_io/yaml_conversion'
 
 require 'translation_io/controller'
 require 'translation_io/extractor'
+require 'translation_io/yaml_entry'
 
 module TranslationIO
   module Proxy

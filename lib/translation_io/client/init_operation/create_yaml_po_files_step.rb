@@ -18,11 +18,11 @@ module TranslationIO
           end
 
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            key.present? && value.is_a?(String)
+            YamlEntry.string?(key, value)
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
-            key.start_with?("#{@source_locale}.") && !key.start_with?("#{@source_locale}.faker.")
+            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key, @source_locale)
           end
 
           @target_locales.each do |target_locale|

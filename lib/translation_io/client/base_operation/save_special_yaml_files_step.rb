@@ -20,14 +20,12 @@ module TranslationIO
             )
           end
 
-          TranslationIO.info all_flat_translations
-
           all_flat_special_translations = all_flat_translations.select do |key, value|
-            !value.is_a?(String) && !value.nil?
+            YamlEntry.localization?(key, value)
           end
 
           source_flat_special_translations = all_flat_special_translations.select do |key|
-            key.start_with?("#{@source_locale}.")
+            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key, @source_locale)
           end
 
           @target_locales.each do |target_locale|
