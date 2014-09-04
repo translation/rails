@@ -21,6 +21,7 @@ en:
     blop: "blup"
   empty:
     empty_string: " "
+  symbol: :hello
 EOS
     end
 
@@ -39,6 +40,7 @@ fr:
     blop: "blup en français"
   empty:
     empty_string: " "
+  symbol: :hellofr
 EOS
     end
 

@@ -65,7 +65,8 @@ EOS
         "en.hello"           => "Hello world",
         "en.main.menu.stuff" => "This is stuff",
         "en.bye"             => "Good bye world",
-        "en.empty"           => " "
+        "en.empty"           => " ",
+        "en.symbol"          => :hello
       }
     end
   end

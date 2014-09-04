@@ -68,6 +68,11 @@ describe TranslationIO::FlatHash do
             "abbr_day_names"   => [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
             "abbr_month_names" => [ nil, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
             "day_names"        => [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
+          },
+          "number" => {
+            "format" => {
+              "strip_insignificant_zeros" => false
+            }
           }
         }
       }
@@ -75,36 +80,37 @@ describe TranslationIO::FlatHash do
       flat_hash = subject.to_flat_hash(hash)
 
       flat_hash.should == {
-        "en.date.formats.default"      => "%Y-%m-%d",
-        "en.date.formats.long"         => "%B %d, %Y",
-        "en.date.formats.short"        => "%b %d",
-        "en.date.abbr_day_names[0]"    => "Sun",
-        "en.date.abbr_day_names[1]"    => "Mon",
-        "en.date.abbr_day_names[2]"    => "Tue",
-        "en.date.abbr_day_names[3]"    => "Wed",
-        "en.date.abbr_day_names[4]"    => "Thu",
-        "en.date.abbr_day_names[5]"    => "Fri",
-        "en.date.abbr_day_names[6]"    => "Sat",
-        "en.date.abbr_month_names[0]"  => nil,
-        "en.date.abbr_month_names[1]"  => "Jan",
-        "en.date.abbr_month_names[2]"  => "Feb",
-        "en.date.abbr_month_names[3]"  => "Mar",
-        "en.date.abbr_month_names[4]"  => "Apr",
-        "en.date.abbr_month_names[5]"  => "May",
-        "en.date.abbr_month_names[6]"  => "Jun",
-        "en.date.abbr_month_names[7]"  => "Jul",
-        "en.date.abbr_month_names[8]"  => "Aug",
-        "en.date.abbr_month_names[9]"  => "Sep",
-        "en.date.abbr_month_names[10]" => "Oct",
-        "en.date.abbr_month_names[11]" => "Nov",
-        "en.date.abbr_month_names[12]" => "Dec",
-        "en.date.day_names[0]"         => "Sunday",
-        "en.date.day_names[1]"         => "Monday",
-        "en.date.day_names[2]"         => "Tuesday",
-        "en.date.day_names[3]"         => "Wednesday",
-        "en.date.day_names[4]"         => "Thursday",
-        "en.date.day_names[5]"         => "Friday",
-        "en.date.day_names[6]"         => "Saturday"
+        "en.date.formats.default"                    => "%Y-%m-%d",
+        "en.date.formats.long"                       => "%B %d, %Y",
+        "en.date.formats.short"                      => "%b %d",
+        "en.date.abbr_day_names[0]"                  => "Sun",
+        "en.date.abbr_day_names[1]"                  => "Mon",
+        "en.date.abbr_day_names[2]"                  => "Tue",
+        "en.date.abbr_day_names[3]"                  => "Wed",
+        "en.date.abbr_day_names[4]"                  => "Thu",
+        "en.date.abbr_day_names[5]"                  => "Fri",
+        "en.date.abbr_day_names[6]"                  => "Sat",
+        "en.date.abbr_month_names[0]"                => nil,
+        "en.date.abbr_month_names[1]"                => "Jan",
+        "en.date.abbr_month_names[2]"                => "Feb",
+        "en.date.abbr_month_names[3]"                => "Mar",
+        "en.date.abbr_month_names[4]"                => "Apr",
+        "en.date.abbr_month_names[5]"                => "May",
+        "en.date.abbr_month_names[6]"                => "Jun",
+        "en.date.abbr_month_names[7]"                => "Jul",
+        "en.date.abbr_month_names[8]"                => "Aug",
+        "en.date.abbr_month_names[9]"                => "Sep",
+        "en.date.abbr_month_names[10]"               => "Oct",
+        "en.date.abbr_month_names[11]"               => "Nov",
+        "en.date.abbr_month_names[12]"               => "Dec",
+        "en.date.day_names[0]"                       => "Sunday",
+        "en.date.day_names[1]"                       => "Monday",
+        "en.date.day_names[2]"                       => "Tuesday",
+        "en.date.day_names[3]"                       => "Wednesday",
+        "en.date.day_names[4]"                       => "Thursday",
+        "en.date.day_names[5]"                       => "Friday",
+        "en.date.day_names[6]"                       => "Saturday",
+        "en.number.format.strip_insignificant_zeros" => false
       }
 
       subject.to_hash(flat_hash).should == hash

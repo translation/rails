@@ -5,3 +5,4 @@ en:
       stuff: "This is stuff"
   bye: "Good bye world"
   empty: " "
+  symbol: :hello
