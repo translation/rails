@@ -4,6 +4,7 @@ module TranslationIO
     attr_accessor :source_locale, :target_locales
     attr_accessor :endpoint
     attr_accessor :verbose
+    attr_accessor :test
 
     def initialize
       self.locales_path   = File.join('config', 'locales', 'gettext')
@@ -11,6 +12,7 @@ module TranslationIO
       self.target_locales = []
       self.endpoint       = 'api.translation.io/api'
       self.verbose        = 1
+      self.test           = false
     end
 
     def pot_path

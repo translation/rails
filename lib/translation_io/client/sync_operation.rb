@@ -29,7 +29,7 @@ module TranslationIO
         end
 
         uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/sync")
-        parsed_response = perform_request(uri, params)
+        parsed_response = BaseOperation.perform_request(uri, params)
 
         unless parsed_response.nil?
           BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run

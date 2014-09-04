@@ -20,6 +20,8 @@ module TranslationIO
             )
           end
 
+          TranslationIO.info all_flat_translations
+
           all_flat_special_translations = all_flat_translations.select do |key, value|
             !value.is_a?(String) && !value.nil?
           end
@@ -43,6 +45,29 @@ module TranslationIO
 
             File.open(yaml_path, 'wb') do |file|
               file.write(yaml_data)
+            end
+          end
+
+          if not TranslationIO.config.test
+            # Get YAML localization entries
+            params = {}
+            @target_locales.each do |target_locale|
+              yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
+              params["yaml_data_#{target_locale}"] = File.read(yaml_path)
+            end
+
+            TranslationIO.info "Collecting YAML localization entries"
+            uri             = URI("http://#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/fill_yaml_localizations")
+            parsed_response = BaseOperation.perform_request(uri, params)
+
+            unless parsed_response.nil?
+              @target_locales.each do |target_locale|
+                yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
+
+                File.open(yaml_path, 'wb') do |file|
+                  file.write(parsed_response["yaml_data_#{target_locale}"])
+                end
+              end
             end
           end
         end

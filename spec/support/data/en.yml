@@ -6,3 +6,8 @@ en:
   bye: "Good bye world"
   empty: " "
   symbol: :hello
+  date:
+    order:
+    - :day
+    - :month
+    - :year

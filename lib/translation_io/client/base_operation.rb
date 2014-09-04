@@ -10,19 +10,21 @@ module TranslationIO
     class BaseOperation
       attr_accessor :client, :params
 
-      def initialize(client, perform_real_requests = true)
+      def initialize(client)
         @client = client
-        @params = {
-          'gem_version'        => TranslationIO.version,
-          'source_language'    => TranslationIO.config.source_locale.to_s,
-          'target_languages[]' => TranslationIO.config.target_locales.map(&:to_s)
-        }
+        @params = {}
       end
 
       private
 
-      def perform_request(uri, params)
+      def self.perform_request(uri, params)
         begin
+          params.merge!({
+            'gem_version'        => TranslationIO.version,
+            'source_language'    => TranslationIO.config.source_locale.to_s,
+            'target_languages[]' => TranslationIO.config.target_locales.map(&:to_s)
+          })
+
           http = Net::HTTP.new(uri.host, uri.port)
           http.read_timeout = 500
 

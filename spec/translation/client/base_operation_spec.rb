@@ -11,8 +11,6 @@ describe TranslationIO::Client::BaseOperation do
   end
 
   it 'has default values initialized' do
-    @operation.client.should                       == @client
-    @operation.params['gem_version'].should        == TranslationIO.version
-    @operation.params['target_languages[]'].should == ['fr', 'nl']
+    @operation.client.should == @client
   end
 end

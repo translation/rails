@@ -66,7 +66,10 @@ EOS
         "en.main.menu.stuff" => "This is stuff",
         "en.bye"             => "Good bye world",
         "en.empty"           => " ",
-        "en.symbol"          => :hello
+        "en.symbol"          => :hello,
+        "en.date.order[0]"   => :day,
+        "en.date.order[1]"   => :month,
+        "en.date.order[2]"   => :year,
       }
     end
   end

@@ -3,7 +3,8 @@ require 'yaml'
 require 'translation'
 
 TranslationIO.configure do |config|
-  config.verbose = -1
+  config.verbose  = -1
+  config.test     = true
 end
 
 RSpec.configure do |config|
