@@ -62,14 +62,17 @@ EOS
       result    = subject.get_flat_translations_for_yaml_file(yaml_path)
 
       result.should == {
-        "en.hello"           => "Hello world",
-        "en.main.menu.stuff" => "This is stuff",
-        "en.bye"             => "Good bye world",
-        "en.empty"           => " ",
-        "en.symbol"          => :hello,
-        "en.date.order[0]"   => :day,
-        "en.date.order[1]"   => :month,
-        "en.date.order[2]"   => :year,
+        "en.hello"                  => "Hello world",
+        "en.main.menu.stuff"        => "This is stuff",
+        "en.bye"                    => "Good bye world",
+        "en.empty"                  => " ",
+        "en.symbol"                 => :hello,
+        "en.date.order[0]"          => :day,
+        "en.date.order[1]"          => :month,
+        "en.date.order[2]"          => :year,
+      # "en.invoice.no"             => "N°", (should not pass, 'no' is a reserved keyword in YAML)
+        "en.invoice.recipient"      => "A l'attention de",
+        "en.test[0].sub_test.hello" => 'hello'
       }
     end
   end

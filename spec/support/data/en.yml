@@ -11,3 +11,11 @@ en:
     - :day
     - :month
     - :year
+  invoice:
+    no: "N°"
+    recipient: "A l'attention de"
+    false: "test"
+  test:
+  - sub_test:
+      hello: hello
+      no: "N°"

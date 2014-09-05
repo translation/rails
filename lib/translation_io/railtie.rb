@@ -20,7 +20,7 @@ end
 module I18n
   class Config
     def locale=(locale)
-      I18n.enforce_available_locales!(locale)
+      I18n.enforce_available_locales!(locale) if I18n.respond_to?(:enforce_available_locales!)
       @locale        = locale.to_sym rescue nil
       GetText.locale = locale.to_s.gsub('-', '_').to_sym
     end

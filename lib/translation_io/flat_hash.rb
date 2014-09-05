@@ -2,7 +2,8 @@ module TranslationIO
   module FlatHash
     class << self
       def to_flat_hash(hash)
-        hash = brackets_to_joker(hash)
+        hash = brackets_to_joker!(hash)
+        hash = remove_reserved_keys!(hash)
         get_flat_hash_for_level(hash)
       end
 
@@ -13,7 +14,7 @@ module TranslationIO
           build_hash_with_flat(hash, key, value)
         end
 
-        joker_to_brackets(hash)
+        joker_to_brackets!(hash)
       end
 
       private
@@ -107,11 +108,11 @@ module TranslationIO
         flat_hash
       end
 
-      def brackets_to_joker(h)
+      def brackets_to_joker!(h)
         gsub_keys!(h, '[', ']', '<@~<', '>@~>')
       end
 
-      def joker_to_brackets(h)
+      def joker_to_brackets!(h)
         gsub_keys!(h, '<@~<', '>@~>', '[', ']')
       end
 
@@ -128,6 +129,21 @@ module TranslationIO
           end
         elsif h.respond_to?(:each)
           h.each { |e| gsub_keys!(e, from_1, from_2, to_1, to_2) }
+        end
+        h
+      end
+
+      def remove_reserved_keys!(h)
+        if h.is_a?(Hash)
+          h.keys.each do |key|
+            if [TrueClass, FalseClass].include?(key.class)
+              h.delete(key)
+            else
+              remove_reserved_keys!(h[key])
+            end
+          end
+        elsif h.respond_to?(:each)
+          h.each { |e| remove_reserved_keys!(e) }
         end
         h
       end
