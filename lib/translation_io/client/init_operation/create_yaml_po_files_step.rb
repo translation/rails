@@ -18,7 +18,7 @@ module TranslationIO
           end
 
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            YamlEntry.string?(key, value)
+            YamlEntry.string?(key, value) && !YamlEntry.localization?(key, value)
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
