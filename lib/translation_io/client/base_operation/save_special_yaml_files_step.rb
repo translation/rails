@@ -25,7 +25,7 @@ module TranslationIO
           end
 
           source_flat_special_translations = all_flat_special_translations.select do |key|
-            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key, @source_locale)
+            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key)
           end
 
           @target_locales.each do |target_locale|

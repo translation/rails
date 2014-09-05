@@ -28,15 +28,15 @@ module YamlEntry
       key.present? && key.start_with?("#{locale}.")
     end
 
-    def ignored?(key, locale)
+    def ignored?(key)
       key.present? && IGNORED_KEY_PREFIXES.any? { |p| key_without_locale(key).start_with?(p) }
     end
 
     def localization?(key, value)
-      key.present? && (excluded_prefix?(key) || (!YamlEntry.string?(key, value) && !value.nil?))
+      key.present? && (localization_prefix?(key) || (!YamlEntry.string?(key, value) && !value.nil?))
     end
 
-    def excluded_prefix?(key)
+    def localization_prefix?(key)
       LOCALIZATION_KEY_PREFIXES.any? do |prefix|
         key_without_locale(key).start_with?(prefix)
       end

@@ -22,7 +22,7 @@ module TranslationIO
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
-            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key, @source_locale)
+            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key)
           end
 
           @target_locales.each do |target_locale|
