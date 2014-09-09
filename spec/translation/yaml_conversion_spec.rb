@@ -75,6 +75,13 @@ EOS
         "en.test[0].sub_test.hello" => 'hello'
       }
     end
+
+    it 'returns an empty Hash if the YAML file is empty' do
+      yaml_path = 'spec/support/data/empty.en.yml'
+      result    = subject.get_flat_translations_for_yaml_file(yaml_path)
+
+      result.should == {}
+    end
   end
 
   describe '#get_yaml_data_from_flat_translations' do

@@ -14,7 +14,12 @@ module TranslationIO
             if locale_file_removable?(locale_file_path)
               if File.exist?(locale_file_path)
                 content_hash     = YAML::load(File.read(locale_file_path))
-                new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
+
+                if content_hash
+                  new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
+                else # loading an empty file returns false
+                  new_content_hash = {}
+                end
 
                 if new_content_hash.keys.any?
                   TranslationIO.info "Rewriting #{locale_file_path}", 2, 2
