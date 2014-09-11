@@ -29,9 +29,8 @@ module TranslationIO
 EOS
 
               File.open(yaml_path, 'wb') do |file|
-                file.write("---\n")
                 file.write(top_comment)
-                file.write(yaml_data.split("---\n", 2).last)
+                file.write(yaml_data)
               end
             end
           end

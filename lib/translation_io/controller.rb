@@ -11,7 +11,7 @@ module TranslationIO
         session[:locale] = requested_locale
         I18n.locale      = requested_locale
       else
-        redirect_to :root, :locale => I18n.default_locale
+        redirect_to root_path(:locale => I18n.default_locale)
       end
     end
   end
