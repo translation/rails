@@ -21,13 +21,13 @@ And finish by inititalizing your translation project with :
 
 ## Synchronization
 
-To get new translations from Translation.io and to send new translatable strings, simply run :
+To send new translatable keys/strings and get new translations from Translation.io, simply run :
 
     bundle exec rake translation:sync
 
 ## Purge
 
-If you need to remove unused keys taking the current branch as reference :
+If you need to remove unused keys/strings from Translation.io using the current branch as reference :
 
     bundle exec rake translation:purge
 
