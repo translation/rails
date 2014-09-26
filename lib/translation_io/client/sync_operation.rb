@@ -28,7 +28,7 @@ module TranslationIO
           params['purge'] = 'true'
         end
 
-        uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/sync")
+        uri             = URI("#{client.endpoint}/projects/#{client.api_key}/sync")
         parsed_response = BaseOperation.perform_request(uri, params)
 
         unless parsed_response.nil?

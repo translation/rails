@@ -55,7 +55,7 @@ module TranslationIO
             end
 
             TranslationIO.info "Collecting YAML localization entries"
-            uri             = URI("http://#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/fill_yaml_localizations")
+            uri             = URI("#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/fill_yaml_localizations")
             parsed_response = BaseOperation.perform_request(uri, params)
 
             unless parsed_response.nil?

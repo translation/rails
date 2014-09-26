@@ -6,12 +6,12 @@ describe TranslationIO::Config do
       config.api_key        = '424242'
       config.source_locale  = :en
       config.target_locales = [:fr, :nl]
-      config.endpoint       = 'localhost:3001/api'
+      config.endpoint       = 'http://localhost:3001/api'
     end
 
     TranslationIO.config.api_key.should        == '424242'
     TranslationIO.config.source_locale.should  == :en
     TranslationIO.config.target_locales.should == [:fr, :nl]
-    TranslationIO.config.endpoint.should       == 'localhost:3001/api'
+    TranslationIO.config.endpoint.should       == 'http://localhost:3001/api'
   end
 end

@@ -28,7 +28,7 @@ module TranslationIO
         CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths).run(params)
 
         TranslationIO.info "Sending data to server"
-        uri             = URI("http://#{client.endpoint}/projects/#{client.api_key}/init")
+        uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
         parsed_response = BaseOperation.perform_request(uri, params)
 
         unless parsed_response.nil?

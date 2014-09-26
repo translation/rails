@@ -10,7 +10,7 @@ module TranslationIO
       self.locales_path   = File.join('config', 'locales', 'gettext')
       self.source_locale  = :en
       self.target_locales = []
-      self.endpoint       = 'api.translation.io/api'
+      self.endpoint       = 'https://translation.io/api'
       self.verbose        = 1
       self.test           = false
     end

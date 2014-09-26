@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe TranslationIO::Client do
   before :each do
-    @client = TranslationIO::Client.new('4242', 'bidule.com/api')
+    @client = TranslationIO::Client.new('4242', 'http://bidule.com/api')
   end
 
   it do
     @client.api_key.should  == '4242'
-    @client.endpoint.should == 'bidule.com/api'
+    @client.endpoint.should == 'http://bidule.com/api'
   end
 
   it do
