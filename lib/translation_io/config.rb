@@ -26,7 +26,7 @@ module TranslationIO
     end
 
     def source_files
-      paths = Dir['**/*.{rb,erb,html.erb,xml.erb}'].select do |p|
+      paths = Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
       end
 
