@@ -429,10 +429,7 @@ describe TranslationIO::FlatHash do
     hash.should == {
       "errors" => {
         "messages" => {
-          "too_long" => {
-            "one"   => "est trop long (pas plus d'un caractère)",
-            "other" => "est trop long (pas plus de %{count} caractères)"
-          }
+          "too_long" => "est trop long (pas plus de %{count} caractères)"
         }
       }
     }
