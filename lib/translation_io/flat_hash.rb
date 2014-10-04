@@ -77,7 +77,7 @@ module TranslationIO
                 current_object[current_key] = {}
               end
               current_object          = current_object[current_key]
-              current_object[new_key] = value
+              current_object[new_key] = value if current_object.respond_to? :each
 
               key_string = ''
             end

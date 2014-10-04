@@ -416,4 +416,25 @@ describe TranslationIO::FlatHash do
 
     subject.to_flat_hash(hash).should == flat_hash
   end
+
+  it 'handle inconsistant values in hashs' do
+    flat_hash = {
+      "errors.messages.too_long"       => "est trop long (pas plus de %{count} caractères)",
+      "errors.messages.too_long.one"   => "est trop long (pas plus d'un caractère)",
+      "errors.messages.too_long.other" => "est trop long (pas plus de %{count} caractères)"
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      "errors" => {
+        "messages" => {
+          "too_long" => {
+            "one"   => "est trop long (pas plus d'un caractère)",
+            "other" => "est trop long (pas plus de %{count} caractères)"
+          }
+        }
+      }
+    }
+  end
 end
