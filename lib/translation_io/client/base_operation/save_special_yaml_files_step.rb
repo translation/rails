@@ -21,11 +21,11 @@ module TranslationIO
           end
 
           all_flat_special_translations = all_flat_translations.select do |key, value|
-            YamlEntry.localization?(key, value)
+            TranslationIO::YamlEntry.localization?(key, value)
           end
 
           source_flat_special_translations = all_flat_special_translations.select do |key|
-            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key)
+            TranslationIO::YamlEntry.from_locale?(key, @source_locale) && !TranslationIO::YamlEntry.ignored?(key)
           end
 
           @target_locales.each do |target_locale|

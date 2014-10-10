@@ -10,19 +10,26 @@ module TranslationIO
 
         def run(params)
           TranslationIO.info "Importing translations from YAML files."
-          all_flat_translations = {}
+
+          all_translations = {}
 
           @yaml_file_paths.each do |file_path|
             TranslationIO.info file_path, 2, 2
-            all_flat_translations.merge!(YAMLConversion.get_flat_translations_for_yaml_file(file_path))
+            file_translations = YAML::load(File.read(file_path))
+
+            unless file_translations.blank?
+              all_translations = all_translations.deep_merge(file_translations)
+            end
           end
 
+          all_flat_translations = FlatHash.to_flat_hash(all_translations)
+
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            YamlEntry.string?(key, value) && !YamlEntry.localization?(key, value)
+            TranslationIO::YamlEntry.string?(key, value) && !TranslationIO::YamlEntry.localization?(key, value)
           end
 
           source_flat_string_tanslations = all_flat_string_translations.select do |key|
-            YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key)
+            TranslationIO::YamlEntry.from_locale?(key, @source_locale) && !TranslationIO::YamlEntry.ignored?(key)
           end
 
           @target_locales.each do |target_locale|

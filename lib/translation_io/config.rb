@@ -5,14 +5,16 @@ module TranslationIO
     attr_accessor :endpoint
     attr_accessor :verbose
     attr_accessor :test
+    attr_accessor :ignored_key_prefixes
 
     def initialize
-      self.locales_path   = File.join('config', 'locales', 'gettext')
-      self.source_locale  = :en
-      self.target_locales = []
-      self.endpoint       = 'https://translation.io/api'
-      self.verbose        = 1
-      self.test           = false
+      self.locales_path         = File.join('config', 'locales', 'gettext')
+      self.source_locale        = :en
+      self.target_locales       = []
+      self.endpoint             = 'https://translation.io/api'
+      self.verbose              = 1
+      self.test                 = false
+      self.ignored_key_prefixes = []
     end
 
     def pot_path
