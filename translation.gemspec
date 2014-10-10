@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.description      = 'Rails translation made _("simple") with YAML and GetText.'
   s.homepage         = 'http://translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '0.9.4'
-  s.date             = '2014-09-26'
+  s.version          = '0.9.5'
+  s.date             = '2014-10-10'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
   s.files            = Dir["lib/**/*"] + ['README.md']
