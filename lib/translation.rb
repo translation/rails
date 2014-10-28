@@ -47,7 +47,7 @@ module TranslationIO
 
       Proxy.bindtextdomain(TEXT_DOMAIN, {
         :path           => @config.locales_path,
-        :output_charset => 'UTF-8'
+        :output_charset => @config.charset
       })
 
       Proxy.textdomain(TEXT_DOMAIN)

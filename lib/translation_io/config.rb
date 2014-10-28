@@ -6,6 +6,7 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
     attr_accessor :ignored_key_prefixes
+    attr_accessor :charset
 
     def initialize
       self.locales_path         = File.join('config', 'locales', 'gettext')
@@ -15,6 +16,7 @@ module TranslationIO
       self.verbose              = 1
       self.test                 = false
       self.ignored_key_prefixes = []
+      self.charset              = 'UTF-8'
     end
 
     def pot_path
