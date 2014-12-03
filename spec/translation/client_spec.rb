@@ -13,6 +13,6 @@ describe TranslationIO::Client do
   it do
     @client.should respond_to :init
     @client.should respond_to :sync
-    @client.should respond_to :purge
+    @client.should respond_to :sync_and_purge
   end
 end

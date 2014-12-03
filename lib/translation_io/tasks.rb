@@ -2,9 +2,10 @@ require 'gettext/tools'
 
 namespace :translation do
 
-  DESCRIPTIONS = { :init  => "Initialize your Translation.io project",
-    :sync  => "Send new translatable keys/strings and get new translations from Translation.io",
-    :purge => "Remove unused keys/strings from Translation.io using the current branch as reference"
+  DESCRIPTIONS = {
+    :init           => "Initialize your Translation.io project",
+    :sync           => "Send new translatable keys/strings and get new translations from Translation.io",
+    :sync_and_purge => "Remove unused keys/strings from Translation.io using the current branch as reference"
   }
 
   desc "Get configuration infos of Translation gem"
@@ -25,5 +26,9 @@ EOS
         TranslationIO.info(message)
       end
     end
+  end
+
+  task :purge => :environment do
+    TranslationIO.info("Purge is deprecated, please use rake 'translation:sync_and_purge' instead.")
   end
 end
