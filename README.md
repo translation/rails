@@ -19,19 +19,19 @@ And finish by inititalizing your translation project with :
 
     bundle exec rake translation:init
 
-## Synchronization
+## Sync
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run :
 
     bundle exec rake translation:sync
 
-## Purge
+## Sync and Purge
 
-If you need to remove unused keys/strings from Translation.io using the current branch as reference :
+If you also need to remove unused keys/strings from Translation.io using the current branch as reference :
 
-    bundle exec rake translation:purge
+    bundle exec rake translation:sync_and_purge
 
-Note that this operation will also perform a sync at the same time.
+As the name says, this operation will also perform a sync at the same time.
 
 Warning : all keys that are not present in the current branch will be **permanently deleted both on Translation.io and in your app**.
 
