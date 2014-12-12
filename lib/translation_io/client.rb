@@ -19,7 +19,7 @@ module TranslationIO
       TranslationIO::Client::SyncOperation.new(self).run
     end
 
-    def purge
+    def sync_and_purge
       TranslationIO::Client::SyncOperation.new(self).run(true)
     end
   end
