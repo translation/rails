@@ -32,11 +32,9 @@ module TranslationIO
             yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
             TranslationIO.info yaml_path, 2, 2
-            flat_translations = {}
 
-            source_flat_special_translations.each_pair do |key, value|
-              target_key = key.gsub(/\A#{@source_locale}\./, "#{target_locale}.")
-              flat_translations[target_key] = all_flat_special_translations[target_key]
+            flat_translations = all_flat_special_translations.select do |key|
+              TranslationIO::YamlEntry.from_locale?(key, target_locale) && !TranslationIO::YamlEntry.ignored?(key)
             end
 
             yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(flat_translations)

@@ -1,5 +1,5 @@
 module TranslationIO
-  module TranslationIO::YamlEntry
+  module YamlEntry
 
     IGNORED_KEY_PREFIXES = [
       'faker.'
@@ -47,11 +47,19 @@ module TranslationIO
       private
 
       def localization_key_prefixes
-        LOCALIZATION_KEY_PREFIXES + TranslationIO.config.localization_key_prefixes
+        if TranslationIO.config
+          LOCALIZATION_KEY_PREFIXES + TranslationIO.config.localization_key_prefixes
+        else
+          LOCALIZATION_KEY_PREFIXES
+        end
       end
 
       def ignored_key_prefixes
-        IGNORED_KEY_PREFIXES + TranslationIO.config.ignored_key_prefixes
+        if TranslationIO.config
+          IGNORED_KEY_PREFIXES + TranslationIO.config.ignored_key_prefixes
+        else
+          LOCALIZATION_KEY_PREFIXES
+        end
       end
 
       def key_without_locale(key)

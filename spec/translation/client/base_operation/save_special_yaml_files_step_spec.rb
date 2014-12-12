@@ -46,7 +46,6 @@ fr:
   main:
     female: true
   value: 43
-  other_value:
 EOS
 
     File.read('tmp/config/locales/localization.fr.yml').strip.should == expected_yaml_content_fr.strip
