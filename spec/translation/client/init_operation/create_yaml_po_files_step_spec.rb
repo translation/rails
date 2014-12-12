@@ -22,6 +22,10 @@ en:
   empty:
     empty_string: " "
   symbol: :hello
+  i18n:
+    transliterate:
+      rule:
+        'æ': "ae"
 EOS
     end
 

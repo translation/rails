@@ -44,6 +44,8 @@ describe TranslationIO::YamlEntry do
       TranslationIO::YamlEntry.localization?('en.date.order[0]', :year      ).should be_true
       TranslationIO::YamlEntry.localization?('en.date.order[1]', :month     ).should be_true
       TranslationIO::YamlEntry.localization?('en.date.order[2]', :day       ).should be_true
+
+      TranslationIO::YamlEntry.localization?('en.i18n.transliterate.rule.æ', "ae" ).should be_true
     end
   end
 

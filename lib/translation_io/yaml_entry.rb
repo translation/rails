@@ -1,6 +1,10 @@
 module TranslationIO
   module TranslationIO::YamlEntry
 
+    IGNORED_KEY_PREFIXES = [
+      'faker.'
+    ]
+
     LOCALIZATION_KEY_PREFIXES = [
       'date.formats',
       'date.order',
@@ -13,7 +17,8 @@ module TranslationIO
       'number.human.format',
       'number.human.storage_units.format',
       'number.human.decimal_units.format',
-      'number.human.decimal_units.units.unit'
+      'number.human.decimal_units.units.unit',
+      'i18n.transliterate'
     ]
 
     class << self
@@ -34,15 +39,19 @@ module TranslationIO
       end
 
       def localization_prefix?(key)
-        LOCALIZATION_KEY_PREFIXES.any? do |prefix|
+        localization_key_prefixes.any? do |prefix|
           key_without_locale(key).start_with?(prefix)
         end
       end
 
       private
 
+      def localization_key_prefixes
+        LOCALIZATION_KEY_PREFIXES + TranslationIO.config.localization_key_prefixes
+      end
+
       def ignored_key_prefixes
-        ['faker.'] + TranslationIO.config.ignored_key_prefixes
+        IGNORED_KEY_PREFIXES + TranslationIO.config.ignored_key_prefixes
       end
 
       def key_without_locale(key)

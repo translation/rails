@@ -29,8 +29,7 @@ EOS
     parsed_response = {
       'yaml_po_data_fr' => yaml_po_data_fr,
       'yaml_po_data_nl' => yaml_po_data_nl,
-
-      'project_url' => 'http://rails.translation.io/alfred/dummy'
+      'project_url'     => 'http://rails.translation.io/alfred/dummy'
     }
 
     operation_step = TranslationIO::Client::BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response)

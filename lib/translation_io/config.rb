@@ -6,17 +6,19 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
     attr_accessor :ignored_key_prefixes
+    attr_accessor :localization_key_prefixes
     attr_accessor :charset
 
     def initialize
-      self.locales_path         = File.join('config', 'locales', 'gettext')
-      self.source_locale        = :en
-      self.target_locales       = []
-      self.endpoint             = 'https://translation.io/api'
-      self.verbose              = 1
-      self.test                 = false
-      self.ignored_key_prefixes = []
-      self.charset              = 'UTF-8'
+      self.locales_path              = File.join('config', 'locales', 'gettext')
+      self.source_locale             = :en
+      self.target_locales            = []
+      self.endpoint                  = 'https://translation.io/api'
+      self.verbose                   = 1
+      self.test                      = false
+      self.ignored_key_prefixes      = []
+      self.localization_key_prefixes = []
+      self.charset                   = 'UTF-8'
     end
 
     def pot_path
