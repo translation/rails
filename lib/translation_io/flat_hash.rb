@@ -137,6 +137,9 @@ module TranslationIO
         if h.is_a?(Hash)
           h.keys.each do |key|
             if [TrueClass, FalseClass].include?(key.class)
+              # # This warning is commented because Rails admin uses bad keys: https://github.com/sferik/rails_admin/blob/master/config/locales/rails_admin.en.yml
+              # TranslationIO.info("Warning - We found some YAML protected keys in your project, they will not be synchronized: 'yes', 'no', 'y', 'n', 'on', 'off', 'true', 'false'")
+              # TranslationIO.info(h.inspect)
               h.delete(key)
             else
               remove_reserved_keys!(h[key])
