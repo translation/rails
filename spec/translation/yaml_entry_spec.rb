@@ -27,6 +27,9 @@ describe TranslationIO::YamlEntry do
     it do
       TranslationIO::YamlEntry.ignored?('en.faker.yo').should be_true
       TranslationIO::YamlEntry.ignored?('en.yo').should be_false
+
+      TranslationIO.config.ignored_key_prefixes = ['world']
+      TranslationIO::YamlEntry.ignored?('en.world.hello').should be_true
     end
   end
 
@@ -46,6 +49,9 @@ describe TranslationIO::YamlEntry do
       TranslationIO::YamlEntry.localization?('en.date.order[2]', :day       ).should be_true
 
       TranslationIO::YamlEntry.localization?('en.i18n.transliterate.rule.æ', "ae" ).should be_true
+
+      TranslationIO.config.localization_key_prefixes = ['date.first_day_of_week_in_english']
+      TranslationIO::YamlEntry.localization?('en.date.first_day_of_week_in_english', 'monday').should be_true
     end
   end
 

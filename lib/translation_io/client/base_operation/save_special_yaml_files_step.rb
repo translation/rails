@@ -24,20 +24,16 @@ module TranslationIO
             TranslationIO::YamlEntry.localization?(key, value)
           end
 
-          source_flat_special_translations = all_flat_special_translations.select do |key|
-            TranslationIO::YamlEntry.from_locale?(key, @source_locale) && !TranslationIO::YamlEntry.ignored?(key)
-          end
-
           @target_locales.each do |target_locale|
             yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
             TranslationIO.info yaml_path, 2, 2
 
-            flat_translations = all_flat_special_translations.select do |key|
+            target_flat_special_translations = all_flat_special_translations.select do |key|
               TranslationIO::YamlEntry.from_locale?(key, target_locale) && !TranslationIO::YamlEntry.ignored?(key)
             end
 
-            yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(flat_translations)
+            yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations)
 
             File.open(yaml_path, 'wb') do |file|
               file.write(yaml_data)

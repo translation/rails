@@ -58,7 +58,7 @@ module TranslationIO
         if TranslationIO.config
           IGNORED_KEY_PREFIXES + TranslationIO.config.ignored_key_prefixes
         else
-          LOCALIZATION_KEY_PREFIXES
+          IGNORED_KEY_PREFIXES
         end
       end
 
