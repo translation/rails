@@ -23,7 +23,7 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
-        UpdatePotFileStep.new(pot_path, source_files).run
+        UpdatePotFileStep.new(pot_path, source_files).run(params)
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
         CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths).run(params)
 

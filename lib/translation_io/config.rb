@@ -9,6 +9,12 @@ module TranslationIO
     attr_accessor :localization_key_prefixes
     attr_accessor :charset
 
+    attr_accessor :pot_msgid_bugs_address
+    attr_accessor :pot_package_name
+    attr_accessor :pot_package_version
+    attr_accessor :pot_copyright_holder
+    attr_accessor :pot_copyright_year
+
     def initialize
       self.locales_path              = File.join('config', 'locales', 'gettext')
       self.source_locale             = :en
@@ -19,6 +25,12 @@ module TranslationIO
       self.ignored_key_prefixes      = []
       self.localization_key_prefixes = []
       self.charset                   = 'UTF-8'
+
+      self.pot_msgid_bugs_address = 'contact@translation.io'
+      self.pot_package_name       = File.basename(Dir.pwd)
+      self.pot_package_version    = '1.0'
+      self.pot_copyright_holder   = File.basename(Dir.pwd)
+      self.pot_copyright_year     = Date.today.year
     end
 
     def pot_path
