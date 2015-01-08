@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name             = 'translation'
   s.summary          = 'Rails translation made _("simple") with YAML and GetText.'
-  s.description      = 'Translation.io allows you to localize Rails applications using either t(".keys") or _("free text"). Just type "rake translation:sync" to synchronize with your translators, and let them translate online with our interface.'
+  s.description      = 'Rails translation made _("simple") with YAML and GetText. Localize your app using either t(".keys") or _("free text") and type "rake translation:sync" to synchronize with your translators.'
   s.homepage         = 'http://translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.date             = '2015-01-08'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency('gettext', '~> 3.1', '>= 3.1.2')
 
-  s.add_development_dependency('rake',  '~> 0')
-  s.add_development_dependency('rspec', '~> 0')
-  s.add_development_dependency('rails', '~> 0')
+  s.add_development_dependency('rake',  '~> 10.3')
+  s.add_development_dependency('rspec', '~> 2.14', '2.14.1')
+  s.add_development_dependency('rails', '~> 4.1')
 end
