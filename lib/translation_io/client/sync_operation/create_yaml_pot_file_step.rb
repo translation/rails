@@ -24,7 +24,7 @@ module TranslationIO
           all_flat_translations = FlatHash.to_flat_hash(all_translations)
 
           source_flat_string_tanslations = all_flat_translations.select do |key, value|
-            TranslationIO::YamlEntry.string?(key, value) && TranslationIO::YamlEntry.from_locale?(key, @source_locale) && !TranslationIO::YamlEntry.ignored?(key) && !TranslationIO::YamlEntry.localization?(key, value)
+            YamlEntry.string?(key, value) && YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key) && !YamlEntry.localization?(key, value)
           end
 
           pot_representation = GetText::PO.new

@@ -21,7 +21,7 @@ module TranslationIO
           end
 
           all_flat_special_translations = all_flat_translations.select do |key, value|
-            TranslationIO::YamlEntry.localization?(key, value)
+            YamlEntry.localization?(key, value)
           end
 
           @target_locales.each do |target_locale|
@@ -30,7 +30,7 @@ module TranslationIO
             TranslationIO.info yaml_path, 2, 2
 
             target_flat_special_translations = all_flat_special_translations.select do |key|
-              TranslationIO::YamlEntry.from_locale?(key, target_locale) && !TranslationIO::YamlEntry.ignored?(key)
+              YamlEntry.from_locale?(key, target_locale) && !YamlEntry.ignored?(key)
             end
 
             yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations)

@@ -35,7 +35,7 @@ module TranslationIO
       end
 
       def localization?(key, value)
-        key.present? && (localization_prefix?(key) || (!TranslationIO::YamlEntry.string?(key, value) && !value.nil?))
+        key.present? && (localization_prefix?(key) || (!string?(key, value) && !value.nil?))
       end
 
       def localization_prefix?(key)
