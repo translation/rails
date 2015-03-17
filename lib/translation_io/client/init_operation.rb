@@ -11,10 +11,6 @@ module TranslationIO
 
         haml_source_files = config.haml_source_files
         slim_source_files = config.slim_source_files
-
-        BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
-        BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
-
         source_files      = config.source_files
         pot_path          = config.pot_path
         source_locale     = config.source_locale
@@ -22,6 +18,9 @@ module TranslationIO
         locales_path      = config.locales_path
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
+
+        BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
+        BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
 
         UpdatePotFileStep.new(pot_path, source_files).run(params)
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)

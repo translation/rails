@@ -1,6 +1,6 @@
 module TranslationIO
   class Config
-    attr_accessor :api_key, :locales_path
+    attr_accessor :api_key, :locales_path, :yaml_locales_path
     attr_accessor :source_locale, :target_locales
     attr_accessor :endpoint
     attr_accessor :verbose
@@ -8,6 +8,7 @@ module TranslationIO
     attr_accessor :ignored_key_prefixes
     attr_accessor :localization_key_prefixes
     attr_accessor :charset
+    attr_accessor :metadata_path
 
     attr_accessor :pot_msgid_bugs_address
     attr_accessor :pot_package_name
@@ -17,6 +18,7 @@ module TranslationIO
 
     def initialize
       self.locales_path              = File.join('config', 'locales', 'gettext')
+      self.yaml_locales_path         = File.join('config', 'locales')
       self.source_locale             = :en
       self.target_locales            = []
       self.endpoint                  = 'https://translation.io/api'
@@ -25,6 +27,7 @@ module TranslationIO
       self.ignored_key_prefixes      = []
       self.localization_key_prefixes = []
       self.charset                   = 'UTF-8'
+      self.metadata_path             = File.join('config', 'locales', '.translation_io')
 
       self.pot_msgid_bugs_address = 'contact@translation.io'
       self.pot_package_name       = File.basename(Dir.pwd)
@@ -51,10 +54,6 @@ module TranslationIO
       paths += Dir['tmp/translation/*.rb']
 
       paths
-    end
-
-    def yaml_locales_path
-      'config/locales'
     end
 
     def haml_source_files

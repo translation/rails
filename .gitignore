@@ -2,3 +2,4 @@
 Thumbs.db
 *.gem
 tmp*.rb
+tmp/*

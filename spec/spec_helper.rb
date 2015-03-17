@@ -11,6 +11,8 @@ RSpec.configure do |config|
       config.target_locales            = []
       config.ignored_key_prefixes      = []
       config.localization_key_prefixes = []
+      config.yaml_locales_path         = File.join('tmp', 'config', 'locales')
+      config.metadata_path             = 'tmp/config/locales/.translation_io'
     end
 
     if File.exist?('tmp')
