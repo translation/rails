@@ -17,7 +17,6 @@ module TranslationIO
                                        '--copyright-year',     TranslationIO.config.pot_copyright_year.to_s)
 
           params['pot_data'] = File.read(@pot_path)
-          puts params['pot_data']
         end
       end
     end
