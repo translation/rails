@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.description      = 'Rails translation made _("simple") with YAML and GetText. Localize your app using either t(".keys") or _("free text") and type "rake translation:sync" to synchronize with your translators.'
   s.homepage         = 'http://translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '1.1.0'
-  s.date             = '2015-03-17'
+  s.version          = '1.1.1'
+  s.date             = '2015-03-18'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
   s.files            = Dir["lib/**/*"] + ['README.md']
