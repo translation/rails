@@ -13,7 +13,9 @@ module TranslationIO
             FileUtils.mkdir_p(File.join('tmp', 'translation'))
 
             extracted_gettext_entries.each_with_index do |entry, index|
-              File.open(File.join('tmp', 'translation', "haml-gettext-#{index.to_s.rjust(8,'0')}.rb"), 'w') do |file|
+              file_path = File.join('tmp', 'translation', "haml-gettext-#{index.to_s.rjust(8,'0')}.rb")
+
+              File.open(file_path, 'w') do |file|
                 file.puts "#{entry}"
               end
             end

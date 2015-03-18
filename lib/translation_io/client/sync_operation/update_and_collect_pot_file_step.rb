@@ -4,7 +4,7 @@ module TranslationIO
       class UpdateAndCollectPotFileStep
         def initialize(pot_path, source_files)
           @pot_path     = pot_path
-          @source_files = source_files
+          @source_files = source_files + Dir['tmp/translation/*.rb']
         end
 
         def run(params)
@@ -17,6 +17,7 @@ module TranslationIO
                                        '--copyright-year',     TranslationIO.config.pot_copyright_year.to_s)
 
           params['pot_data'] = File.read(@pot_path)
+          puts params['pot_data']
         end
       end
     end

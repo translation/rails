@@ -4,7 +4,7 @@ module TranslationIO
       class UpdatePotFileStep
         def initialize(pot_path, source_files)
           @pot_path     = pot_path
-          @source_files = source_files
+          @source_files = source_files + Dir['tmp/translation/*.rb']
         end
 
         def run(params)

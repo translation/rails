@@ -17,6 +17,16 @@ msgstr ""
 #: ../spec/support/rails_app/app/views/layouts/application.html.erb:1
 msgid "Let's get ready to rumble!"
 msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:2
+msgctxt "contexte"
+msgid "salut"
+msgstr ""
+
+#: ../spec/support/rails_app/tmp/translation/haml-gettext-00000000.rb:1
+msgctxt "Printer"
+msgid "Open"
+msgstr ""
 EOS
 
     File.read('tmp/test.pot').should end_with pot_data
@@ -44,6 +54,16 @@ msgstr ""
 
 #: ../spec/support/rails_app/app/views/layouts/application.html.erb:1
 msgid "Let's get ready to rumble!"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:2
+msgctxt "contexte"
+msgid "salut"
+msgstr ""
+
+#: ../spec/support/rails_app/tmp/translation/haml-gettext-00000000.rb:1
+msgctxt "Printer"
+msgid "Open"
 msgstr ""
 EOS
 

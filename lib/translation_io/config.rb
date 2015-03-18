@@ -47,13 +47,9 @@ module TranslationIO
     end
 
     def source_files
-      paths = Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
+      Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
       end
-
-      paths += Dir['tmp/translation/*.rb']
-
-      paths
     end
 
     def haml_source_files

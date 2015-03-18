@@ -1,0 +1,1 @@
+p_("Printer", "Open")
