@@ -14,6 +14,11 @@ module TranslationIO
     initializer 'translation.rails_extensions' do
       ActionController::Base.send(:include, TranslationIO::Controller)
     end
+
+    config.after_initialize do
+      # Ensure GetText.locale is in sync with I18n's default locale at boot
+      I18n.locale = I18n.default_locale
+    end
   end
 end
 
