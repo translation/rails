@@ -27,6 +27,8 @@ And finish by inititalizing your translation project with :
 
     bundle exec rake translation:init
 
+If you later need to add/remove target languages, please read our [dedicated article](https://translation.io/blog/adding-target-languages).
+
 ## Sync
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run :
@@ -51,7 +53,7 @@ The `TranslationIO.configure` block in `config/initializers/translation.rb` can 
 
 ### Ignored YAML keys
 
-Sometimes you would like to ignore some YAMK keys comming from gems or so.
+Sometimes you would like to ignore some YAML keys comming from gems or so.
 You can use the `ignored_key_prefixes` for that.
 
 For example :
@@ -99,12 +101,12 @@ For example :
 
 You can specify where your GetText and YAML files are on disk :
 
-  TranslationIO.configure do |config|
-    ...
+    TranslationIO.configure do |config|
+      ...
 
-    config.locales_path      = 'some/path' # defaults to config/locales/gettext
-    config.yaml_locales_path = 'some/path' # defaults to config/locales
-  end
+      config.locales_path      = 'some/path' # defaults to config/locales/gettext
+      config.yaml_locales_path = 'some/path' # defaults to config/locales
+    end
 
 ## Tests
 
