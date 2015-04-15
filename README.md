@@ -27,7 +27,8 @@ And finish by inititalizing your translation project with :
 
     bundle exec rake translation:init
 
-If you later need to add/remove target languages, please read our [dedicated article](https://translation.io/blog/adding-target-languages).
+If you later need to add/remove target languages, please read our
+[dedicated article](https://translation.io/blog/adding-target-languages) about that.
 
 ## Sync
 
