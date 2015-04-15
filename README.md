@@ -46,7 +46,7 @@ As the name says, this operation will also perform a sync at the same time.
 
 Warning : all keys that are not present in the current branch will be **permanently deleted both on Translation.io and in your app**.
 
-## Advanced Configuration
+## Advanced Configuration Options
 
 The `TranslationIO.configure` block in `config/initializers/translation.rb` can take several optional configuration options.
 
