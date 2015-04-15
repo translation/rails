@@ -12,7 +12,7 @@ Add the gem to your project's Gemfile :
 
 Then :
 
-* Create a translation project from the UI.
+* Create a translation project [from the UI](https://translation.io).
 * Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 The initializer looks like this :
@@ -54,7 +54,7 @@ The `TranslationIO.configure` block in `config/initializers/translation.rb` can 
 
 ### Ignored YAML keys
 
-Sometimes you would like to ignore some YAML keys comming from gems or so.
+Sometimes you would like to ignore some YAML keys coming from gems or so.
 You can use the `ignored_key_prefixes` for that.
 
 For example :
