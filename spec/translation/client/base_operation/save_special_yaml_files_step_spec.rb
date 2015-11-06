@@ -41,7 +41,7 @@ EOS
     operation_step.run
 
     expected_yaml_content_fr = <<EOS
----
+#{TranslationIO::Client::BaseOperation::SaveSpecialYamlFilesStep.top_comment}---
 fr:
   main:
     female: true
