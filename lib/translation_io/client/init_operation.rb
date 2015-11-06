@@ -28,7 +28,7 @@ module TranslationIO
         create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
         create_yaml_pot_files_step.run(params)
 
-        yaml_locales_difference = (create_yaml_pot_files_step.all_yaml_locales.to_a.map(&:to_s) - [config.source_locale.to_s]) - target_locales.sort.map(&:to_s)
+        yaml_locales_difference = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [config.source_locale.to_s]) - target_locales.sort.map(&:to_s)
 
         if yaml_locales_difference.any?
           TranslationIO.info("[error] Some locales used in your existing YAML files aren't defined in `config.target_locales`: #{yaml_locales_difference.join(', ')}.")

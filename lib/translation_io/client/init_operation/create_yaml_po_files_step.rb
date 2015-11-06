@@ -2,13 +2,13 @@ module TranslationIO
   class Client
     class InitOperation < BaseOperation
       class CreateYamlPoFilesStep
-        attr_accessor :all_yaml_locales
+        attr_accessor :all_used_yaml_locales
 
         def initialize(source_locale, target_locales, yaml_file_paths)
           @source_locale    = source_locale
           @target_locales   = target_locales
           @yaml_file_paths  = yaml_file_paths
-          @all_yaml_locales = Set.new
+          @all_used_yaml_locales = Set.new
         end
 
         def run(params)
@@ -28,7 +28,7 @@ module TranslationIO
           all_flat_translations = FlatHash.to_flat_hash(all_translations)
 
           all_flat_string_translations = all_flat_translations.select do |key, value|
-            all_yaml_locales << key.split('.').first
+            all_used_yaml_locales << key.split('.').first
             YamlEntry.string?(key, value) && !YamlEntry.localization?(key, value)
           end
 
