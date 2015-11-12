@@ -58,6 +58,7 @@ module TranslationIO
                 yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
                 File.open(yaml_path, 'wb') do |file|
+                  file.write(self.class.top_comment)
                   file.write(parsed_response["yaml_data_#{target_locale}"])
                 end
               end
@@ -67,15 +68,13 @@ module TranslationIO
 
         def self.top_comment
           <<EOS
-# THIS FILE CONTAINS LOCALIZATION KEYS : date and number formats, number percisions,
+# THIS FILE CONTAINS LOCALIZATION KEYS : date and number formats, number precisions,
 # number separators and all other non-text values depending on the language.
 # These values must not reach the translator, so they are separated in this file.
 #
-# More info here: https://translation.io/blog/gettext-is-better-than-rails-i18n
+# More info here: https://translation.io/blog/gettext-is-better-than-rails-i18n#localization
 #
 # You can edit and/or add new keys here, they won't be touched by Translation.io.
-# Don't forget to edit/update them in the localization file of the source language
-# and each target language.
 #
 EOS
         end
