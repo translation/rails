@@ -6,6 +6,7 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
     attr_accessor :ignored_key_prefixes
+    attr_accessor :ignored_source_files
     attr_accessor :localization_key_prefixes
     attr_accessor :charset
     attr_accessor :metadata_path
@@ -25,6 +26,7 @@ module TranslationIO
       self.verbose                   = 1
       self.test                      = false
       self.ignored_key_prefixes      = []
+      self.ignored_source_files      = [] # Files not parsed for GetText entries
       self.localization_key_prefixes = []
       self.charset                   = 'UTF-8'
       self.metadata_path             = File.join('config', 'locales', '.translation_io')
@@ -47,9 +49,11 @@ module TranslationIO
     end
 
     def source_files
-      Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
+      file_paths = Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
       end
+
+      file_paths - ignored_source_files
     end
 
     def haml_source_files
