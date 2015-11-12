@@ -28,25 +28,34 @@ module TranslationIO
         create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
         create_yaml_pot_files_step.run(params)
 
-        yaml_locales_difference = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [config.source_locale.to_s]) - target_locales.sort.map(&:to_s)
+        all_used_yaml_locales   = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [config.source_locale.to_s]).sort.map(&:to_s)
+        yaml_locales_difference = (all_used_yaml_locales) - target_locales.sort.map(&:to_s)
 
         if yaml_locales_difference.any?
-          TranslationIO.info("[error] Some locales used in your existing YAML files aren't defined in `config.target_locales`: #{yaml_locales_difference.join(', ')}.")
-        else
-          TranslationIO.info "Sending data to server"
-          uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
-          parsed_response = BaseOperation.perform_request(uri, params)
+          TranslationIO.info("[error] Your `config.target_locales` are [#{target_locales.join(', ')}] and we have found some YAML keys for [#{all_used_yaml_locales.join(', ')}] and they does not match.")
+          TranslationIO.info("[error] Do you really want to continue? (y/N)")
 
-          unless parsed_response.nil?
-            BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-            BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
-            BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
-            CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
-            BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+          print "> "
+          input = STDIN.gets.strip
+
+          if input != 'y' && input != 'Y'
+            exit(0)
           end
-
-          cleanup
         end
+
+        TranslationIO.info "Sending data to server"
+        uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
+        parsed_response = BaseOperation.perform_request(uri, params)
+
+        unless parsed_response.nil?
+          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+          CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
+          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+        end
+
+        cleanup
       end
     end
   end
