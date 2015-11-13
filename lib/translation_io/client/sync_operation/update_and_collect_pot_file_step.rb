@@ -9,6 +9,7 @@ module TranslationIO
 
         def run(params)
           TranslationIO.info "Updating POT file."
+
           GetText::Tools::XGetText.run(*@source_files, '-o', @pot_path,
                                        '--msgid-bugs-address', TranslationIO.config.pot_msgid_bugs_address,
                                        '--package-name',       TranslationIO.config.pot_package_name,

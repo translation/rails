@@ -4,6 +4,7 @@ require 'i18n/config'
 require 'gettext'
 require 'gettext/po'
 require 'gettext/po_parser'
+require 'gettext/tools/xgettext'
 
 module TranslationIO
   class Railtie < Rails::Railtie
@@ -37,6 +38,25 @@ module GetText
     def initialize
       @ignore_fuzzy   = true
       @report_warning = false
+    end
+  end
+
+  module Tools
+    class XGetText
+      def parse(paths)
+        po = PO.new
+        paths = [paths] if paths.kind_of?(String)
+        paths.each do |path|
+          begin
+            parse_path(path, po)
+          rescue SystemExit => e
+            # puts(_("Error parsing %{path}") % {:path => path})
+            puts
+            puts
+          end
+        end
+        po
+      end
     end
   end
 end
