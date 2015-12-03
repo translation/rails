@@ -8,6 +8,7 @@ module TranslationIO
     attr_accessor :ignored_key_prefixes
     attr_accessor :ignored_source_files
     attr_accessor :localization_key_prefixes
+    attr_accessor :disable_gettext
     attr_accessor :charset
     attr_accessor :metadata_path
 
@@ -28,6 +29,7 @@ module TranslationIO
       self.ignored_key_prefixes      = []
       self.ignored_source_files      = [] # Files not parsed for GetText entries
       self.localization_key_prefixes = []
+      self.disable_gettext           = false
       self.charset                   = 'UTF-8'
       self.metadata_path             = File.join('config', 'locales', '.translation_io')
 

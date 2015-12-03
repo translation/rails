@@ -1,3 +1,4 @@
+require 'translation_io/client/base_operation/update_pot_file_step'
 require 'translation_io/client/base_operation/save_new_po_files_step'
 require 'translation_io/client/base_operation/create_new_mo_files_step'
 require 'translation_io/client/base_operation/save_new_yaml_files_step'
@@ -41,7 +42,7 @@ module TranslationIO
             $stderr.puts "[Error] #{parsed_response['error']}"
             exit
           else
-            $stderr.puts "[Error] Unknown error."
+            $stderr.puts "[Error] Unknown error from the server: #{response.code}."
             exit
           end
         rescue Errno::ECONNREFUSED
@@ -52,6 +53,10 @@ module TranslationIO
 
       def cleanup
         FileUtils.rm_rf(File.join('tmp', 'translation'))
+
+        if TranslationIO.config.disable_gettext
+          FileUtils.rm_rf(TranslationIO.config.locales_path)
+        end
       end
     end
   end

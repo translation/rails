@@ -5,9 +5,9 @@ module TranslationIO
         attr_accessor :all_used_yaml_locales
 
         def initialize(source_locale, target_locales, yaml_file_paths)
-          @source_locale    = source_locale
-          @target_locales   = target_locales
-          @yaml_file_paths  = yaml_file_paths
+          @source_locale         = source_locale
+          @target_locales        = target_locales
+          @yaml_file_paths       = yaml_file_paths
           @all_used_yaml_locales = Set.new
         end
 

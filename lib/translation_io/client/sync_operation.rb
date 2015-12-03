@@ -1,4 +1,3 @@
-require 'translation_io/client/sync_operation/update_and_collect_pot_file_step'
 require 'translation_io/client/sync_operation/create_yaml_pot_file_step'
 require 'translation_io/client/sync_operation/apply_yaml_source_edits_step'
 
@@ -20,10 +19,12 @@ module TranslationIO
 
         ApplyYamlSourceEditsStep.new(yaml_file_paths, source_locale).run(params)
 
-        BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
-        BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
+        unless config.disable_gettext
+          BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
+          BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
+        end
 
-        UpdateAndCollectPotFileStep.new(pot_path, source_files).run(params)
+        UpdatePotFileStep.new(pot_path, source_files).run(params)
         CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
 
         if purge

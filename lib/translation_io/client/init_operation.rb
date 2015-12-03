@@ -1,4 +1,3 @@
-require 'translation_io/client/init_operation/update_pot_file_step'
 require 'translation_io/client/init_operation/update_and_collect_po_files_step'
 require 'translation_io/client/init_operation/create_yaml_po_files_step'
 require 'translation_io/client/init_operation/cleanup_yaml_files_step'
@@ -19,8 +18,10 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
-        BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
-        BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
+        unless config.disable_gettext
+          BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
+          BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
+        end
 
         UpdatePotFileStep.new(pot_path, source_files).run(params)
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
@@ -32,8 +33,13 @@ module TranslationIO
         yaml_locales_difference = (all_used_yaml_locales) - target_locales.sort.map(&:to_s)
 
         if yaml_locales_difference.any?
-          TranslationIO.info("[error] Your `config.target_locales` are [#{target_locales.join(', ')}] and we have found some YAML keys for [#{all_used_yaml_locales.join(', ')}] and they does not match.")
-          TranslationIO.info("[error] Do you really want to continue? (y/N)")
+          puts
+          puts "----------"
+          puts "Your `config.target_locales` are [#{target_locales.join(', ')}]."
+          puts "We have found some YAML keys for [#{all_used_yaml_locales.join(', ')}] and they don't match."
+          puts "Some of these locales may be coming from your gems."
+          puts "----------"
+          puts "Do you want to continue? (y/N)"
 
           print "> "
           input = STDIN.gets.strip
