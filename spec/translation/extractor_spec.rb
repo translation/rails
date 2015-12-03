@@ -254,6 +254,11 @@ describe TranslationIO::Extractor do
         extracted = subject.extract('%div= "#{_("Hi kids !")}"')
         extracted.should == ['_("Hi kids !")']
       end
+
+      it 'extracts gettext containing some interpolation' do
+        extracted = subject.extract('n_("Up to one visit per month", "Up to %{visits} visites per month", company.monthly_cap) % {visits: company.monthly_cap}')
+        extracted.should == ['n_("Up to one visit per month", "Up to %{visits} visites per month", company.monthly_cap)']
+      end
     end
 
     context "weird spaces - " do
