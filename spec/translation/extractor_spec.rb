@@ -297,6 +297,16 @@ describe TranslationIO::Extractor do
         extracted.should == ['_ "Hi kids !"']
       end
 
+      it 'extracts with no () and single quotes' do
+        extracted = subject.extract("=_ 'Hi kids !'")
+        extracted.should == ["_ 'Hi kids !'"]
+      end
+
+      it 'extracts with no () and spaces and single quotes' do
+        extracted = subject.extract("= _'Hi kids !'")
+        extracted.should == ["_'Hi kids !'"]
+      end
+
       it 'extracts with HAML parameter' do
         extracted = subject.extract('%div{:alt => _("hello kids")}')
         extracted.should == ['_("hello kids")']

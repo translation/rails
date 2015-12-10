@@ -16,7 +16,7 @@ module TranslationIO
               file_path = File.join('tmp', 'translation', "haml-gettext-#{index.to_s.rjust(8,'0')}.rb")
 
               File.open(file_path, 'w') do |file|
-                file.puts "#{entry}"
+                file.puts "def tmp_test\n  #{entry}\nend"
               end
             end
           end
