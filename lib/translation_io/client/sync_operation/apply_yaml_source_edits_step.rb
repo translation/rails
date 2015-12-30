@@ -26,35 +26,39 @@ module TranslationIO
                 flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
 
                 flat_yaml_hash.each do |key, value|
-                  if key == "#{@source_locale}.#{source_edit['key']}" && value == source_edit['old_text']
-                    TranslationIO.info "#{source_edit['key']} | #{source_edit['old_text']} -> #{source_edit['new_text']}", 2, 2
+                  if key == "#{@source_locale}.#{source_edit['key']}"
+                    if value == source_edit['old_text']
+                      TranslationIO.info "#{source_edit['key']} | #{source_edit['old_text']} -> #{source_edit['new_text']}", 2, 2
 
-                    if locale_file_path_in_project?(file_path)
-                      flat_yaml_hash[key] = source_edit['new_text']
+                      if locale_file_path_in_project?(file_path)
+                        flat_yaml_hash[key] = source_edit['new_text']
 
-                      File.open(file_path, 'w') do |f|
-                        f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
+                        File.open(file_path, 'w') do |f|
+                          f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
+                        end
+                      else # override source text of gem
+                        yaml_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
+
+                        if File.exists?(yaml_path) # source yaml file
+                          yaml_hash      = YAML::load(File.read(yaml_path))
+                          flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
+                        else
+                          FileUtils::mkdir_p File.dirname(yaml_path)
+                          flat_yaml_hash = {}
+                        end
+
+                        flat_yaml_hash["#{@source_locale}.#{source_edit['key']}"] = source_edit['new_text']
+
+                        File.open(yaml_path, 'w') do |f|
+                          f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
+                        end
                       end
+
+                      inserted = true
+                      break
                     else
-                      yaml_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
-
-                      if File.exists?(yaml_path) # en.yml
-                        yaml_hash      = YAML::load(File.read(yaml_path))
-                        flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
-                      else
-                        FileUtils::mkdir_p File.dirname(yaml_path)
-                        flat_yaml_hash = {}
-                      end
-
-                      flat_yaml_hash["#{@source_locale}.#{source_edit['key']}"] = source_edit['new_text']
-
-                      File.open(yaml_path, 'w') do |f|
-                        f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
-                      end
+                      TranslationIO.info "#{source_edit['key']} | Ignored because translation was updated directly in source YAML file", 2, 2
                     end
-
-                    inserted = true
-                    break
                   end
                 end
 
@@ -64,7 +68,7 @@ module TranslationIO
           end
 
           File.open(TranslationIO.config.metadata_path, 'w') do |f|
-            f.write({ 'timestamp' => Time.now.getutc.to_i }.to_yaml)
+            f.write({ 'timestamp' => Time.now.utc.to_i }.to_yaml)
           end
         end
 
