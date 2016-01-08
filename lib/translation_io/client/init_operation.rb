@@ -29,15 +29,32 @@ module TranslationIO
         create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
         create_yaml_pot_files_step.run(params)
 
-        all_used_yaml_locales   = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [config.source_locale.to_s]).sort.map(&:to_s)
-        yaml_locales_difference = (all_used_yaml_locales) - target_locales.sort.map(&:to_s)
+        all_used_yaml_locales    = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [source_locale.to_s]).sort.map(&:to_s)
+        is_source_locale_unfound = !source_locale.in?(all_used_yaml_locales)
+        unfound_target_locales   = target_locales - all_used_yaml_locales
 
-        if yaml_locales_difference.any?
+        if is_source_locale_unfound
           puts
           puts "----------"
-          puts "Your `config.target_locales` are [#{target_locales.join(', ')}]."
-          puts "We have found some YAML keys for [#{all_used_yaml_locales.join(', ')}] and they don't match."
-          puts "Some of these locales may be coming from your gems."
+          puts "Your `config.source_locale` is \"#{source_locale}\" but no YAML keys were found for this locale."
+          puts "Check that you haven't misspelled the locale (ex. 'en-GB' instead of 'en')."
+          puts "----------"
+          puts "Do you want to continue anyway? (y/N)"
+
+          print "> "
+          input = STDIN.gets.strip
+
+          if input != 'y' && input != 'Y'
+            exit(0)
+          end
+        end
+
+        if unfound_target_locales.any?
+          puts
+          puts "----------"
+          puts "Your `config.target_locales` are [#{target_locales.sort.join(', ')}]."
+          puts "But we haven't found any YAML key for [#{unfound_target_locales.join(', ')}], is this normal?"
+          puts "If not, check that you haven't misspelled the locale (ex. 'en-GB' instead of 'en')."
           puts "----------"
           puts "Do you want to continue? (y/N)"
 
