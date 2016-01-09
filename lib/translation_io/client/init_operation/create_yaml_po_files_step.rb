@@ -32,14 +32,14 @@ module TranslationIO
             YamlEntry.string?(key, value) && !YamlEntry.localization?(key, value)
           end
 
-          source_flat_string_tanslations = all_flat_string_translations.select do |key|
+          source_flat_string_translations = all_flat_string_translations.select do |key|
             YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key)
           end
 
           @target_locales.each do |target_locale|
             po_representation = GetText::PO.new
 
-            source_flat_string_tanslations.each_pair do |key, value|
+            source_flat_string_translations.each_pair do |key, value|
               target_key = key.gsub(/\A#{TranslationIO.config.source_locale}\./, "#{target_locale}.")
               msgid      = value
               msgstr     = all_flat_string_translations[target_key]

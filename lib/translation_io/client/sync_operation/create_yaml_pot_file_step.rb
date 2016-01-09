@@ -23,13 +23,13 @@ module TranslationIO
 
           all_flat_translations = FlatHash.to_flat_hash(all_translations)
 
-          source_flat_string_tanslations = all_flat_translations.select do |key, value|
+          source_flat_string_translations = all_flat_translations.select do |key, value|
             YamlEntry.string?(key, value) && YamlEntry.from_locale?(key, @source_locale) && !YamlEntry.ignored?(key) && !YamlEntry.localization?(key, value)
           end
 
           pot_representation = GetText::PO.new
 
-          source_flat_string_tanslations.each_pair do |key, value|
+          source_flat_string_translations.each_pair do |key, value|
             msgid = value
 
             unless msgid.to_s.empty?
