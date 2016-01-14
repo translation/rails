@@ -60,3 +60,15 @@ module GetText
     end
   end
 end
+
+if defined?(ActiveRecord)
+  class ActiveRecord::Base
+    class << self
+      def translated_field(field_name)
+        puts "lol"
+        TranslationIO::Content.register_translated_field(self.name, field_name)
+        true
+      end
+    end
+  end
+end

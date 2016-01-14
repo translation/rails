@@ -31,4 +31,16 @@ EOS
   task :purge => :environment do
     TranslationIO.info("Purge is deprecated, please use rake 'translation:sync_and_purge' instead.")
   end
+
+  namespace :content do
+    task :init => :environment do
+      Rails.application.eager_load!
+      TranslationIO::Content::Init.new.run
+    end
+
+    task :sync => :environment do
+      Rails.application.eager_load!
+      TranslationIO::Content::Sync.new.run
+    end
+  end
 end

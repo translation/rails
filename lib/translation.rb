@@ -25,6 +25,8 @@ require 'translation_io/controller'
 require 'translation_io/extractor'
 require 'translation_io/yaml_entry'
 
+require 'translation_io/content'
+
 module TranslationIO
   module Proxy
     include GetText
