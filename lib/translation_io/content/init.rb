@@ -3,14 +3,12 @@ module TranslationIO
     class Init
       def run
         po_representations = {}
-        storage            = Storage::SuffixStorage.new
+        storage            = TranslationIO::Content.config.storage
         source_locale      = TranslationIO::Content.config.source_locale
 
         TranslationIO::Content.config.target_locales.each do |target_locale|
           po_representations[target_locale] = GetText::PO.new
         end
-
-        puts TranslationIO::Content.config.target_locales.inspect
 
         TranslationIO::Content.translated_fields.each_pair do |class_name, field_names|
           puts "* #{class_name}"
@@ -21,7 +19,7 @@ module TranslationIO
             field_names.each do |field_name|
               puts "    * #{field_name}"
 
-              msgid = storage.get_translation(source_locale, instance, field_name)
+              msgid = storage.get(source_locale, instance, field_name)
 
               TranslationIO::Content.config.target_locales.each do |target_locale|
                 puts "      * #{target_locale}"
@@ -29,7 +27,7 @@ module TranslationIO
                 unless msgid.to_s.empty?
                   po_entry         = GetText::POEntry.new(:msgctxt)
                   po_entry.msgid   = msgid
-                  po_entry.msgstr  = storage.get_translation(target_locale, instance, field_name)
+                  po_entry.msgstr  = storage.get(target_locale, instance, field_name)
                   po_entry.msgctxt = "#{class_name}-#{instance.id}-#{field_name}"
 
                   po_representations[target_locale][po_entry.msgctxt, po_entry.msgid] = po_entry
@@ -45,7 +43,11 @@ module TranslationIO
           params["content_po_data_#{target_locale}"] = po_representation.to_s
         end
 
-        puts params
+        TranslationIO.info "Sending content data to server"
+        uri             = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_init")
+        parsed_response = TranslationIO::Content.perform_request(uri, params)
+
+        puts "Init content success."
       end
     end
   end

@@ -1,3 +1,4 @@
+require 'translation_io/content/config'
 require 'translation_io/content/storage'
 require 'translation_io/content/init'
 require 'translation_io/content/sync'
@@ -7,12 +8,11 @@ module TranslationIO
     @@translated_fields = {}
 
     class << self
-      attr_reader :config, :client
+      attr_reader :config
 
       def configure(&block)
         @config ||= Content::Config.new
         yield @config
-        @client = Client.new(@config.api_key, @config.endpoint)
         return true
       end
 
@@ -24,27 +24,50 @@ module TranslationIO
         @@translated_fields[class_name] ||= []
         @@translated_fields[class_name] << field_name.to_s
       end
-    end
 
-    class Config
-      attr_accessor :api_key, :locales_path, :yaml_locales_path
-      attr_accessor :source_locale, :target_locales
-      attr_accessor :endpoint
-      attr_accessor :verbose
-      attr_accessor :test
-
-      def initialize
-        self.locales_path      = File.join('config', 'locales', 'gettext')
-        self.yaml_locales_path = File.join('config', 'locales')
-        self.source_locale     = :en
-        self.target_locales    = []
-        self.endpoint          = 'https://translation.io/api'
-        self.verbose           = 1
-        self.test              = false
+      def define_field_accessors
+        if config.field_accessors
+          translated_fields.each_pair do |class_name, field_names|
+            field_names.each do |field_name|
+              class_name.constantize.send(:define_method, field_name.to_sym) do
+                config.storage.get(I18n.locale, self, field_name)
+              end
+            end
+          end
+        end
       end
 
-      def to_s
-        "content — #{api_key} - #{source_locale} => #{target_locales.join(' + ')}"
+      def perform_request(uri, params = {})
+        begin
+          params.merge!({
+            'gem_version'        => TranslationIO.version,
+            'source_language'    => config.source_locale.to_s,
+            'target_languages[]' => config.target_locales.map(&:to_s)
+          })
+
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = uri.scheme == 'https'
+          http.read_timeout = 500
+
+          request = Net::HTTP::Post.new(uri.request_uri)
+          request.set_form_data(params)
+
+          response        = http.request(request)
+          parsed_response = JSON.parse(response.body)
+
+          if response.code.to_i == 200
+            return parsed_response
+          elsif response.code.to_i == 400 && parsed_response.has_key?('error')
+            $stderr.puts "[Error] #{parsed_response['error']}"
+            exit
+          else
+            $stderr.puts "[Error] Unknown error from the server: #{response.code}."
+            exit
+          end
+        rescue Errno::ECONNREFUSED
+          $stderr.puts "[Error] Server not responding."
+          exit
+        end
       end
     end
   end

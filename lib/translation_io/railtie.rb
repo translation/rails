@@ -19,6 +19,7 @@ module TranslationIO
     config.after_initialize do
       # Ensure GetText.locale is in sync with I18n's default locale at boot
       I18n.locale = I18n.default_locale
+      TranslationIO::Content.define_field_accessors
     end
   end
 end
@@ -65,7 +66,6 @@ if defined?(ActiveRecord)
   class ActiveRecord::Base
     class << self
       def translated_field(field_name)
-        puts "lol"
         TranslationIO::Content.register_translated_field(self.name, field_name)
         true
       end
