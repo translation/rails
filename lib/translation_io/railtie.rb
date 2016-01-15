@@ -20,6 +20,7 @@ module TranslationIO
       # Ensure GetText.locale is in sync with I18n's default locale at boot
       I18n.locale = I18n.default_locale
       TranslationIO::Content.define_field_accessors
+      TranslationIO::Content.register_translated_fields_from_globalize
     end
   end
 end

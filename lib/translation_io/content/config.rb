@@ -18,7 +18,7 @@ module TranslationIO
         self.endpoint          = 'https://translation.io/api'
         self.verbose           = 1
         self.test              = false
-        self.storage           = Storage::SuffixStorage.new
+        self.storage           = 'suffix'
       end
 
       def to_s

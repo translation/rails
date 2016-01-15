@@ -3,7 +3,7 @@ module TranslationIO
     class Init
       def run
         po_representations = {}
-        storage            = TranslationIO::Content.config.storage
+        storage            = TranslationIO::Content.storage
         source_locale      = TranslationIO::Content.config.source_locale
 
         TranslationIO::Content.config.target_locales.each do |target_locale|

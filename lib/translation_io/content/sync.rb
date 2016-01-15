@@ -2,7 +2,7 @@ module TranslationIO
   module Content
     class Sync
       def run
-        storage        = TranslationIO::Content.config.storage
+        storage        = TranslationIO::Content.storage
         source_locale  = TranslationIO::Content.config.source_locale
         target_locales = TranslationIO::Content.config.target_locales
 
