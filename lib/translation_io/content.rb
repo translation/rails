@@ -1,5 +1,6 @@
 require 'translation_io/content/config'
 require 'translation_io/content/storage'
+require 'translation_io/content/request'
 require 'translation_io/content/init'
 require 'translation_io/content/sync'
 
@@ -59,37 +60,12 @@ module TranslationIO
         storage.is_a?(Storage::GlobalizeStorage)
       end
 
-      def perform_request(uri, params = {})
-        begin
-          params.merge!({
-            'gem_version'        => TranslationIO.version,
-            'source_language'    => config.source_locale.to_s,
-            'target_languages[]' => config.target_locales.map(&:to_s)
-          })
+      def init
+        TranslationIO::Content::Init.new.run
+      end
 
-          http = Net::HTTP.new(uri.host, uri.port)
-          http.use_ssl = uri.scheme == 'https'
-          http.read_timeout = 500
-
-          request = Net::HTTP::Post.new(uri.request_uri)
-          request.set_form_data(params)
-
-          response        = http.request(request)
-          parsed_response = JSON.parse(response.body)
-
-          if response.code.to_i == 200
-            return parsed_response
-          elsif response.code.to_i == 400 && parsed_response.has_key?('error')
-            $stderr.puts "[Error] #{parsed_response['error']}"
-            exit
-          else
-            $stderr.puts "[Error] Unknown error from the server: #{response.code}."
-            exit
-          end
-        rescue Errno::ECONNREFUSED
-          $stderr.puts "[Error] Server not responding."
-          exit
-        end
+      def sync
+        TranslationIO::Content::Sync.new.run
       end
     end
   end

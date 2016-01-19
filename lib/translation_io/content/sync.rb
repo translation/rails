@@ -9,7 +9,7 @@ module TranslationIO
         # appel pour avoir les source edits depuis une date
 
         uri                   = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_source_edits")
-        source_edits_response = TranslationIO::Content.perform_request(uri)
+        source_edits_response = TranslationIO::Content::Request.new(uri).perform
 
         # appliquer les changements de source reçus (ignorer un changement si ça a changé en DB depuis)
 
@@ -63,7 +63,7 @@ module TranslationIO
         params["content_pot_data"] = pot_representation.to_s
 
         uri           = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_sync")
-        sync_response = TranslationIO::Content.perform_request(uri, params)
+        sync_response = TranslationIO::Content::Request.new(uri, params).perform
 
         puts sync_response
 

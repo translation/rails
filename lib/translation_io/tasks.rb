@@ -35,12 +35,12 @@ EOS
   namespace :content do
     task :init => :environment do
       Rails.application.eager_load!
-      TranslationIO::Content::Init.new.run
+      TranslationIO::Content.init
     end
 
     task :sync => :environment do
       Rails.application.eager_load!
-      TranslationIO::Content::Sync.new.run
+      TranslationIO::Content.sync
     end
   end
 end

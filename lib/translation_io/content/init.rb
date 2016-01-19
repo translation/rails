@@ -45,7 +45,7 @@ module TranslationIO
 
         TranslationIO.info "Sending content data to server"
         uri             = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_init")
-        parsed_response = TranslationIO::Content.perform_request(uri, params)
+        parsed_response = TranslationIO::Content::Request.new(uri, params).perform
 
         puts "Init content success."
       end
