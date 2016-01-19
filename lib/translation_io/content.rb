@@ -14,7 +14,7 @@ module TranslationIO
         @config ||= Content::Config.new
         yield @config
         storage_class = "TranslationIO::Content::Storage::#{@config.storage.to_s.camelize}Storage".constantize
-        storage = storage_class.new
+        @storage = storage_class.new
         return true
       end
 

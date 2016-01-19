@@ -18,7 +18,12 @@ module TranslationIO
         self.endpoint          = 'https://translation.io/api'
         self.verbose           = 1
         self.test              = false
-        self.storage           = 'suffix'
+
+        if defined?(Globalize)
+          self.storage = :globalize
+        else
+          self.storage = :suffix
+        end
       end
 
       def to_s
