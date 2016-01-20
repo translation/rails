@@ -1,19 +1,35 @@
 module TranslationIO
   module Content
     class Sync
+      attr_reader :storage, :source_locale, :target_locales
+
+      def initialize
+        @storage        = TranslationIO::Content.storage
+        @source_locale  = TranslationIO::Content.config.source_locale
+        @target_locales = TranslationIO::Content.config.target_locales
+      end
+
       def run
-        storage        = TranslationIO::Content.storage
-        source_locale  = TranslationIO::Content.config.source_locale
-        target_locales = TranslationIO::Content.config.target_locales
+        source_edits_response = get_source_edits_from_backend
+        apply_source_edits(source_edits_response)
 
-        # appel pour avoir les source edits depuis une date
+        backend_response = submit_local_changes_to_backend(
+          build_local_changes_params(
+            source_edits_response['last_content_synced_at'].to_i
+          )
+        )
 
-        uri                   = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_source_edits")
-        source_edits_response = TranslationIO::Content::Request.new(uri).perform
+        apply_new_translations_from_backend(backend_response)
+        update_last_content_synced_at_on_backend
+      end
 
-        # appliquer les changements de source reçus (ignorer un changement si ça a changé en DB depuis)
+      def get_source_edits_from_backend
+        uri = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_source_edits")
+        return TranslationIO::Content::Request.new(uri).perform
+      end
 
-        source_edits_response['content_source_edits'].each do |source_edit|
+      def apply_source_edits(data)
+        data['content_source_edits'].each do |source_edit|
           old_text    = source_edit['old_text']
           new_text    = source_edit['new_text']
           key         = source_edit['key']
@@ -24,16 +40,16 @@ module TranslationIO
           instance    = class_name.constantize.find(instance_id)
 
           if storage.get(source_locale, instance, field_name) == old_text
-            TranslationIO.info "#{key} | #{old_text} -> #{new_text}"
+            #puts "#{key} | #{old_text} -> #{new_text}"
             storage.set(source_locale, instance, field_name, new_text)
           else
-            puts "Ignore #{key}"
+            #puts "Ignore #{key}"
           end
         end
+      end
 
-        # chopper tous les changements/ajouts *de source* en DB et les envoyer à content_sync en backend
-
-        last_content_synced_at = Time.at(source_edits_response['last_content_synced_at'].to_i)
+      def build_local_changes_params(last_content_synced_at)
+        last_content_synced_at = Time.at(last_content_synced_at)
         pot_representation     = GetText::PO.new
 
         TranslationIO::Content.translated_fields.each_pair do |class_name, field_names|
@@ -59,18 +75,19 @@ module TranslationIO
           end
         end
 
-        params = {}
-        params["content_pot_data"] = pot_representation.to_s
+        return {
+          "content_pot_data" => pot_representation.to_s
+        }
+      end
 
-        uri           = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_sync")
-        sync_response = TranslationIO::Content::Request.new(uri, params).perform
+      def submit_local_changes_to_backend(params)
+        uri = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_sync")
+        return TranslationIO::Content::Request.new(uri, params).perform
+      end
 
-        puts sync_response
-
-        # traiter la réponse du backend qui contient éventuellement des nouvelles traductions : appliquer ces traductions en DB
-
+      def apply_new_translations_from_backend(response)
         target_locales.each do |target_locale|
-          po_data = sync_response["content_po_data_#{target_locale}"]
+          po_data = response["content_po_data_#{target_locale}"]
 
           unless po_data.blank?
             parser            = GetText::POParser.new
@@ -86,10 +103,16 @@ module TranslationIO
               instance    = class_name.constantize.find(instance_id)
               new_value   = po_entry.msgstr.to_s
 
-              storage.set(target_locale, instance, field_name, new_value)
+              if instance.present?
+                storage.set(target_locale, instance, field_name, new_value)
+              end
             end
           end
         end
+      end
+
+      def update_last_content_synced_at_on_backend
+        # IMPLEMENT ME
       end
     end
   end

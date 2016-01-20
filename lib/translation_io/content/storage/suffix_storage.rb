@@ -7,7 +7,9 @@ module TranslationIO
         end
 
         def set(locale, instance, field_name, value)
-          instance.update_column("#{field_name}_#{locale}".to_sym, value.to_s)
+          instance.update_columns(
+            "#{field_name}_#{locale}".to_sym => value.to_s
+          )
         end
       end
     end
