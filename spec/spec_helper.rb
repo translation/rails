@@ -14,18 +14,21 @@ RSpec.configure do |config|
       self.verbose = false
 
       create_table :posts, :force => true do |t|
-        t.string   :title_fr
-        t.string   :title_en
-        t.string   :title_nl
-        t.string   :content_fr
-        t.string   :content_en
-        t.string   :content_nl
-        t.datetime :published_at
+        t.string     :title_fr
+        t.string     :title_en
+        t.string     :title_nl
+        t.string     :content_fr
+        t.string     :content_en
+        t.string     :content_nl
+        t.datetime   :published_at
+        t.timestamps :null => false
       end
     end
   end
 
   config.before :each do
+    Post.destroy_all
+
     TranslationIO.configure do |config|
       config.verbose                   = -1
       config.test                      = true

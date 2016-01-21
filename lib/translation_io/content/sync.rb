@@ -20,7 +20,8 @@ module TranslationIO
         )
 
         apply_new_translations_from_backend(backend_response)
-        update_last_content_synced_at_on_backend
+        touch_last_content_synced_at_on_backend
+        true
       end
 
       def get_source_edits_from_backend
@@ -37,13 +38,15 @@ module TranslationIO
           class_name  = key_parts.first
           instance_id = key_parts.second.to_i
           field_name  = key_parts.last
-          instance    = class_name.constantize.find(instance_id)
+          instance    = class_name.constantize.find_by_id(instance_id)
 
-          if storage.get(source_locale, instance, field_name) == old_text
-            #puts "#{key} | #{old_text} -> #{new_text}"
-            storage.set(source_locale, instance, field_name, new_text)
-          else
-            #puts "Ignore #{key}"
+          if instance.present?
+            if storage.get(source_locale, instance, field_name) == old_text
+              #puts "#{key} | #{old_text} -> #{new_text}"
+              storage.set(source_locale, instance, field_name, new_text)
+            else
+              #puts "Ignore #{key}"
+            end
           end
         end
       end
@@ -111,8 +114,9 @@ module TranslationIO
         end
       end
 
-      def update_last_content_synced_at_on_backend
-        # IMPLEMENT ME
+      def touch_last_content_synced_at_on_backend
+        uri = URI("#{TranslationIO::Content.config.endpoint}/projects/#{TranslationIO::Content.config.api_key}/content_touch_last_content_synced_at")
+        return TranslationIO::Content::Request.new(uri).perform
       end
     end
   end
