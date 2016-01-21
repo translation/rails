@@ -31,17 +31,12 @@ describe TranslationIO::Content::Sync do
 
   describe '#build_local_changes_params' do
     it 'works' do
-      post1 = Post.create!({ :title_fr => 'Un super titre modifé après le timestamp' })
-
-      sleep 1
-      last_content_synced_at = Time.now.to_i
-      sleep 1
-
-      post2 = Post.create!({ :title_fr => 'Un autre super titre modifé' })
+      post1 = Post.create!({ :title_fr => 'Un super titre modifé après le timestamp', :updated_at => 10.minutes.ago })
+      post2 = Post.create!({ :title_fr => 'Un autre super titre modifé'  })
       post3 = Post.create!({ :title_fr => 'Un autre super titre modifié' })
 
       sync = TranslationIO::Content::Sync.new
-      backend_response = sync.build_local_changes_params(last_content_synced_at)
+      backend_response = sync.build_local_changes_params(Time.now.to_i)
 
       backend_response.should == {
         "content_pot_data" => "msgctxt \"Post-#{post2.id}-title\"\nmsgid \"Un autre super titre modifé\"\nmsgstr \"\"\n\nmsgctxt \"Post-#{post3.id}-title\"\nmsgid \"Un autre super titre modifié\"\nmsgstr \"\"\n"

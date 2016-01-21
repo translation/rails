@@ -42,10 +42,7 @@ module TranslationIO
 
           if instance.present?
             if storage.get(source_locale, instance, field_name) == old_text
-              #puts "#{key} | #{old_text} -> #{new_text}"
               storage.set(source_locale, instance, field_name, new_text)
-            else
-              #puts "Ignore #{key}"
             end
           end
         end
@@ -56,14 +53,8 @@ module TranslationIO
         pot_representation     = GetText::PO.new
 
         TranslationIO::Content.translated_fields.each_pair do |class_name, field_names|
-          puts "* #{class_name}"
-
           class_name.constantize.where('updated_at > ?', last_content_synced_at).find_each do |instance|
-            puts "  * #{instance.id}"
-
             field_names.each do |field_name|
-              puts "    * #{field_name}"
-
               msgid = storage.get(source_locale, instance, field_name)
 
               unless msgid.to_s.empty?
