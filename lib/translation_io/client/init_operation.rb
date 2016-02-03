@@ -29,7 +29,7 @@ module TranslationIO
         create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
         create_yaml_pot_files_step.run(params)
 
-        all_used_yaml_locales    = (create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s) - [source_locale.to_s]).sort.map(&:to_s)
+        all_used_yaml_locales    = create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s).sort
         is_source_locale_unfound = !source_locale.in?(all_used_yaml_locales)
         unfound_target_locales   = target_locales - all_used_yaml_locales
 
