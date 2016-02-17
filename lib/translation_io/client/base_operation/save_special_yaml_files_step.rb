@@ -69,12 +69,15 @@ module TranslationIO
         def self.top_comment
           <<EOS
 # THIS FILE CONTAINS LOCALIZATION KEYS : date and number formats, number precisions,
-# number separators and all other non-text values depending on the language.
+# number separators and all non-textual values depending on the language.
 # These values must not reach the translator, so they are separated in this file.
 #
 # More info here: https://translation.io/blog/gettext-is-better-than-rails-i18n#localization
 #
-# You can edit and/or add new keys here, they won't be touched by Translation.io.
+# You can edit and/or add new localization keys here, they won't be touched by Translation.io.
+#
+# If you want to add a new localization key prefix, use the option described here:
+# https://github.com/aurels/translation-gem#custom-localization-key-prefixes
 #
 EOS
         end

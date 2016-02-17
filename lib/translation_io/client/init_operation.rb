@@ -76,6 +76,12 @@ module TranslationIO
           BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
           CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
           BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+
+          puts
+          puts "----------"
+          puts "If you're wondering why your YAML directory structure has changed so much,"
+          puts "please check this article: https://translation.io/blog/dealing-with-yaml-files-and-their-directory-structure"
+          puts "----------"
         end
 
         cleanup
