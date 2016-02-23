@@ -31,9 +31,7 @@ end
 
 And finish by inititalizing your translation project with:
 
-```ruby
-bundle exec rake translation:init
-```
+    bundle exec rake translation:init
 
 If you later need to add/remove target languages, please read our
 [dedicated article](https://translation.io/blog/adding-target-languages) about that.
@@ -42,17 +40,13 @@ If you later need to add/remove target languages, please read our
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
-```ruby
-bundle exec rake translation:sync
-```
+    bundle exec rake translation:sync
 
 ## Sync and Purge
 
 If you also need to remove unused keys/strings from Translation.io using the current branch as reference:
 
-```ruby
-bundle exec rake translation:sync_and_purge
-```
+    bundle exec rake translation:sync_and_purge
 
 As the name says, this operation will also perform a sync at the same time.
 
