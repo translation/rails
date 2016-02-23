@@ -10,7 +10,9 @@ Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [T
 
 Add the gem to your project's Gemfile:
 
-    gem 'translation'
+```ruby
+gem 'translation'
+```
 
 Then:
 
@@ -19,15 +21,19 @@ Then:
 
 The initializer looks like this:
 
-    TranslationIO.configure do |config|
-      config.api_key        = 'some api key which is very long'
-      config.source_locale  = 'en'
-      config.target_locales = ['fr', 'nl', 'de', 'es']
-    end
+```ruby
+TranslationIO.configure do |config|
+  config.api_key        = 'some api key which is very long'
+  config.source_locale  = 'en'
+  config.target_locales = ['fr', 'nl', 'de', 'es']
+end
+```
 
 And finish by inititalizing your translation project with:
 
-    bundle exec rake translation:init
+```ruby
+bundle exec rake translation:init
+```
 
 If you later need to add/remove target languages, please read our
 [dedicated article](https://translation.io/blog/adding-target-languages) about that.
@@ -36,13 +42,17 @@ If you later need to add/remove target languages, please read our
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
-    bundle exec rake translation:sync
+```ruby
+bundle exec rake translation:sync
+```
 
 ## Sync and Purge
 
 If you also need to remove unused keys/strings from Translation.io using the current branch as reference:
 
-    bundle exec rake translation:sync_and_purge
+```ruby
+bundle exec rake translation:sync_and_purge
+```
 
 As the name says, this operation will also perform a sync at the same time.
 
@@ -59,11 +69,13 @@ For these cases, you just have to add `disable_gettext` in the config file.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.disable_gettext = true
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.disable_gettext = true
+  ...
+end
+```
 
 ### Ignored YAML keys
 
@@ -72,20 +84,22 @@ You can use the `ignored_key_prefixes` for that.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.ignored_key_prefixes = [
-        'number.human.',
-        'admin.',
-        'errors.messages.',
-        'activerecord.errors.messages.',
-        'will_paginate.',
-        'helpers.page_entries_info.',
-        'views.pagination.',
-        'enumerize.visibility.'
-      ]
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.ignored_key_prefixes = [
+    'number.human.',
+    'admin.',
+    'errors.messages.',
+    'activerecord.errors.messages.',
+    'will_paginate.',
+    'helpers.page_entries_info.',
+    'views.pagination.',
+    'enumerize.visibility.'
+  ]
+  ...
+end
+```
 
 ### Custom localization key prefixes
 
@@ -105,28 +119,31 @@ to add some more, use the `localization_key_prefixes` option.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.localization_key_prefixes = ['my_gem.date.formats']
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.localization_key_prefixes = ['my_gem.date.formats']
+  ...
+end
+```
 
 ### Paths where locales are stored (not recommended)
 
 You can specify where your GetText and YAML files are on disk:
 
-    TranslationIO.configure do |config|
-      ...
-      config.locales_path      = 'some/path' # defaults to config/locales/gettext
-      config.yaml_locales_path = 'some/path' # defaults to config/locales
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.locales_path      = 'some/path' # defaults to config/locales/gettext
+  config.yaml_locales_path = 'some/path' # defaults to config/locales
+  ...
+end
+```
 
 ## Tests
 
 To run the specs:
 
-    bundle
     bundle exec rspec
 
 ## Credits
