@@ -20,8 +20,8 @@ module TranslationIO
         ApplyYamlSourceEditsStep.new(yaml_file_paths, source_locale).run(params)
 
         unless config.disable_gettext
-          BaseOperation::DumpHamlGettextKeysStep.new(haml_source_files).run
-          BaseOperation::DumpSlimGettextKeysStep.new(slim_source_files).run
+          BaseOperation::DumpMarkupGettextKeysStep.new(haml_source_files, :haml).run
+          BaseOperation::DumpMarkupGettextKeysStep.new(slim_source_files, :slim).run
         end
 
         UpdatePotFileStep.new(pot_path, source_files).run(params)
