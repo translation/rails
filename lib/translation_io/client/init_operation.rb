@@ -29,9 +29,30 @@ module TranslationIO
         create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
         create_yaml_pot_files_step.run(params)
 
-        all_used_yaml_locales    = create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s).sort
+        all_used_yaml_locales = create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s).sort
+
+        warn_source_locale_unfound(source_locale, all_used_yaml_locales)
+        warn_target_locale_unfound(target_locales, all_used_yaml_locales)
+
+        TranslationIO.info "Sending data to server"
+        uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
+        parsed_response = BaseOperation.perform_request(uri, params)
+
+        unless parsed_response.nil?
+          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+          CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
+          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+
+          info_yaml_directory_structure
+        end
+
+        cleanup
+      end
+
+      def warn_source_locale_unfound(source_locale, all_used_yaml_locales)
         is_source_locale_unfound = !source_locale.in?(all_used_yaml_locales)
-        unfound_target_locales   = target_locales - all_used_yaml_locales
 
         if is_source_locale_unfound
           puts
@@ -48,12 +69,16 @@ module TranslationIO
             exit(0)
           end
         end
+      end
 
-        if unfound_target_locales.any?
+      def warn_target_locale_unfound(target_locales, all_used_yaml_locales)
+        target_locales_unfound = target_locales - all_used_yaml_locales
+
+        if target_locales_unfound.any?
           puts
           puts "----------"
           puts "Your `config.target_locales` are [#{target_locales.sort.join(', ')}]."
-          puts "But we haven't found any YAML key for [#{unfound_target_locales.join(', ')}], is this normal?"
+          puts "But we haven't found any YAML key for [#{target_locales_unfound.join(', ')}], is this normal?"
           puts "If not, check that you haven't misspelled the locale (ex. 'en-GB' instead of 'en')."
           puts "----------"
           puts "Do you want to continue? (y/N)"
@@ -65,26 +90,14 @@ module TranslationIO
             exit(0)
           end
         end
+      end
 
-        TranslationIO.info "Sending data to server"
-        uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
-        parsed_response = BaseOperation.perform_request(uri, params)
-
-        unless parsed_response.nil?
-          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
-          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
-          CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
-          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
-
-          puts
-          puts "----------"
-          puts "If you're wondering why your YAML directory structure has changed so much,"
-          puts "please check this article: https://translation.io/blog/dealing-with-yaml-files-and-their-directory-structure"
-          puts "----------"
-        end
-
-        cleanup
+      def info_yaml_directory_structure
+        puts
+        puts "----------"
+        puts "If you're wondering why your YAML directory structure has changed so much,"
+        puts "please check this article: https://translation.io/blog/dealing-with-yaml-files-and-their-directory-structure"
+        puts "----------"
       end
     end
   end
