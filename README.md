@@ -1,4 +1,4 @@
-# Ruby/Rails gem for [Translation.io](http://translation.io). ![Build Status](https://www.codeship.io/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status) [![Code Climate](https://codeclimate.com/github/aurels/translation-gem/badges/gpa.svg)](https://codeclimate.com/github/aurels/translation-gem) [![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
+# Gem for [Translation.io](http://translation.io). ![Build Status](https://www.codeship.io/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status) [![Code Climate](https://codeclimate.com/github/aurels/translation-gem/badges/gpa.svg)](https://codeclimate.com/github/aurels/translation-gem) [![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
 
 ## Description
 
