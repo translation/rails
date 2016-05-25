@@ -13,7 +13,7 @@ module TranslationIO
 
           @target_locales.each do |target_locale|
             if @parsed_response.has_key?("po_data_#{target_locale}")
-              po_path = File.join(@locales_path, target_locale.to_s.gsub('-', '_'), "#{TEXT_DOMAIN}.po")
+              po_path = File.join(@locales_path, Locale::Tag.parse(target_locale).to_s, "#{TEXT_DOMAIN}.po")
               FileUtils.mkdir_p(File.dirname(po_path))
               TranslationIO.info po_path, 2, 2
 
