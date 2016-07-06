@@ -1,11 +1,5 @@
 require 'net/http'
 
-require 'gettext'
-require 'gettext/po'
-require 'gettext/po_parser'
-require 'gettext/tools'
-require 'gettext/text_domain_manager'
-
 module TranslationIO
   GETTEXT_METHODS = [
     :nsgettext, :pgettext, :npgettext, :sgettext, :ngettext, :gettext,
@@ -27,7 +21,6 @@ require 'translation_io/yaml_entry'
 
 module TranslationIO
   module Proxy
-    include GetText
   end
 
   class << self
@@ -37,21 +30,32 @@ module TranslationIO
       ENV['LANG']     = 'en_US.UTF-8' if ENV['LANG'].blank?
       ENV['LC_CTYPE'] = 'UTF-8'       if ENV['LC_CTYPE'].blank?
 
-      if Rails.env.development?
-        GetText::TextDomainManager.cached = false
-      end
-
       @config ||= Config.new
 
       yield @config
 
-      Proxy.bindtextdomain(TEXT_DOMAIN, {
-        :path           => @config.locales_path,
-        :output_charset => @config.charset
-      })
+      unless @config.disable_gettext
+        require 'gettext'
+        require 'gettext/po'
+        require 'gettext/po_parser'
+        require 'gettext/tools'
+        require 'gettext/text_domain_manager'
+        require 'gettext/tools/xgettext'
 
-      Proxy.textdomain(TEXT_DOMAIN)
-      Object.delegate *GETTEXT_METHODS, :to => Proxy
+        if Rails.env.development?
+          GetText::TextDomainManager.cached = false
+        end
+
+        Proxy.include GetText
+
+        Proxy.bindtextdomain(TEXT_DOMAIN, {
+          :path           => @config.locales_path,
+          :output_charset => @config.charset
+        })
+
+        Proxy.textdomain(TEXT_DOMAIN)
+        Object.delegate *GETTEXT_METHODS, :to => Proxy
+      end
 
       @client = Client.new(@config.api_key, @config.endpoint)
 
