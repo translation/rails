@@ -26,8 +26,6 @@ module I18n
 
       if defined?(GetText)
         GetText.set_current_locale(locale.to_s.gsub('-', '_').to_sym)
-      else
-        puts "do not set gettext locale because not loaded"
       end
     end
   end
