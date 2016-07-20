@@ -35,12 +35,8 @@ module TranslationIO
       yield @config
 
       unless @config.disable_gettext
-        require 'gettext'
-        require 'gettext/po'
-        require 'gettext/po_parser'
-        require 'gettext/tools'
-        require 'gettext/text_domain_manager'
-        require 'gettext/tools/xgettext'
+        require_gettext_dependencies
+        add_missing_locales
 
         if Rails.env.development?
           GetText::TextDomainManager.cached = false
@@ -60,6 +56,21 @@ module TranslationIO
       @client = Client.new(@config.api_key, @config.endpoint)
 
       return true
+    end
+
+    def require_gettext_dependencies
+      require 'gettext'
+      require 'gettext/po'
+      require 'gettext/po_parser'
+      require 'gettext/tools'
+      require 'gettext/text_domain_manager'
+      require 'gettext/tools/xgettext'
+    end
+
+    # Missing languages from Locale that are in Translation.io
+    def add_missing_locales
+      Locale::Info.three_languages['wee'] = Locale::Info::Language.new('', 'wee', 'I', 'L', 'Lower Sorbian')
+      Locale::Info.three_languages['wen'] = Locale::Info::Language.new('', 'wen', 'I', 'L', 'Upper Sorbian')
     end
 
     def info(message, level = 0, verbose_level = 0)
