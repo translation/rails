@@ -27,8 +27,7 @@ module TranslationIO
     attr_reader :config, :client
 
     def configure(&block)
-      ENV['LANG']     = 'en_US.UTF-8' if ENV['LANG'].blank?
-      ENV['LC_CTYPE'] = 'UTF-8'       if ENV['LC_CTYPE'].blank?
+      ENV['LANG'] = 'en_US.UTF-8' if ENV['LANG'].blank?
 
       @config ||= Config.new
 
