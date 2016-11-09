@@ -1,6 +1,4 @@
-# Ruby/Rails gem for [Translation.io](http://translation.io).
-
-![Build Status](https://www.codeship.io/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status)
+# Gem for [Translation.io](http://translation.io). [ ![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528) [![Code Climate](https://codeclimate.com/github/aurels/translation-gem/badges/gpa.svg)](https://codeclimate.com/github/aurels/translation-gem) [![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
 
 ## Description
 
@@ -10,7 +8,9 @@ Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [T
 
 Add the gem to your project's Gemfile:
 
-    gem 'translation'
+```ruby
+gem 'translation'
+```
 
 Then:
 
@@ -19,11 +19,13 @@ Then:
 
 The initializer looks like this:
 
-    TranslationIO.configure do |config|
-      config.api_key        = 'some api key which is very long'
-      config.source_locale  = 'en'
-      config.target_locales = ['fr', 'nl', 'de', 'es']
-    end
+```ruby
+TranslationIO.configure do |config|
+  config.api_key        = 'some api key which is very long'
+  config.source_locale  = 'en'
+  config.target_locales = ['fr', 'nl', 'de', 'es']
+end
+```
 
 And finish by inititalizing your translation project with:
 
@@ -59,11 +61,13 @@ For these cases, you just have to add `disable_gettext` in the config file.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.disable_gettext = true
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.disable_gettext = true
+  ...
+end
+```
 
 ### Ignored YAML keys
 
@@ -72,20 +76,22 @@ You can use the `ignored_key_prefixes` for that.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.ignored_key_prefixes = [
-        'number.human.',
-        'admin.',
-        'errors.messages.',
-        'activerecord.errors.messages.',
-        'will_paginate.',
-        'helpers.page_entries_info.',
-        'views.pagination.',
-        'enumerize.visibility.'
-      ]
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.ignored_key_prefixes = [
+    'number.human.',
+    'admin.',
+    'errors.messages.',
+    'activerecord.errors.messages.',
+    'will_paginate.',
+    'helpers.page_entries_info.',
+    'views.pagination.',
+    'enumerize.visibility.'
+  ]
+  ...
+end
+```
 
 ### Custom localization key prefixes
 
@@ -105,28 +111,31 @@ to add some more, use the `localization_key_prefixes` option.
 
 For example:
 
-    TranslationIO.configure do |config|
-      ...
-      config.localization_key_prefixes = ['my_gem.date.formats']
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.localization_key_prefixes = ['my_gem.date.formats']
+  ...
+end
+```
 
 ### Paths where locales are stored (not recommended)
 
 You can specify where your GetText and YAML files are on disk:
 
-    TranslationIO.configure do |config|
-      ...
-      config.locales_path      = 'some/path' # defaults to config/locales/gettext
-      config.yaml_locales_path = 'some/path' # defaults to config/locales
-      ...
-    end
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.locales_path      = 'some/path' # defaults to config/locales/gettext
+  config.yaml_locales_path = 'some/path' # defaults to config/locales
+  ...
+end
+```
 
 ## Tests
 
 To run the specs:
 
-    bundle
     bundle exec rspec
 
 ## Credits

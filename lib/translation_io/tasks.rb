@@ -1,3 +1,6 @@
+require 'gettext'
+require 'gettext/po'
+require 'gettext/po_parser'
 require 'gettext/tools'
 
 namespace :translation do

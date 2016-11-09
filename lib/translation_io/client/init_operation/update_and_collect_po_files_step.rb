@@ -12,7 +12,7 @@ module TranslationIO
           TranslationIO.info "Updating PO files."
 
           @target_locales.each do |target_locale|
-            po_path = "#{@locales_path}/#{target_locale.gsub('-', '_')}/#{TEXT_DOMAIN}.po"
+            po_path = "#{@locales_path}/#{Locale::Tag.parse(target_locale).to_s}/#{TEXT_DOMAIN}.po"
             TranslationIO.info po_path, 2, 2
 
             if File.exist?(po_path)

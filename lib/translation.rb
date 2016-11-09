@@ -1,11 +1,5 @@
 require 'net/http'
 
-require 'gettext'
-require 'gettext/po'
-require 'gettext/po_parser'
-require 'gettext/tools'
-require 'gettext/text_domain_manager'
-
 module TranslationIO
   GETTEXT_METHODS = [
     :nsgettext, :pgettext, :npgettext, :sgettext, :ngettext, :gettext,
@@ -29,35 +23,55 @@ require 'translation_io/content'
 
 module TranslationIO
   module Proxy
-    include GetText
   end
 
   class << self
     attr_reader :config, :client
 
     def configure(&block)
-      ENV['LANG']     = 'en_US.UTF-8' if ENV['LANG'].blank?
-      ENV['LC_CTYPE'] = 'UTF-8'       if ENV['LC_CTYPE'].blank?
-
-      if Rails.env.development?
-        GetText::TextDomainManager.cached = false
-      end
+      ENV['LANG'] = 'en_US.UTF-8' if ENV['LANG'].blank?
 
       @config ||= Config.new
 
       yield @config
 
-      Proxy.bindtextdomain(TEXT_DOMAIN, {
-        :path           => @config.locales_path,
-        :output_charset => @config.charset
-      })
+      unless @config.disable_gettext
+        require_gettext_dependencies
+        add_missing_locales
 
-      Proxy.textdomain(TEXT_DOMAIN)
-      Object.delegate *GETTEXT_METHODS, :to => Proxy
+        if Rails.env.development?
+          GetText::TextDomainManager.cached = false
+        end
+
+        Proxy.include GetText
+
+        Proxy.bindtextdomain(TEXT_DOMAIN, {
+          :path           => @config.locales_path,
+          :output_charset => @config.charset
+        })
+
+        Proxy.textdomain(TEXT_DOMAIN)
+        Object.delegate *GETTEXT_METHODS, :to => Proxy
+      end
 
       @client = Client.new(@config.api_key, @config.endpoint)
 
       return true
+    end
+
+    def require_gettext_dependencies
+      require 'gettext'
+      require 'gettext/po'
+      require 'gettext/po_parser'
+      require 'gettext/tools'
+      require 'gettext/text_domain_manager'
+      require 'gettext/tools/xgettext'
+    end
+
+    # Missing languages from Locale that are in Translation.io
+    def add_missing_locales
+      Locale::Info.three_languages['wee'] = Locale::Info::Language.new('', 'wee', 'I', 'L', 'Lower Sorbian')
+      Locale::Info.three_languages['wen'] = Locale::Info::Language.new('', 'wen', 'I', 'L', 'Upper Sorbian')
     end
 
     def info(message, level = 0, verbose_level = 0)

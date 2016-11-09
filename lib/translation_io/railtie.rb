@@ -1,11 +1,6 @@
 require 'i18n'
 require 'i18n/config'
 
-require 'gettext'
-require 'gettext/po'
-require 'gettext/po_parser'
-require 'gettext/tools/xgettext'
-
 module TranslationIO
   class Railtie < Rails::Railtie
     rake_tasks do
@@ -30,34 +25,39 @@ module I18n
     def locale=(locale)
       I18n.enforce_available_locales!(locale) if I18n.respond_to?(:enforce_available_locales!)
       @locale = locale.to_sym rescue nil
-      GetText.set_current_locale(locale.to_s.gsub('-', '_').to_sym)
+
+      if defined?(GetText)
+        GetText.set_current_locale(locale.to_s.gsub('-', '_').to_sym)
+      end
     end
   end
 end
 
-module GetText
-  class POParser < Racc::Parser
-    def initialize
-      @ignore_fuzzy   = true
-      @report_warning = false
+if defined?(GetText)
+  module GetText
+    class POParser < Racc::Parser
+      def initialize
+        @ignore_fuzzy   = true
+        @report_warning = false
+      end
     end
-  end
 
-  module Tools
-    class XGetText
-      def parse(paths)
-        po = PO.new
-        paths = [paths] if paths.kind_of?(String)
-        paths.each do |path|
-          begin
-            parse_path(path, po)
-          rescue SystemExit => e
-            # puts(_("Error parsing %{path}") % {:path => path})
-            puts
-            puts
+    module Tools
+      class XGetText
+        def parse(paths)
+          po = PO.new
+          paths = [paths] if paths.kind_of?(String)
+          paths.each do |path|
+            begin
+              parse_path(path, po)
+            rescue SystemExit => e
+              # puts(_("Error parsing %{path}") % {:path => path})
+              puts
+              puts
+            end
           end
+          po
         end
-        po
       end
     end
   end
