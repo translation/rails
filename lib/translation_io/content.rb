@@ -48,7 +48,7 @@ module TranslationIO
             translated_fields.each_pair do |class_name, field_names|
               field_names.each do |field_name|
                 class_name.constantize.send(:define_method, field_name.to_sym) do
-                  storage.get(I18n.locale, self, field_name)
+                  TranslationIO::Content.storage.get(I18n.locale, self, field_name)
                 end
               end
             end
