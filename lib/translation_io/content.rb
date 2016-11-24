@@ -32,7 +32,13 @@ module TranslationIO
         if globalize?
           Rails.application.eager_load!
 
-          ActiveRecord::Base.subclasses.each do |klass|
+          if defined?(ApplicationRecord)
+            base_class = ApplicationRecord
+          else
+            base_class = ActiveRecord::Base
+          end
+
+          base_class.subclasses.each do |klass|
             if klass.translates?
               klass.translated_attribute_names.each do |attribute_name|
                 register_translated_field(klass.name, attribute_name)
