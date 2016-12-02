@@ -358,6 +358,44 @@ describe TranslationIO::FlatHash do
     }
   end
 
+  it 'returns a hash when inconsistencies in YAML (can be caused by YamlLocalizationFillService)' do
+    flat_hash = {
+      "en.date.order"    => "%d.%m.%Y",
+      "en.date.order[0]" => :year,
+      "en.date.order[1]" => :month,
+      "en.date.order[2]" => :day,
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'en' => {
+        'date' => {
+          'order' => "%d.%m.%Y"
+        }
+      }
+    }
+  end
+
+  it 'returns a hash when inconsistencies in YAML (can be caused by YamlLocalizationFillService) - 2' do
+    flat_hash = {
+      "en.date.order[0]" => :year,
+      "en.date.order[1]" => :month,
+      "en.date.order[2]" => :day,
+      "en.date.order"    => "%d.%m.%Y",
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'en' => {
+        'date' => {
+          'order' => "%d.%m.%Y"
+        }
+      }
+    }
+  end
+
   it 'handles empty/nil keys' do
     flat_hash = {
       ""  => "jan"
