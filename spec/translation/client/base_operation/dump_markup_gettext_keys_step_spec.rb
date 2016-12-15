@@ -32,6 +32,7 @@ EOS
 
   %p= p_("Printer", "Open") + ' - ' + p_("File", "Open")
   %p= s_("Printer|Open") + ' - ' + s_("File|Open")
+  %p= cache("admin_nav_zone_\#{current_zone.try(:id)}_\#{params[:controller].parameterize("_")}_\#{Time.now.strftime("%Y%m%d%H%M").to_i / 5}") do
   %p= np_("Fruit", "Apple", "%{num} Apples", 3) % { :num => 3 }
 EOS
     end
@@ -56,6 +57,7 @@ EOS
       'p_("File", "Open")',
       's_("Printer|Open")',
       's_("File|Open")',
+      '_")}_#{Time.now.strftime("',                  # SYNTAX INVALID! Wrong parsing
       'np_("Fruit", "Apple", "%{num} Apples", 3)'
     ]
 
@@ -74,10 +76,11 @@ EOS
     File.read('tmp/translation/haml-gettext-00000010.rb').strip.should include('p_("File", "Open")')
     File.read('tmp/translation/haml-gettext-00000011.rb').strip.should include('s_("Printer|Open")')
     File.read('tmp/translation/haml-gettext-00000012.rb').strip.should include('s_("File|Open")')
-    File.read('tmp/translation/haml-gettext-00000013.rb').strip.should include('np_("Fruit", "Apple", "%{num} Apples", 3)')
+    File.exist?('tmp/translation/haml-gettext-00000013.rb').should == false # because syntax invalid and file ignored
+    File.read('tmp/translation/haml-gettext-00000014.rb').strip.should include('np_("Fruit", "Apple", "%{num} Apples", 3)')
   end
 
-  it 'works with SLIM' do
+  it 'works with SLIM', :focus => true do
     slim_path_1 = "tmp/#{Time.now.to_i}.slim"
     slim_path_2 = "tmp/#{Time.now.to_i}.html.slim"
 
@@ -120,6 +123,7 @@ html
            Thank you!
         p = _("I am another text")
         p = n_("Un cheval", "%{num} chevaux", 42)
+        p - cache("admin_nav_zone_\#{current_zone.try(:id)}_\#{params[:controller].parameterize("_")}_\#{Time.now.strftime("%Y%m%d%H%M").to_i / 5}") do
         p = np_("Fruit", "Apple", "%{num} (App)les", 3)
 
     div id="footer"
@@ -141,20 +145,21 @@ EOS
       '_("I am a (text)(text)")',
       '_("I am another text")',
       'n_("Un cheval", "%{num} chevaux", 42)',
+      '_")}_#{Time.now.strftime("',                  # SYNTAX INVALID! Wrong parsing
       'np_("Fruit", "Apple", "%{num} (App)les", 3)',
       'np_("Fruit", "Apple", "%{num} Apples", 3)'
     ]
 
-   operation.run
+    operation.run
 
-   File.read('tmp/translation/slim-gettext-00000000.rb').strip.should include('_("I am a text from a SLIM file")')
-   File.read('tmp/translation/slim-gettext-00000001.rb').strip.should include('_("Title")')
-   File.read('tmp/translation/slim-gettext-00000002.rb').strip.should include('_("I am a text")')
-   File.read('tmp/translation/slim-gettext-00000003.rb').strip.should include('_("I am a (text)(text)")')
-   File.read('tmp/translation/slim-gettext-00000004.rb').strip.should include('_("I am another text")')
-   File.read('tmp/translation/slim-gettext-00000005.rb').strip.should include('n_("Un cheval", "%{num} chevaux", 42)')
-   File.read('tmp/translation/slim-gettext-00000006.rb').strip.should include('np_("Fruit", "Apple", "%{num} (App)les", 3)')
-   File.read('tmp/translation/slim-gettext-00000007.rb').strip.should include('np_("Fruit", "Apple", "%{num} Apples", 3)')
-
+    File.read('tmp/translation/slim-gettext-00000000.rb').strip.should include('_("I am a text from a SLIM file")')
+    File.read('tmp/translation/slim-gettext-00000001.rb').strip.should include('_("Title")')
+    File.read('tmp/translation/slim-gettext-00000002.rb').strip.should include('_("I am a text")')
+    File.read('tmp/translation/slim-gettext-00000003.rb').strip.should include('_("I am a (text)(text)")')
+    File.read('tmp/translation/slim-gettext-00000004.rb').strip.should include('_("I am another text")')
+    File.read('tmp/translation/slim-gettext-00000005.rb').strip.should include('n_("Un cheval", "%{num} chevaux", 42)')
+    File.exist?('tmp/translation/slim-gettext-00000006.rb').should == false # because syntax invalid and file ignored
+    File.read('tmp/translation/slim-gettext-00000007.rb').strip.should include('np_("Fruit", "Apple", "%{num} (App)les", 3)')
+    File.read('tmp/translation/slim-gettext-00000008.rb').strip.should include('np_("Fruit", "Apple", "%{num} Apples", 3)')
   end
 end
