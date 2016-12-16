@@ -104,9 +104,8 @@ module TranslationIO
       def info_project_url(parsed_response)
         puts
         puts "----------"
-        puts "Use this URL to translate:"
-        puts parsed_response['project_url']
-        puts "Then use 'rake translation:sync' to get new translations into your project and send new keys to Translation.io."
+        puts "Use this URL to translate: #{parsed_response['project_url']}"
+        puts "Then use 'rake translation:sync' to send new keys to Translation.io and get new translations into your project."
         puts "----------"
       end
     end
