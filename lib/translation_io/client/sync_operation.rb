@@ -49,8 +49,7 @@ module TranslationIO
       def info_project_url(parsed_response)
         puts
         puts "----------"
-        puts "Use this URL to translate:"
-        puts parsed_response['project_url']
+        puts "Use this URL to translate: #{parsed_response['project_url']}"
         puts "----------"
       end
     end
