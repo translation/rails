@@ -65,7 +65,7 @@ module TranslationIO
     end
 
     def slim_source_files
-      Dir['**/*.{slim}'].select do |p|
+      Dir['**/*.{slim,mjmlslim}'].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
       end
     end
