@@ -46,6 +46,7 @@ module TranslationIO
           BaseOperation::CreateNewMoFilesStep.new(locales_path).run
 
           info_yaml_directory_structure
+          info_project_url(parsed_response)
         end
 
         cleanup
@@ -97,6 +98,14 @@ module TranslationIO
         puts "----------"
         puts "If you're wondering why your YAML directory structure has changed so much,"
         puts "please check this article: https://translation.io/blog/dealing-with-yaml-files-and-their-directory-structure"
+        puts "----------"
+      end
+
+      def info_project_url(parsed_response)
+        puts
+        puts "----------"
+        puts "Use this URL to translate: #{parsed_response['project_url']}"
+        puts "Then use 'rake translation:sync' to send new keys to Translation.io and get new translations into your project."
         puts "----------"
       end
     end
