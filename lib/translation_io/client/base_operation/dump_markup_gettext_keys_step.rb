@@ -23,7 +23,9 @@ module TranslationIO
               end
 
               # can happen sometimes if gettext parsing is wrong
-              remove_file_if_syntax_invalid(file_path, entry)
+              if ruby_cmd_available?
+                remove_file_if_syntax_invalid(file_path, entry)
+              end
             end
           end
         end
@@ -55,6 +57,10 @@ module TranslationIO
           TranslationIO.info "#{entries.size} entries found", 2, 2
 
           entries
+        end
+
+        def ruby_cmd_available?
+          @ruby_cmd_available ||= `which ruby`.strip.length > 0
         end
       end
     end
