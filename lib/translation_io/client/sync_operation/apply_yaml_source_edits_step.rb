@@ -10,9 +10,7 @@ module TranslationIO
         def run(params)
           TranslationIO.info "Downloading YAML source editions."
 
-          timestamp = YAML::load(File.read(TranslationIO.config.metadata_path))['timestamp'] rescue 0
-
-          params.merge!({ :timestamp => timestamp })
+          params.merge!({ :timestamp => metadata_timestamp })
           parsed_response = perform_source_edits_request(params)
 
           unless parsed_response.nil?
@@ -73,6 +71,21 @@ module TranslationIO
         end
 
         private
+
+        def metadata_timestamp
+          if File.exist?(TranslationIO.config.metadata_path)
+            metadata_content = File.read(TranslationIO.config.metadata_path)
+
+            if metadata_content.include?('>>>>') || metadata_content.include?('<<<<')
+              TranslationIO.info "[Error] #{TranslationIO.config.metadata_path} file is corrupted and seems to have unresolved versioning conflicts. Please resolve them and try again."
+              exit
+            else
+              return YAML::load(metadata_content)['timestamp'] rescue 0
+            end
+          else
+            return 0
+          end
+        end
 
         def perform_source_edits_request(params)
           uri             = URI("#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/source_edits")
