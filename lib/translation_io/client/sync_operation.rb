@@ -39,9 +39,18 @@ module TranslationIO
           BaseOperation::CreateNewMoFilesStep.new(locales_path).run
           BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
           BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+
+          info_project_url(parsed_response)
         end
 
         cleanup
+      end
+
+      def info_project_url(parsed_response)
+        puts
+        puts "----------"
+        puts "Use this URL to translate: #{parsed_response['project_url']}"
+        puts "----------"
       end
     end
   end
