@@ -53,9 +53,15 @@ module TranslationIO
     end
 
     def source_files
-      additinal_formats = additional_source_formats.join(',')
-      file_paths = Dir["**/*.{rb,erb,ruby,rabl#{additinal_formats}}"].select do |p|
+      file_paths = Dir["**/*.{rb,erb,ruby,rabl}"].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      end
+
+      if additional_source_formats.length > 0
+        additinal_formats = additional_source_formats.join(',')
+        file_paths = Dir["**/*.{#{additinal_formats}}"].select do |p|
+          !p.start_with?('vendor/') && !p.start_with?('tmp/')
+        end
       end
 
       file_paths - ignored_source_files
