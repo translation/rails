@@ -5,6 +5,7 @@ module TranslationIO
     attr_accessor :endpoint
     attr_accessor :verbose
     attr_accessor :test
+    attr_accessor :additional_source_formats
     attr_accessor :ignored_key_prefixes
     attr_accessor :ignored_source_files
     attr_accessor :localization_key_prefixes
@@ -26,6 +27,7 @@ module TranslationIO
       self.endpoint                  = 'https://translation.io/api'
       self.verbose                   = 1
       self.test                      = false
+      self.additional_source_formats = []
       self.ignored_key_prefixes      = []
       self.ignored_source_files      = [] # Files not parsed for GetText entries
       self.localization_key_prefixes = []
@@ -51,8 +53,15 @@ module TranslationIO
     end
 
     def source_files
-      file_paths = Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
+      file_paths = Dir["**/*.{rb,erb,ruby,rabl}"].select do |p|
         !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      end
+
+      if additional_source_formats.length > 0
+        additinal_formats = additional_source_formats.join(',')
+        file_paths = Dir["**/*.{#{additinal_formats}}"].select do |p|
+          !p.start_with?('vendor/') && !p.start_with?('tmp/')
+        end
       end
 
       file_paths - ignored_source_files
