@@ -5,8 +5,15 @@ module TranslationIO
     attr_accessor :endpoint
     attr_accessor :verbose
     attr_accessor :test
+
     attr_accessor :ignored_key_prefixes
+    attr_accessor :ignored_source_paths
     attr_accessor :ignored_source_files
+
+    attr_accessor :source_formats
+    attr_accessor :haml_source_formats
+    attr_accessor :slim_source_formats
+
     attr_accessor :localization_key_prefixes
     attr_accessor :disable_gettext
     attr_accessor :charset
@@ -26,18 +33,25 @@ module TranslationIO
       self.endpoint                  = 'https://translation.io/api'
       self.verbose                   = 1
       self.test                      = false
+
       self.ignored_key_prefixes      = []
+      self.ignored_source_paths      = ['vendor/', 'tmp/']
       self.ignored_source_files      = [] # Files not parsed for GetText entries
+
+      self.source_formats            = ['rb', 'erb', 'ruby', 'rabl']
+      self.haml_source_formats       = ['haml', 'mjmlhaml']
+      self.slim_source_formats       = ['slim', 'mjmlslim']
+
       self.localization_key_prefixes = []
       self.disable_gettext           = false
       self.charset                   = 'UTF-8'
       self.metadata_path             = File.join('config', 'locales', '.translation_io')
 
-      self.pot_msgid_bugs_address = 'contact@translation.io'
-      self.pot_package_name       = File.basename(Dir.pwd)
-      self.pot_package_version    = '1.0'
-      self.pot_copyright_holder   = File.basename(Dir.pwd)
-      self.pot_copyright_year     = Date.today.year
+      self.pot_msgid_bugs_address    = 'contact@translation.io'
+      self.pot_package_name          = File.basename(Dir.pwd)
+      self.pot_package_version       = '1.0'
+      self.pot_copyright_holder      = File.basename(Dir.pwd)
+      self.pot_copyright_year        = Date.today.year
     end
 
     def pot_path
@@ -51,23 +65,29 @@ module TranslationIO
     end
 
     def source_files
-      file_paths = Dir['**/*.{rb,erb,ruby,rabl}'].select do |p|
-        !p.start_with?('vendor/') && !p.start_with?('tmp/')
-      end
-
-      file_paths - ignored_source_files
+      source_files_for_formats(source_formats)
     end
 
     def haml_source_files
-      Dir['**/*.{haml}'].select do |p|
-        !p.start_with?('vendor/') && !p.start_with?('tmp/')
-      end
+      source_files_for_formats(haml_source_formats)
     end
 
     def slim_source_files
-      Dir['**/*.{slim,mjmlslim}'].select do |p|
-        !p.start_with?('vendor/') && !p.start_with?('tmp/')
+      source_files_for_formats(slim_source_formats)
+    end
+
+    def source_files_for_formats(formats)
+      file_paths = Dir["**/*.{#{formats.join(',')}}"]
+
+      # remove ignored files
+      file_paths = file_paths - ignored_source_files
+
+      # remove ignored paths
+      ignored_source_paths.each do |ignored_source_path|
+        file_paths = file_paths.select { |file_path| !file_path.start_with?(ignored_source_path) }
       end
+
+      file_paths
     end
 
     def to_s
