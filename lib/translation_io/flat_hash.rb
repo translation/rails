@@ -51,7 +51,7 @@ module TranslationIO
 
               # array is terminal
               if key_string == ''
-                current_object[array_pos] = value
+                current_object[array_pos] = value if current_object.is_a?(Array)
               end
             # next is hash
             elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))

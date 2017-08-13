@@ -93,6 +93,26 @@ TranslationIO.configure do |config|
 end
 ```
 
+### Source file formats (for GetText)
+
+If you are using GetText and you want to manage other file formats than:
+
+ * `rb`, `erb`, `ruby` and `rabl` for Ruby.
+ * `haml` and `mjmlhaml` for [HAML](http://haml.info/).
+ * `slim` and `mjmlslim` for [SLIM](http://slim-lang.com/).
+
+Just add them in your configuration file like this:
+
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.source_formats      << 'rb2'
+  config.haml_source_formats << 'haml2'
+  config.slim_source_formats << 'slim2'
+  ...
+end
+```
+
 ### Custom localization key prefixes
 
 Rails YAML files contain not only translation strings but also localization values (integers, arrays, booleans)
