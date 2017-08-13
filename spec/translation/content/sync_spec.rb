@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TranslationIO::Content::Sync do
   describe '#apply_source_edits' do
-    it 'works', :focus => true do
+    it 'works' do
       post1 = Post.create!({ :title_fr => 'Un super titre'                                  })
       post2 = Post.create!({ :title_fr => 'Un autre super titre'                            })
       post3 = Post.create!({ :title_fr => 'Encore un autre super titre qui a changé depuis' })

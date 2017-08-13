@@ -119,5 +119,23 @@ EOS
 
       ((result == expected_result_1) || (result == expected_result_2)).should be_true
     end
+
+    it 'works with weird not-escaped code', :focus => true do
+      flat_data = {
+        "en.architects.seo.image" => "<%= AController::Base.h.path('a/b.png') %>",
+      }
+
+      result = subject.get_yaml_data_from_flat_translations(flat_data)
+
+      expected_result = <<EOS
+---
+en:
+  architects:
+    seo:
+      image: "<%= AController::Base.h.path('a/b.png') %>"
+EOS
+
+      result.should == expected_result
+    end
   end
 end
