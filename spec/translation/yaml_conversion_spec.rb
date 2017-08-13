@@ -120,7 +120,7 @@ EOS
       ((result == expected_result_1) || (result == expected_result_2)).should be_true
     end
 
-    it 'works with weird not-escaped code', :focus => true do
+    it 'works with weird not-escaped code' do
       flat_data = {
         "en.architects.seo.image" => "<%= AController::Base.h.path('a/b.png') %>",
       }
