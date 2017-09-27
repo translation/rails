@@ -106,4 +106,18 @@ msgstr ""
 EOS
   end
 
+  it "works when gettext is disabled" do
+    pot_path     = 'tmp/test.pot'
+    source_files = Dir['spec/support/**/*.{rb,erb}']
+
+    TranslationIO.config.disable_gettext = true
+
+    step_operation = TranslationIO::Client::InitOperation::UpdatePotFileStep.new(pot_path, source_files)
+    params = {}
+    step_operation.run(params)
+
+    # empty pot data
+    params['pot_data'].should end_with "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\\n\"\n"
+  end
+
 end
