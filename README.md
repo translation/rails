@@ -40,15 +40,23 @@ To send new translatable keys/strings and get new translations from Translation.
 
     bundle exec rake translation:sync
 
+## Sync and Show Purgeable
+
+If you need to see what are the unused keys/strings from Translation.io, using the current branch as reference:
+
+    bundle exec rake translation:sync_and_show_purgeable
+
+As the name says, this operation will also perform a sync at the same time.
+
 ## Sync and Purge
 
-If you also need to remove unused keys/strings from Translation.io using the current branch as reference:
+If you need to remove unused keys/strings from Translation.io, using the current branch as reference:
 
     bundle exec rake translation:sync_and_purge
 
 As the name says, this operation will also perform a sync at the same time.
 
-Warning: all keys that are not present in the current branch will be **permanently deleted both on Translation.io and in your app**.
+Warning: all keys that are not present in the current branch will be **permanently deleted from Translation.io**.
 
 ## Advanced Configuration Options
 

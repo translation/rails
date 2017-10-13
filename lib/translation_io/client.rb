@@ -19,8 +19,12 @@ module TranslationIO
       TranslationIO::Client::SyncOperation.new(self).run
     end
 
+    def sync_and_show_purgeable
+      TranslationIO::Client::SyncOperation.new(self).run(:show_purgeable => true)
+    end
+
     def sync_and_purge
-      TranslationIO::Client::SyncOperation.new(self).run(true)
+      TranslationIO::Client::SyncOperation.new(self).run(:purge => true)
     end
   end
 end

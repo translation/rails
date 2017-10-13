@@ -91,7 +91,7 @@ module TranslationIO
     end
 
     def to_s
-      "#{api_key} - #{source_locale} => #{target_locales.join(' + ')}"
+      "API Key: #{api_key} | Languages: #{source_locale} => [#{target_locales.join(', ')}]"
     end
   end
 end
