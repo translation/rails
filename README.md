@@ -297,7 +297,7 @@ Credit: [@armandsar](https://github.com/armandsar)
 
 ## Credits
 
-The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by [Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see MIT-LICENSE
-file).
+The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by
+[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see LICENSE file).
 
 (c) [https://translation.io](https://translation.io) / [contact@translation.io](mailto:contact@translation.io)
