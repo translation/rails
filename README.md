@@ -2,37 +2,92 @@
 
 ## Description
 
-Add this gem to your [Rails](http://rubyonrails.org) app to translate it with [Translation.io](http://translation.io).
+Add this gem to your [Rails](http://rubyonrails.org) application to translate
+it using [I18n (YAML)](http://guides.rubyonrails.org/i18n.html) or
+[GetText](https://github.com/ruby-gettext/gettext) syntaxes.
+
+Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
 ## Installation
 
-Add the gem to your project's Gemfile:
+ * 1. Add the gem to your project's Gemfile:
 
 ```ruby
 gem 'translation'
 ```
 
-Then:
-
-* Create a translation project [from the UI](https://translation.io).
-* Copy the initializer into your Rails app (`config/initializers/translation.rb`)
+ * 2. Create a new translation project [from the UI](https://translation.io).
+ * 3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 The initializer looks like this:
 
 ```ruby
 TranslationIO.configure do |config|
-  config.api_key        = 'some api key which is very long'
+  config.api_key        = 'abcdefghijklmnopqrstuvwxyz012345'
   config.source_locale  = 'en'
   config.target_locales = ['fr', 'nl', 'de', 'es']
 end
 ```
 
-And finish by inititalizing your translation project with:
+ * 4. Initialize your translation project with:
 
     bundle exec rake translation:init
 
 If you later need to add/remove target languages, please read our
 [dedicated article](https://translation.io/blog/adding-target-languages) about that.
+
+## Usage
+
+#### I18n (YAML)
+
+```ruby
+# Regular
+t('inbox.title')
+
+# Plural management
+t('inbox.message', count: n)
+
+# Interpolation
+t('inbox.hello', name: @user.name)
+```
+
+A YAML file should be updated for the source:
+
+```yaml
+en:
+  inbox:
+    title:   'text to be translated'
+    message:
+      zero:  'no messages'
+      one:   'one message'
+      other: '%{count} messages'
+    hello:   'Hello %{name}'
+```
+
+You can keep your source YAML file automatically updated using [i18n-tasks](https://github.com/glebm/i18n-tasks).
+
+More information about I18n usage [here](http://guides.rubyonrails.org/i18n.html).
+
+#### GetText
+
+```ruby
+# Regular
+_("text to be translated")
+
+# Plural management
+n_("singular text", "plural text", number)
+
+# Regular with context
+p_("context", "text to be translated")
+
+# Plural management with contect
+np_("context", "singular text", "plural text", number)
+
+# Interpolations
+_('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
+```
+
+More information about GetText usage [here](https://github.com/ruby-gettext/gettext#usage).
 
 ## Sync
 
@@ -62,7 +117,7 @@ Warning: all keys that are not present in the current branch will be **permanent
 
 The `TranslationIO.configure` block in `config/initializers/translation.rb` can take several optional configuration options.
 
-### Disable GetText
+#### Disable GetText
 
 Sometimes, you only want to use YAML and don't want to be bothered by GetText at all.
 For these cases, you just have to add `disable_gettext` in the config file.
@@ -77,7 +132,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-### Ignored YAML keys
+#### Ignored YAML keys
 
 Sometimes you would like to ignore some YAML keys coming from gems or so.
 You can use the `ignored_key_prefixes` for that.
@@ -101,7 +156,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-### Source file formats (for GetText)
+#### Source file formats (for GetText)
 
 If you are using GetText and you want to manage other file formats than:
 
@@ -121,7 +176,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-### Custom localization key prefixes
+#### Custom localization key prefixes
 
 Rails YAML files contain not only translation strings but also localization values (integers, arrays, booleans)
 in the same place and that's bad. For example: date formats, number separators, default
@@ -147,7 +202,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-### Paths where locales are stored (not recommended)
+#### Paths where locales are stored (not recommended)
 
 You can specify where your GetText and YAML files are on disk:
 
@@ -165,6 +220,82 @@ end
 To run the specs:
 
     bundle exec rspec
+
+## Pure Ruby (without Rails)
+
+This gem was created specifically for Rails, but you can also use it in a pure Ruby project by making some arrangements:
+
+```ruby
+  require 'rubygems'
+  require 'active_support/all'
+  require 'yaml'
+
+  class FakeConfig
+    def after_initialize
+    end
+    def development?
+      false
+    end
+  end
+
+  module Rails
+    class Railtie
+      def self.rake_tasks
+        yield
+      end
+
+      def self.initializer(*args)
+      end
+
+      def self.config
+        ::FakeConfig.new
+      end
+    end
+
+    def self.env
+      ::FakeConfig.new
+    end
+  end
+
+  task :environment do
+  end
+
+  require 'translation'
+
+  I18n.load_path += Dir[File.join('i18n', '**', '*.{yml,yaml}')]
+
+  # Put your configuration here:
+  TranslationIO.configure do |config|
+    config.yaml_locales_path = 'i18n'
+    config.api_key           = ''
+    config.source_locale     = 'en'
+    config.target_locales    = ['nl', 'de']
+    config.metadata_path     = 'i18n/.translation_io'
+  end
+```
+
+(Thanks @kubaw for this snippet!)
+
+## Other implementations
+
+These implementations are made by contributors for their own projects and are not
+*currently* supported by Translation.io. However, they are quite well documented.
+
+Thanks a lot to these contributors for their hard work!
+
+#### React and React-Intl (JavaScript)
+
+* GitHub: https://github.com/deecewan/translation-io
+* NPM: https://www.npmjs.com/package/translation-io
+
+Credit: @deecewan
+
+#### Laravel (PHP)
+
+ * GitHub: https://github.com/armandsar/laravel-translationio
+ * Packagist: https://packagist.org/packages/armandsar/laravel-translationio
+
+Credit: @armandsar
 
 ## Credits
 
