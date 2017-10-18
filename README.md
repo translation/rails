@@ -10,14 +10,14 @@ Keep it synchronized with your translators on [Translation.io](https://translati
 
 ## Installation
 
- * 1. Add the gem to your project's Gemfile:
+ 1. Add the gem to your project's Gemfile:
 
 ```ruby
 gem 'translation'
 ```
 
- * 2. Create a new translation project [from the UI](https://translation.io).
- * 3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
+ 2. Create a new translation project [from the UI](https://translation.io).
+ 3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 The initializer looks like this:
 
@@ -29,7 +29,7 @@ TranslationIO.configure do |config|
 end
 ```
 
- * 4. Initialize your translation project with:
+ 4. Initialize your translation project with:
 
     bundle exec rake translation:init
 
@@ -51,7 +51,7 @@ t('inbox.message', count: n)
 t('inbox.hello', name: @user.name)
 ```
 
-A YAML file should be updated for the source:
+...with the source YAML file:
 
 ```yaml
 en:
@@ -274,12 +274,12 @@ This gem was created specifically for Rails, but you can also use it in a pure R
   end
 ```
 
-(Thanks @kubaw for this snippet!)
+(Thanks [@kubaw](https://github.com/kubaw) for this snippet!)
 
 ## Other implementations
 
 These implementations are made by contributors for their own projects and are not
-*currently* supported by Translation.io. However, they are quite well documented.
+*currently* supported by [Translation.io](https://translation.io). However, they are quite well documented.
 
 Thanks a lot to these contributors for their hard work!
 
@@ -288,14 +288,14 @@ Thanks a lot to these contributors for their hard work!
 * GitHub: https://github.com/deecewan/translation-io
 * NPM: https://www.npmjs.com/package/translation-io
 
-Credit: @deecewan
+Credit: [@deecewan](https://github.com/deecewan)
 
 #### Laravel (PHP)
 
  * GitHub: https://github.com/armandsar/laravel-translationio
  * Packagist: https://packagist.org/packages/armandsar/laravel-translationio
 
-Credit: @armandsar
+Credit: [@armandsar](https://github.com/armandsar)
 
 ## Credits
 
