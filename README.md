@@ -8,6 +8,8 @@ it using [I18n (YAML)](http://guides.rubyonrails.org/i18n.html) or
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
+Need help? [contact@translation.io](mailto:contact@translation.io)
+
 ## Installation
 
  1. Add the gem to your project's Gemfile:
@@ -302,4 +304,6 @@ Credit: [@armandsar](https://github.com/armandsar)
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by [Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see MIT-LICENSE
 file).
 
-(c) http://translation.io
+[contact@translation.io](mailto:contact@translation.io)
+
+(c) https://translation.io
