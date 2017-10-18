@@ -29,12 +29,10 @@ TranslationIO.configure do |config|
 end
 ```
 
- 4. Initialize your translation project with:
-
-    bundle exec rake translation:init
+ 4. Initialize your translation project with `bundle exec rake translation:init`
 
 If you later need to add/remove target languages, please read our
-[dedicated article](https://translation.io/blog/adding-target-languages) about that.
+[documentation](https://translation.io/blog/adding-target-languages) about that.
 
 ## Usage
 
@@ -302,6 +300,4 @@ Credit: [@armandsar](https://github.com/armandsar)
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by [Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see MIT-LICENSE
 file).
 
-[contact@translation.io](mailto:contact@translation.io)
-
-(c) https://translation.io
+(c) [https://translation.io](https://translation.io) / [contact@translation.io](mailto:contact@translation.io)
