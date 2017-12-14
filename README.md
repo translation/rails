@@ -78,7 +78,7 @@ n_("singular text", "plural text", number)
 # Regular with context
 p_("context", "text to be translated")
 
-# Plural management with contect
+# Plural management with context
 np_("context", "singular text", "plural text", number)
 
 # Interpolations
