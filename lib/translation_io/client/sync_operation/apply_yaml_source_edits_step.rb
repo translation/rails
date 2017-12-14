@@ -55,7 +55,7 @@ module TranslationIO
                       inserted = true
                       break
                     else
-                      TranslationIO.info "#{source_edit['key']} | Ignored because translation was updated directly in source YAML file", 2, 2
+                      TranslationIO.info "#{source_edit['key']} | Ignored because translation was also updated in source YAML file", 2, 2
                     end
                   end
                 end

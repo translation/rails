@@ -41,7 +41,8 @@ module TranslationIO
           GetText::TextDomainManager.cached = false
         end
 
-        Proxy.include GetText
+        # include is private until Ruby 2.1
+        Proxy.send(:include, GetText)
 
         Proxy.bindtextdomain(TEXT_DOMAIN, {
           :path           => @config.locales_path,

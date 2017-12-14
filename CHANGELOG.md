@@ -1,5 +1,12 @@
 #  Changelog
 
+## [v1.11](https://github.com/aurels/translation-gem/releases/tag/v1.11) (2017-12-14)
+
+#### Fixes (bugs & defects):
+
+ * Update GetText dependency to >= 3.2.5 because of [That issue that evaluate strings of whole code](https://github.com/ruby-gettext/gettext/issues/56)
+ * Call `send(:include)` to make it compatible with Ruby < 2.1
+
 ## [v1.10](https://github.com/aurels/translation-gem/releases/tag/v1.10) (2017-10-18)
 
 #### New features:
