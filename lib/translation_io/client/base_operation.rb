@@ -39,14 +39,14 @@ module TranslationIO
             return parsed_response
           elsif response.code.to_i == 400 && parsed_response.has_key?('error')
             $stderr.puts "[Error] #{parsed_response['error']}"
-            exit
+            exit(false)
           else
             $stderr.puts "[Error] Unknown error from the server: #{response.code}."
-            exit
+            exit(false)
           end
         rescue Errno::ECONNREFUSED
           $stderr.puts "[Error] Server not responding."
-          exit
+          exit(false)
         end
       end
 
