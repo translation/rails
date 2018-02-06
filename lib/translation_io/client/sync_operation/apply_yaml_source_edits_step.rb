@@ -78,7 +78,7 @@ module TranslationIO
 
             if metadata_content.include?('>>>>') || metadata_content.include?('<<<<')
               TranslationIO.info "[Error] #{TranslationIO.config.metadata_path} file is corrupted and seems to have unresolved versioning conflicts. Please resolve them and try again."
-              exit
+              exit(false)
             else
               return YAML::load(metadata_content)['timestamp'] rescue 0
             end
