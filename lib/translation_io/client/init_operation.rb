@@ -67,7 +67,7 @@ module TranslationIO
           input = STDIN.gets.strip
 
           if input != 'y' && input != 'Y'
-            exit(0)
+            exit(true)
           end
         end
       end
@@ -88,7 +88,7 @@ module TranslationIO
           input = STDIN.gets.strip
 
           if input != 'y' && input != 'Y'
-            exit(0)
+            exit(true)
           end
         end
       end
