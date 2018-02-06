@@ -5,7 +5,7 @@ Add this gem to your [Rails](http://rubyonrails.org) application to localize it 
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
-![Image](https://github.com/aurels/translation-gem/raw/master/interface.png)
+[![Image](https://github.com/aurels/translation-gem/raw/master/interface.png)](https://translation.io)
 
 Need help? [contact@translation.io](mailto:contact@translation.io)
 
