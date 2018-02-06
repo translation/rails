@@ -4,7 +4,7 @@
 
 #### Fixes (bugs & defects):
 
- * Exit with failure status code as opposed to implicit success in rescue blocks ([#22](https://github.com/aurels/translation-gem/pull/22). Thanks @Dombo!
+ * Exit with failure status code as opposed to implicit success in rescue blocks ([#22](https://github.com/aurels/translation-gem/pull/22)). Thanks @Dombo!
 
 ## [v1.11](https://github.com/aurels/translation-gem/releases/tag/v1.11) (2017-12-14)
 
