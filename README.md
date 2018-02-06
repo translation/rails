@@ -146,7 +146,7 @@ Warning: all keys that are not present in the current branch will be **permanent
 
 The `TranslationIO.configure` block in `config/initializers/translation.rb` can take several optional configuration options.
 
-Some options are described below but for an exhaustive list, please see [config.rb](https://github.com/aurels/translation-gem/blob/master/lib/translation_io/config.rb).
+Some options are described below but for an exhaustive list, please refer to [config.rb](https://github.com/aurels/translation-gem/blob/master/lib/translation_io/config.rb).
 
 #### Disable GetText
 
