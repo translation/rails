@@ -1,14 +1,13 @@
 # Gem for [Translation.io](http://translation.io). [ ![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528) [![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
 
-Add this gem to your [Rails](http://rubyonrails.org) application to localize
-it using [I18n (YAML)](http://guides.rubyonrails.org/i18n.html) or
-[GetText](https://github.com/ruby-gettext/gettext) syntaxes.
+Add this gem to your [Rails](http://rubyonrails.org) application to localize it using
+[I18n (YAML)](#i18n-yaml) or [GetText](#gettext) syntaxes.
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
-Need help? [contact@translation.io](mailto:contact@translation.io)
-
 ![Image](https://github.com/aurels/translation-gem/raw/master/interface.png)
+
+Need help? [contact@translation.io](mailto:contact@translation.io)
 
 Table of contents
 =================
