@@ -114,7 +114,7 @@ np_("context", "singular text", "plural text", number)
 _('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
 ```
 
-More information about GetText usage [here](https://github.com/ruby-gettext/gettext#usage).
+More information about GetText syntax [here](https://github.com/ruby-gettext/gettext#usage).
 
 ## Usage
 
@@ -145,6 +145,8 @@ Warning: all keys that are not present in the current branch will be **permanent
 ## Advanced Configuration Options
 
 The `TranslationIO.configure` block in `config/initializers/translation.rb` can take several optional configuration options.
+
+Some options are described below but for an exhaustive list, please see [config.rb](https://github.com/aurels/translation-gem/blob/master/lib/translation_io/config.rb).
 
 #### Disable GetText
 
