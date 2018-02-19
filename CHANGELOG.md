@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.13](https://github.com/aurels/translation-gem/releases/tag/v1.13) (2018-02-19)
+
+#### New features:
+
+ * `rake translation:sync_and_show_purgeable` specifies the languages of the to-be-removed segments (because sometimes it will only delete a segment related to a removed language).
+
 ## [v1.12](https://github.com/aurels/translation-gem/releases/tag/v1.12) (2018-02-06)
 
 #### Fixes (bugs & defects):

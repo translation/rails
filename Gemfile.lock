@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    translation (1.12)
+    translation (1.13)
       gettext (>= 3.2.5)
 
 GEM

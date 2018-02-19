@@ -82,7 +82,7 @@ module TranslationIO
             puts
 
             yaml_unused_segments.each do |yaml_unused_segment|
-              puts " - [#{yaml_unused_segment['msgctxt']}] \"#{yaml_unused_segment['msgid']}\""
+              puts "[#{yaml_unused_segment['languages']}] [#{yaml_unused_segment['msgctxt']}] \"#{yaml_unused_segment['msgid']}\""
             end
           end
 
@@ -93,7 +93,7 @@ module TranslationIO
             puts
 
             gettext_unused_segments.each do |gettext_unused_segment|
-              puts " - \"#{gettext_unused_segment['msgid']}\""
+              puts "[#{gettext_unused_segment['languages']}] \"#{gettext_unused_segment['msgid']}\""
             end
           end
 
