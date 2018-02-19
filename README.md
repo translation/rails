@@ -214,7 +214,7 @@ in the same place and that's bad. For example: date formats, number separators, 
 currency or measure units, etc.
 
 A translator is supposed to translate, not localize. That's not his role to choose how you want your dates or
-numbers to be displayed, right ? Moreover, this special keys often contain special constructions (e.g.,
+numbers to be displayed, right? Moreover, this special keys often contain special constructions (e.g.,
 with percent signs or spaces) that he might break.
 
 We think localization is part of the configuration of the app and it should not reach the translator UI at all.
