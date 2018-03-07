@@ -65,7 +65,7 @@ module TranslationIO
             puts
             puts "----------"
             puts "#{yaml_size + gettext_size} keys/strings are in Translation.io but not in your current branch."
-            puts 'Execute "rake translation:sync_and_show_purgeable" to list these keys/strings'
+            puts 'Execute "rake translation:sync_and_show_purgeable" to list these keys/strings.'
           end
         # Complete summary for sync_and_show_purgeable or sync_and_purge
         else
@@ -108,7 +108,7 @@ module TranslationIO
           if show_purgeable && total_size > 0
             puts
             puts "----------"
-            puts "If you know what you are doing, you can remove them using \"rake translation:sync_and_purge\""
+            puts "If you know what you are doing, you can remove them using \"rake translation:sync_and_purge\"."
           end
         end
       end

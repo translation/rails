@@ -5,12 +5,12 @@ require 'gettext/tools'
 
 namespace :translation do
 
-  desc "Get configuration infos of Translation gem"
+  desc "Get configuration infos of Translation gem."
   task :config => :environment do
     puts TranslationIO.config
   end
 
-  desc "Initialize your Translation.io project"
+  desc "Initialize Translation.io with existing keys/strings."
   task :init => :environment do
     if client_ready?
       TranslationIO.client.init
@@ -24,14 +24,14 @@ namespace :translation do
     end
   end
 
-  desc "Sync and show unused keys/strings from Translation.io using the current branch as reference"
+  desc "Sync translations and find out the unused keys/string from Translation.io, using the current branch as reference."
   task :sync_and_show_purgeable => :environment do
     if client_ready?
       TranslationIO.client.sync_and_show_purgeable
     end
   end
 
-  desc "Sync and remove unused keys/strings from Translation.io using the current branch as reference"
+  desc "Sync translations and remove unused keys from Translation.io, using the current branch as reference."
   task :sync_and_purge => :environment do
     if client_ready?
       TranslationIO.client.sync_and_purge

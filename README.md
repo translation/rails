@@ -1,11 +1,15 @@
-# Gem for [Translation.io](http://translation.io) [ ![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528) [![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
+# [Translation.io](https://translation.io) client for Ruby on Rails
 
-Add this gem to your [Rails](http://rubyonrails.org) application to localize it using
-[I18n (YAML)](#i18n-yaml) or [GetText](#gettext) syntaxes.
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528)
+[![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
+
+Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
+[GetText](#gettext) syntaxes.
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
-[![Image](https://github.com/aurels/translation-gem/raw/master/interface.png)](https://translation.io)
+[![Image](https://translation.io/interface.png)](https://translation.io)
 
 Need help? [contact@translation.io](mailto:contact@translation.io)
 
@@ -27,10 +31,11 @@ Table of contents
    * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
- * [Other implementations](#other-implementations)
-   * [React and React-Intl (JavaScript)](#react-and-react-intl-javascript)
+ * [List of clients for Translation.io](#list-of-clients-for-translationio)
+   * [Ruby on Rails (Ruby)](#ruby-on-rails-ruby)
    * [Laravel (PHP)](#laravel-php)
- * [Tests](#tests)
+   * [React and React-Intl (JavaScript)](#react-and-react-intl-javascript)
+ * [Testing](#testing)
  * [Contributing](#contributing)
  * [Credits](#credits)
 
@@ -55,7 +60,11 @@ TranslationIO.configure do |config|
 end
 ```
 
- 4. Initialize your translation project with `bundle exec rake translation:init`
+ 4. Initialize your project and push existing translations to Translation.io with:
+
+```bash
+$ bundle exec rake translation:init
+```
 
 If you later need to add/remove target languages, please read our
 [documentation](https://translation.io/blog/adding-target-languages) about that.
@@ -70,19 +79,19 @@ The default [Rails Internationalization API](http://guides.rubyonrails.org/i18n.
 # Regular
 t('inbox.title')
 
-# Plural management
+# Pluralization
 t('inbox.message', count: n)
 
 # Interpolation
 t('inbox.hello', name: @user.name)
 ```
 
-...with the source YAML file:
+With the source YAML file:
 
 ```yaml
 en:
   inbox:
-    title:   'text to be translated'
+    title:   'Title to be translated'
     message:
       zero:  'no messages'
       one:   'one message'
@@ -99,16 +108,16 @@ that you use GetText to translate your applications since it allows a simpler an
 
 ```ruby
 # Regular
-_("text to be translated")
+_("Text to be translated")
 
-# Plural management
-n_("singular text", "plural text", number)
+# Pluralization
+n_("Singular text", "Plural text", number)
 
 # Regular with context
-p_("context", "text to be translated")
+p_("context", "Text to be translated")
 
-# Plural management with context
-np_("context", "singular text", "plural text", number)
+# Pluralization with context
+np_("context", "Singular text", "Plural text", number)
 
 # Interpolations
 _('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
@@ -122,13 +131,17 @@ More information about GetText syntax [here](https://github.com/ruby-gettext/get
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
-    bundle exec rake translation:sync
+```bash
+$ bundle exec rake translation:sync
+```
 
 #### Sync and Show Purgeable
 
-If you need to see what are the unused keys/strings from Translation.io, using the current branch as reference:
+If you need to find out what are the unused keys/strings from Translation.io, using the current branch as reference:
 
-    bundle exec rake translation:sync_and_show_purgeable
+```bash
+$ bundle exec rake translation:sync_and_show_purgeable
+```
 
 As the name says, this operation will also perform a sync at the same time.
 
@@ -136,7 +149,9 @@ As the name says, this operation will also perform a sync at the same time.
 
 If you need to remove unused keys/strings from Translation.io, using the current branch as reference:
 
-    bundle exec rake translation:sync_and_purge
+```bash
+$ bundle exec rake translation:sync_and_purge
+```
 
 As the name says, this operation will also perform a sync at the same time.
 
@@ -301,40 +316,56 @@ This gem was created specifically for Rails, but you can also use it in a pure R
 
 (Thanks [@kubaw](https://github.com/kubaw) for this snippet!)
 
-## Other implementations
+## List of clients for Translation.io
 
-These implementations are made by contributors for their own projects and are not
-*currently* supported by [Translation.io](https://translation.io). However, they are quite well documented.
+These implementations were usually started by contributors for their own projects.
+Some of them are officially supported by [Translation.io](https://translation.io)
+and some are not yet supported. However, they are quite well documented.
 
 Thanks a lot to these contributors for their hard work!
 
-#### React and React-Intl (JavaScript)
+#### Ruby on Rails (Ruby)
 
- * GitHub: https://github.com/deecewan/translation-io
- * NPM: https://www.npmjs.com/package/translation-io
+**Officially Supported**
 
-Credit: [@deecewan](https://github.com/deecewan)
+ * GitHub: https://github.com/aurels/translation-gem
+ * RubyGems: https://rubygems.org/gems/translation/
+
+Credits: [@aurels](https://github.com/aurels), [@michaelhoste](https://github.com/michaelhoste)
 
 #### Laravel (PHP)
+
+**Officially Supported**
 
  * GitHub: https://github.com/armandsar/laravel-translationio
  * Packagist: https://packagist.org/packages/armandsar/laravel-translationio
 
-Credit: [@armandsar](https://github.com/armandsar)
+Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://github.com/michaelhoste)
 
-## Tests
+#### React and React-Intl (JavaScript)
+
+**Not Officially Supported**
+
+ * GitHub: https://github.com/deecewan/translation-io
+ * NPM: https://www.npmjs.com/package/translation-io
+
+Credits: [@deecewan](https://github.com/deecewan)
+
+## Testing
 
 To run the specs:
 
-    bundle exec rspec
+```bash
+$ bundle exec rspec
+```
 
 ## Contributing
 
-Please read the [CONTRIBUTING](https://github.com/aurels/translation-gem/blob/master/CONTRIBUTING.md) file.
+Please read the [CONTRIBUTING](CONTRIBUTING.md) file.
 
 ## Credits
 
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by
-[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see LICENSE file).
+[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see [LICENSE](LICENSE.md) file).
 
 (c) [https://translation.io](https://translation.io) / [contact@translation.io](mailto:contact@translation.io)
