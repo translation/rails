@@ -326,7 +326,7 @@ Thanks a lot to these contributors for their hard work!
 
 #### Ruby on Rails (Ruby)
 
-**Officially Supported**
+*Officially Supported*
 
  * GitHub: https://github.com/aurels/translation-gem
  * RubyGems: https://rubygems.org/gems/translation/
@@ -335,7 +335,7 @@ Credits: [@aurels](https://github.com/aurels), [@michaelhoste](https://github.co
 
 #### Laravel (PHP)
 
-**Officially Supported**
+*Officially Supported*
 
  * GitHub: https://github.com/armandsar/laravel-translationio
  * Packagist: https://packagist.org/packages/armandsar/laravel-translationio
@@ -344,7 +344,7 @@ Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://git
 
 #### React and React-Intl (JavaScript)
 
-**Not Officially Supported**
+*Not Officially Supported*
 
  * GitHub: https://github.com/deecewan/translation-io
  * NPM: https://www.npmjs.com/package/translation-io
