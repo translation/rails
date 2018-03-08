@@ -123,6 +123,9 @@ np_("context", "Singular text", "Plural text", number)
 _('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
 ```
 
+You don't need another file with source text or translations, everything will
+be synchronized from Translation.io, and stored on PO/MO files.
+
 More information about GetText syntax [here](https://github.com/ruby-gettext/gettext#usage).
 
 ## Usage
@@ -326,7 +329,7 @@ Thanks a lot to these contributors for their hard work!
 
 If you want to create a new client for your favorite language or framework, feel
 free to reach us on [contact@translation.io](mailto:contact@translation.io) and
-we'll assist you with the workflow logic and some API documentations.
+we'll assist you with the workflow logic and send you API docs.
 
 #### Ruby on Rails (Ruby)
 
