@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name             = 'translation'
-  s.summary          = 'Rails translation made _("simple") with YAML and GetText.'
-  s.description      = 'Rails translation made _("simple") with YAML and GetText. Localize your app using either t(".keys") or _("free text") and type "rake translation:sync" to synchronize with your translators.'
+  s.summary          = 'Rails translation made _("simple") with YAML and GetText using Translation.io.'
+  s.description      = 'Localize your app using either t(".keys") or _("plain text") and type "rake translation:sync" to synchronize with your translators on Translation.io.'
   s.homepage         = 'https://translation.io'
   s.email            = 'contact@translation.io'
   s.version          = '1.13'
