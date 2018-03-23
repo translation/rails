@@ -16,10 +16,10 @@ Need help? [contact@translation.io](mailto:contact@translation.io)
 Table of contents
 =================
 
- * [Installation](#installation)
  * [Translation syntaxes](#translation-syntaxes)
    * [I18n (YAML)](#i18n-yaml)
    * [GetText](#gettext)
+ * [Installation](#installation)
  * [Usage](#usage)
    * [Sync](#sync)
    * [Sync and Show Purgeable](#sync-and-show-purgeable)
@@ -38,36 +38,6 @@ Table of contents
  * [Testing](#testing)
  * [Contributing](#contributing)
  * [Credits](#credits)
-
-## Installation
-
- 1. Add the gem to your project's Gemfile:
-
-```ruby
-gem 'translation'
-```
-
- 2. Create a new translation project [from the UI](https://translation.io).
- 3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
-
-The initializer looks like this:
-
-```ruby
-TranslationIO.configure do |config|
-  config.api_key        = 'abcdefghijklmnopqrstuvwxyz012345'
-  config.source_locale  = 'en'
-  config.target_locales = ['fr', 'nl', 'de', 'es']
-end
-```
-
- 4. Initialize your project and push existing translations to Translation.io with:
-
-```bash
-$ bundle exec rake translation:init
-```
-
-If you later need to add/remove target languages, please read our
-[documentation](https://translation.io/blog/adding-target-languages) about that.
 
 ## Translation syntaxes
 
@@ -127,6 +97,36 @@ You don't need another file with source text or translations, everything will
 be synchronized from Translation.io, and stored on PO/MO files.
 
 More information about GetText syntax [here](https://github.com/ruby-gettext/gettext#usage).
+
+## Installation
+
+ 1. Add the gem to your project's Gemfile:
+
+```ruby
+gem 'translation'
+```
+
+ 2. Create a new translation project [from the UI](https://translation.io).
+ 3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
+
+The initializer looks like this:
+
+```ruby
+TranslationIO.configure do |config|
+  config.api_key        = 'abcdefghijklmnopqrstuvwxyz012345'
+  config.source_locale  = 'en'
+  config.target_locales = ['fr', 'nl', 'de', 'es']
+end
+```
+
+ 4. Initialize your project and push existing translations to Translation.io with:
+
+```bash
+$ bundle exec rake translation:init
+```
+
+If you later need to add/remove target languages, please read our
+[documentation](https://translation.io/blog/adding-target-languages) about that.
 
 ## Usage
 
@@ -333,7 +333,7 @@ we'll assist you with the workflow logic and send you API docs.
 
 #### Ruby on Rails (Ruby)
 
- > Officially Supported
+Officially Supported on [https://translation.io/rails](https://translation.io/rails)
 
  * GitHub: https://github.com/aurels/translation-gem
  * RubyGems: https://rubygems.org/gems/translation/
@@ -342,10 +342,10 @@ Credits: [@aurels](https://github.com/aurels), [@michaelhoste](https://github.co
 
 #### Laravel (PHP)
 
- > Officially Supported
+Officially Supported on [https://translation.io/laravel](https://translation.io/laravel)
 
- * GitHub: https://github.com/armandsar/laravel-translationio
- * Packagist: https://packagist.org/packages/armandsar/laravel-translationio
+ * GitHub: https://github.com/translation/laravel
+ * Packagist: https://packagist.org/packages/tio/laravel
 
 Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://github.com/michaelhoste)
 
@@ -371,6 +371,6 @@ Please read the [CONTRIBUTING](CONTRIBUTING.md) file.
 ## Credits
 
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by
-[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](http://80limit.com) (see [LICENSE](LICENSE) file).
+[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](https://80limit.com) (see [LICENSE](LICENSE) file).
 
 (c) [https://translation.io](https://translation.io) / [contact@translation.io](mailto:contact@translation.io)

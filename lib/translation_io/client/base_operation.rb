@@ -20,7 +20,8 @@ module TranslationIO
       def self.perform_request(uri, params)
         begin
           params.merge!({
-            'gem_version'        => TranslationIO.version,
+            'client'             => 'rails',
+            'version'            => TranslationIO.version,
             'source_language'    => TranslationIO.config.source_locale.to_s,
             'target_languages[]' => TranslationIO.config.target_locales.map(&:to_s)
           })
