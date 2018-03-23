@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.14](https://github.com/aurels/translation-gem/releases/tag/v1.14) (2018-03-23)
+
+#### New features:
+
+ * Add params to each request to specify the version and the client (`gem_version` become `version` and `client` is always `rails`). Needed because now there are also Laravel projects on Translation.io (cf. https://github.com/translation/laravel).
+
 ## [v1.13](https://github.com/aurels/translation-gem/releases/tag/v1.13) (2018-02-19)
 
 #### New features:

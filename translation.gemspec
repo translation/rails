@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.description      = 'Localize your app using either t(".keys") or _("source text") and type "rake translation:sync" to synchronize with your translators on Translation.io.'
   s.homepage         = 'https://translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '1.13'
-  s.date             = '2018-02-19'
+  s.version          = '1.14'
+  s.date             = '2018-03-23'
   s.authors          = ['Aurelien Malisart', 'Michael Hoste']
   s.require_paths    = ["lib"]
   s.files            = Dir["lib/**/*"] + ['README.md']
