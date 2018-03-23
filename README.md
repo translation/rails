@@ -2,7 +2,7 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528)
-[![Test Coverage](https://codeclimate.com/github/aurels/translation-gem/badges/coverage.svg)](https://codeclimate.com/github/aurels/translation-gem/coverage)
+[![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/coverage)
 
 Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
 [GetText](#gettext) syntaxes.
@@ -164,7 +164,7 @@ Warning: all keys that are not present in the current branch will be **permanent
 
 The `TranslationIO.configure` block in `config/initializers/translation.rb` can take several optional configuration options.
 
-Some options are described below but for an exhaustive list, please refer to [config.rb](https://github.com/aurels/translation-gem/blob/master/lib/translation_io/config.rb).
+Some options are described below but for an exhaustive list, please refer to [config.rb](https://github.com/translation/rails/blob/master/lib/translation_io/config.rb).
 
 #### Disable GetText
 
@@ -335,7 +335,7 @@ we'll assist you with the workflow logic and send you API docs.
 
 Officially Supported on [https://translation.io/rails](https://translation.io/rails)
 
- * GitHub: https://github.com/aurels/translation-gem
+ * GitHub: https://github.com/translation/rails
  * RubyGems: https://rubygems.org/gems/translation/
 
 Credits: [@aurels](https://github.com/aurels), [@michaelhoste](https://github.com/michaelhoste)

@@ -77,7 +77,7 @@ module TranslationIO
 # You can edit and/or add new localization keys here, they won't be touched by Translation.io.
 #
 # If you want to add a new localization key prefix, use the option described here:
-# https://github.com/aurels/translation-gem#custom-localization-key-prefixes
+# https://github.com/translation/rails#custom-localization-key-prefixes
 #
 EOS
         end
