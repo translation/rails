@@ -24,6 +24,9 @@ Table of contents
    * [Sync](#sync)
    * [Sync and Show Purgeable](#sync-and-show-purgeable)
    * [Sync and Purge](#sync-and-purge)
+ * [Change the current locale](#change-the-locale-at-runtime)
+   * [Globally](#globally)
+   * [Locally](#locally)
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText](#disable-gettext)
    * [Ignored YAML keys](#ignored-yaml-keys)
@@ -31,13 +34,14 @@ Table of contents
    * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
+ * [Testing](#testing)
+ * [Contributing](#contributing)
  * [List of clients for Translation.io](#list-of-clients-for-translationio)
    * [Ruby on Rails (Ruby)](#ruby-on-rails-ruby)
    * [Laravel (PHP)](#laravel-php)
    * [React and React-Intl (JavaScript)](#react-and-react-intl-javascript)
- * [Testing](#testing)
- * [Contributing](#contributing)
- * [Credits](#credits)
+   * [Others](#others)
+ * [License](#license)
 
 ## Translation syntaxes
 
@@ -159,6 +163,44 @@ $ bundle exec rake translation:sync_and_purge
 As the name says, this operation will also perform a sync at the same time.
 
 Warning: all keys that are not present in the current branch will be **permanently deleted from Translation.io**.
+
+## Change the current locale
+
+#### Globally
+
+The easiest way to change the current locale is with `set_locale`.
+
+```ruby
+class ApplicationController < ActionController::Base
+  before_action :set_locale
+
+  [...]
+end
+```
+
+It will automatically set the locale extracted from the user's browser `HTTP_ACCEPT_LANGUAGE`, and keep it in cookies.
+
+You will then be able to change the current locale using https://yourdomain.com?locale=fr or even https://yourdomain.com/fr if you scoped your routes like this:
+
+```ruby
+scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
+  resources :pages
+end
+```
+
+The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3), feel free to override it depending on your locale management.
+
+Note: be sure to have the locales present in [I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
+
+#### Locally
+
+This command will change the locale for both [I18n (YAML)](#i18n-yaml) and [GetText](#gettext):
+
+```ruby
+I18n.locale = 'fr'
+```
+
+You can call it several times in the same page if you want to switch between languages@.
 
 ## Advanced Configuration Options
 
@@ -319,6 +361,18 @@ This gem was created specifically for Rails, but you can also use it in a pure R
 
 (Thanks [@kubaw](https://github.com/kubaw) for this snippet!)
 
+## Testing
+
+To run the specs:
+
+```bash
+$ bundle exec rspec
+```
+
+## Contributing
+
+Please read the [CONTRIBUTING](CONTRIBUTING.md) file.
+
 ## List of clients for Translation.io
 
 These implementations were usually started by contributors for their own projects.
@@ -326,10 +380,6 @@ Some of them are officially supported by [Translation.io](https://translation.io
 and some are not yet supported. However, they are quite well documented.
 
 Thanks a lot to these contributors for their hard work!
-
-If you want to create a new client for your favorite language or framework, feel
-free to reach us on [contact@translation.io](mailto:contact@translation.io) and
-we'll assist you with the workflow logic and send you API docs.
 
 #### Ruby on Rails (Ruby)
 
@@ -356,19 +406,13 @@ Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://git
 
 Credits: [@deecewan](https://github.com/deecewan)
 
-## Testing
+#### Others
 
-To run the specs:
+If you want to create a new client for your favorite language or framework, feel
+free to reach us on [contact@translation.io](mailto:contact@translation.io) and
+we'll assist you with the workflow logic and send you API docs.
 
-```bash
-$ bundle exec rspec
-```
-
-## Contributing
-
-Please read the [CONTRIBUTING](CONTRIBUTING.md) file.
-
-## Credits
+## License
 
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by
 [Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](https://80limit.com) (see [LICENSE](LICENSE) file).
