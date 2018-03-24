@@ -24,7 +24,7 @@ Table of contents
    * [Sync](#sync)
    * [Sync and Show Purgeable](#sync-and-show-purgeable)
    * [Sync and Purge](#sync-and-purge)
- * [Change the current locale](#change-the-locale-at-runtime)
+ * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
    * [Locally](#locally)
  * [Advanced Configuration Options](#advanced-configuration-options)
@@ -200,7 +200,7 @@ This command will change the locale for both [I18n (YAML)](#i18n-yaml) and [GetT
 I18n.locale = 'fr'
 ```
 
-You can call it several times in the same page if you want to switch between languages@.
+You can call it several times in the same page if you want to switch between languages.
 
 ## Advanced Configuration Options
 
