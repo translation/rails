@@ -188,9 +188,11 @@ scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
 end
 ```
 
-The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3), feel free to override it depending on your locale management.
+The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3), feel free to override it with your own locale management.
 
-Note: be sure to have the locales present in [I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
+Don't forget to define your available locales with [I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
+
+More examples here: https://translation.io/blog/set-current-locale-in-your-rails-app
 
 #### Locally
 
@@ -201,6 +203,8 @@ I18n.locale = 'fr'
 ```
 
 You can call it several times in the same page if you want to switch between languages.
+
+More examples here: https://translation.io/blog/rails-i18n-with-locale
 
 ## Advanced Configuration Options
 
