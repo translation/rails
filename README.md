@@ -1,7 +1,7 @@
 # [Translation.io](https://translation.io) client for Ruby on Rails
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Codeship Status](https://app.codeship.com/projects/f7cd4ac0-b73c-0131-51ea-522dcd2196ed/status?branch=master)](https://app.codeship.com/projects/20528)
+[![Codeship Status for translation/rails](https://app.codeship.com/projects/98c37030-1182-0136-ba1d-323b6f100cd2/status?branch=master)](https://app.codeship.com/projects/282938)
 [![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/coverage)
 
 Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
