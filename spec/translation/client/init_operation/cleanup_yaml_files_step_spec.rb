@@ -42,9 +42,9 @@ EOS
     operation_step = TranslationIO::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
     operation_step.run
 
-    File.exist?("#{yaml_locales_path}/en.yml"   ).should be_true
-    File.exist?("#{yaml_locales_path}/fr.yml"   ).should be_false
-    File.exist?("#{yaml_locales_path}/mixed.yml").should be_true
+    File.exist?("#{yaml_locales_path}/en.yml"   ).should be true
+    File.exist?("#{yaml_locales_path}/fr.yml"   ).should be false
+    File.exist?("#{yaml_locales_path}/mixed.yml").should be true
 
     File.read("#{yaml_locales_path}/mixed.yml").should == <<EOS
 ---

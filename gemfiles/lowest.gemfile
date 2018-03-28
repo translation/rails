@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'gettext',   '3.2'
+gem 'gettext',   '3.2.5'
 gem 'simplecov', '0.11.2'
 gem 'rspec',     '2.14'
 gem 'rails',     '4.1'

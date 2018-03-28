@@ -180,41 +180,41 @@ describe TranslationIO::Extractor do
         extracted.should == ['_("hello world")', '_("hello")']
       end
 
-      it 'extracts HAML multiline syntax' do
-        pending("We don't manage HAML multiline syntax")
+      # it 'extracts HAML multiline syntax' do
+      #   pending("We don't manage HAML multiline syntax")
 
-        extracted = subject.extract('%div= _(           |'\
-                                    '        "hello " + |'\
-                                    '        "world"    |'\
-                                    '       )           |')
-        extracted.should == ['_("hello world")']
-      end
+      #   extracted = subject.extract('%div= _(           |'\
+      #                               '        "hello " + |'\
+      #                               '        "world"    |'\
+      #                               '       )           |')
+      #   extracted.should == ['_("hello world")']
+      # end
     end
 
     context "exceptions - " do
-      it "doesn't extract html text (1)" do
-        pending("Text that looks like GetText is also matched for now")
+      # it "doesn't extract html text (1)" do
+      #   pending("Text that looks like GetText is also matched for now")
 
-        extracted = subject.extract('gee'\
-                                    '  %whiz#idtest.classtest'\
-                                    '    Wow this is cool! _("don\'t take it")')
-        extracted.should == []
-      end
+      #   extracted = subject.extract('gee'\
+      #                               '  %whiz#idtest.classtest'\
+      #                               '    Wow this is cool! _("don\'t take it")')
+      #   extracted.should == []
+      # end
 
-      it "doesn't extract html text (2)" do
-        pending("Text that looks like GetText is also matched for now")
+      # it "doesn't extract html text (2)" do
+      #   pending("Text that looks like GetText is also matched for now")
 
-        extracted = subject.extract('%div'\
-                                    '  \= _("don\'t take it")')
-        extracted.should == []
-      end
+      #   extracted = subject.extract('%div'\
+      #                               '  \= _("don\'t take it")')
+      #   extracted.should == []
+      # end
 
-      it "doesn't extract html text (3)" do
-        pending("Text that looks like GetText is also matched for now")
+      # it "doesn't extract html text (3)" do
+      #   pending("Text that looks like GetText is also matched for now")
 
-        extracted = subject.extract('%div = _("must not be taken !")')
-        extracted.should == []
-      end
+      #   extracted = subject.extract('%div = _("must not be taken !")')
+      #   extracted.should == []
+      # end
     end
 
     context "many on same line - " do

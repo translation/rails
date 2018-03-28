@@ -117,7 +117,7 @@ en:
   empty: " "
 EOS
 
-      ((result == expected_result_1) || (result == expected_result_2)).should be_true
+      ((result == expected_result_1) || (result == expected_result_2)).should be true
     end
 
     it 'works with weird not-escaped code' do
