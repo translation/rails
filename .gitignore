@@ -4,3 +4,5 @@ Thumbs.db
 tmp*.rb
 tmp/*
 coverage
+Gemfile.lock
+.ruby-version
