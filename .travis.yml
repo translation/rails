@@ -12,6 +12,16 @@ gemfile:
   - gemfiles/lowest.gemfile
   - gemfiles/latest.gemfile
 
+# Rails 5 is not compatible with ruby < 2.2.2
+matrix:
+  exclude:
+    - rvm: 2.0
+      jdk: gemfiles/latest.gemfile
+    - rvm: 2.1
+      jdk: gemfiles/latest.gemfile
+    - rvm: 2.2
+      jdk: gemfiles/latest.gemfile
+
 sudo: false
 
 # before_script:
