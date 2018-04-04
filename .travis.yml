@@ -4,8 +4,6 @@ env:
 
 language: ruby
 
-cache: bundler
-
 # 2.0 has only one test not passing
 # (TranslationIO::YAMLConversion#get_yaml_data_from_flat_translations works with weird not-escaped code)
 rvm:
@@ -31,7 +29,6 @@ matrix:
 sudo: false
 
 before_script:
-  - gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
