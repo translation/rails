@@ -1,4 +1,10 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=1ec0e82ac7a13e879f71d36abbf09c7c691c71ec58a8b7f74beef6086e3b65db
+
 language: ruby
+
+cache: bundler
 
 # 2.0 has only one test not passing
 # (TranslationIO::YAMLConversion#get_yaml_data_from_flat_translations works with weird not-escaped code)
@@ -24,16 +30,16 @@ matrix:
 
 sudo: false
 
-# before_script:
-#   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-#   - chmod +x ./cc-test-reporter
-#   - ./cc-test-reporter before-build
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
   - bundle exec rspec
 
-# after_script:
-#   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
   email:
