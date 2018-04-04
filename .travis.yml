@@ -31,6 +31,7 @@ matrix:
 sudo: false
 
 before_script:
+  - gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
