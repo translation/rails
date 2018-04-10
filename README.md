@@ -178,9 +178,9 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-It will automatically set the locale extracted from the user's browser `HTTP_ACCEPT_LANGUAGE`, and keep it in cookies.
+It will automatically set the locale extracted from the user's browser `HTTP_ACCEPT_LANGUAGE` value, and keep it in the session between requests.
 
-You will then be able to change the current locale using https://yourdomain.com?locale=fr or even https://yourdomain.com/fr if you scoped your routes like this:
+Update the current locale by redirecting the user to https://yourdomain.com?locale=fr or even https://yourdomain.com/fr if you scoped your routes like this:
 
 ```ruby
 scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
