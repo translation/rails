@@ -493,4 +493,33 @@ describe TranslationIO::FlatHash do
       ]
     }
   end
+
+  it 'handle inconsistant values in hashs - 3' do
+    flat_hash = {
+      "menus.a"      => "Menu A",
+      "menus.a.test" => "test"
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      "menus" => {
+        "a" => "Menu A",
+      }
+    }
+  end
+
+  it 'handle inconsistant values in hashs - 4' do
+    flat_hash = {
+      "title.edit" => "Modifier",
+      "title.new"  => "Nouveau",
+      "title"      => ""
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      "title" => "",
+    }
+  end
 end
