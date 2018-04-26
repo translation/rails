@@ -9,7 +9,7 @@ Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
-Watch our [TECHNICAL DEMO](https://translation.io/rails?video) (2.5min)
+[Technical Demo](https://translation.io/rails?video) (2.5min)
 
 [![Image](https://translation.io/interface.png)](https://translation.io)
 
