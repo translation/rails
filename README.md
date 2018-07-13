@@ -9,7 +9,7 @@ Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
 
 Keep it synchronized with your translators on [Translation.io](https://translation.io).
 
-[Technical Demo](https://translation.io/rails?video) (2.5min)
+[Technical Demo](https://translation.io/videos/rails.mp4) (2.5min)
 
 [![Image](https://translation.io/interface.png)](https://translation.io)
 
@@ -192,7 +192,7 @@ Examples: `en-microsoft` or `fr-be-custom`.
 
 Custom languages can be added like any other language and fallbacks work as expected.
 It means that if the `en-microsoft.some_key` is missing, then it will fallback to
-`en.some_key`. So you only need to translate keys that need to be customized.
+`en.some_key`. So you only need to translate keys that should be customized.
 
 Note that fallback are chained, so `fr-be-custom` will fallback to `fr-be` that will
 itself fallback to `fr`.
