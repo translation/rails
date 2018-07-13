@@ -50,7 +50,7 @@ Table of contents
 
 ## Translation syntaxes
 
-#### I18n (YAML)
+### I18n (YAML)
 
 The default [Rails Internationalization API](http://guides.rubyonrails.org/i18n.html).
 
@@ -80,7 +80,7 @@ en:
 
 You can keep your source YAML file automatically updated using [i18n-tasks](https://github.com/glebm/i18n-tasks).
 
-#### GetText
+### GetText
 
 This gem adds the GetText support to Rails. We [strongly suggest](https://translation.io/blog/gettext-is-better-than-rails-i18n)
 that you use GetText to translate your applications since it allows a simpler and more maintainable syntax.
@@ -139,7 +139,7 @@ If you later need to add/remove target languages, please read our
 
 ## Usage
 
-#### Sync
+### Sync
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
@@ -147,7 +147,7 @@ To send new translatable keys/strings and get new translations from Translation.
 $ bundle exec rake translation:sync
 ```
 
-#### Sync and Show Purgeable
+### Sync and Show Purgeable
 
 If you need to find out what are the unused keys/strings from Translation.io, using the current branch as reference:
 
@@ -157,7 +157,7 @@ $ bundle exec rake translation:sync_and_show_purgeable
 
 As the name says, this operation will also perform a sync at the same time.
 
-#### Sync and Purge
+### Sync and Purge
 
 If you need to remove unused keys/strings from Translation.io, using the current branch as reference:
 
@@ -171,7 +171,7 @@ Warning: all keys that are not present in the current branch will be **permanent
 
 ## Manage Languages
 
-#### Add or Remove Language
+### Add or Remove Language
 
 You can add or remove a language by updating `config.target_locales = []` in your
 `config/initializers/translation.rb` file, and executing `rake translation:sync`.
@@ -180,11 +180,11 @@ If you want to add a new language with existing translations (ex. if you already
 a translated YAML file in your project), you will need to create a new project on
 Translation.io and run `rake translation:init` for them to appear.
 
-#### Custom Languages
+### Custom Languages
 
 You may want to add a custom language that is derived from an existing language.
-It's useful if you want to change some translations for a specific client or another
-instance of the application.
+It's useful if you want to change some translations for another instance of the
+application or for a specific customer.
 
 The structure of a custom language is : existing language code + "-" + custom text.
 
@@ -198,12 +198,12 @@ Note that fallback are chained, so `fr-be-custom` will fallback to `fr-be` that 
 itself fallback to `fr`.
 
 Using GetText syntax, it will only fallback to the source language. So either you
-create a fallback mechanism by yourself or you will need to avoid fallbacking
-by translating everything in Translation.io for the the custom language.
+create a fallback mechanism by yourself or you avoid fallbacking
+by translating everything in Translation.io for that custom language.
 
 ## Change the current locale
 
-#### Globally
+### Globally
 
 The easiest way to change the current locale is with `set_locale`.
 
@@ -231,7 +231,7 @@ Don't forget to define your available locales with [I18n.available_locales](http
 
 More examples here: https://translation.io/blog/set-current-locale-in-your-rails-app
 
-#### Locally
+### Locally
 
 This command will change the locale for both [I18n (YAML)](#i18n-yaml) and [GetText](#gettext):
 
@@ -249,7 +249,7 @@ The `TranslationIO.configure` block in `config/initializers/translation.rb` can 
 
 Some options are described below but for an exhaustive list, please refer to [config.rb](https://github.com/translation/rails/blob/master/lib/translation_io/config.rb).
 
-#### Disable GetText
+### Disable GetText
 
 Sometimes, you only want to use YAML and don't want to be bothered by GetText at all.
 For these cases, you just have to add `disable_gettext` in the config file.
@@ -264,7 +264,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-#### Ignored YAML keys
+### Ignored YAML keys
 
 Sometimes you would like to ignore some YAML keys coming from gems or so.
 You can use the `ignored_key_prefixes` for that.
@@ -288,7 +288,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-#### Source file formats (for GetText)
+### Source file formats (for GetText)
 
 If you are using GetText and you want to manage other file formats than:
 
@@ -308,7 +308,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-#### Custom localization key prefixes
+### Custom localization key prefixes
 
 Rails YAML files contain not only translation strings but also localization values (integers, arrays, booleans)
 in the same place and that's bad. For example: date formats, number separators, default
@@ -334,7 +334,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-#### Paths where locales are stored (not recommended)
+### Paths where locales are stored (not recommended)
 
 You can specify where your GetText and YAML files are on disk:
 
@@ -422,7 +422,7 @@ and some are not yet supported. However, they are quite well documented.
 
 Thanks a lot to these contributors for their hard work!
 
-#### Ruby on Rails (Ruby)
+### Ruby on Rails (Ruby)
 
 Officially Supported on [https://translation.io/rails](https://translation.io/rails)
 
@@ -431,7 +431,7 @@ Officially Supported on [https://translation.io/rails](https://translation.io/ra
 
 Credits: [@aurels](https://github.com/aurels), [@michaelhoste](https://github.com/michaelhoste)
 
-#### Laravel (PHP)
+### Laravel (PHP)
 
 Officially Supported on [https://translation.io/laravel](https://translation.io/laravel)
 
@@ -440,14 +440,14 @@ Officially Supported on [https://translation.io/laravel](https://translation.io/
 
 Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://github.com/michaelhoste)
 
-#### React and React-Intl (JavaScript)
+### React and React-Intl (JavaScript)
 
  * GitHub: https://github.com/deecewan/translation-io
  * NPM: https://www.npmjs.com/package/translation-io
 
 Credits: [@deecewan](https://github.com/deecewan)
 
-#### Others
+### Others
 
 If you want to create a new client for your favorite language or framework, feel
 free to reach us on [contact@translation.io](mailto:contact@translation.io) and
