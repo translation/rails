@@ -26,6 +26,9 @@ Table of contents
    * [Sync](#sync)
    * [Sync and Show Purgeable](#sync-and-show-purgeable)
    * [Sync and Purge](#sync-and-purge)
+ * [Manage Languages](#manage-languages)
+   * [Add or Remove Language](#add-or-remove-language)
+   * [Custom Languages](#custom-languages)
  * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
    * [Locally](#locally)
@@ -165,6 +168,38 @@ $ bundle exec rake translation:sync_and_purge
 As the name says, this operation will also perform a sync at the same time.
 
 Warning: all keys that are not present in the current branch will be **permanently deleted from Translation.io**.
+
+## Manage Languages
+
+#### Add or Remove Language
+
+You can add or remove a language by updating `config.target_locales = []` in your
+`config/initializers/translation.rb` file, and executing `rake translation:sync`.
+
+If you want to add a new language with existing translations (ex. if you already have
+a translated YAML file in your project), you will need to create a new project on
+Translation.io and run `rake translation:init` for them to appear.
+
+#### Custom Languages
+
+You may want to add a custom language that is derived from an existing language.
+It's useful if you want to change some translations for a specific client or another
+instance of the application.
+
+The structure of a custom language is : existing language code + "-" + custom text.
+
+Examples: `en-microsoft` or `fr-be-custom`.
+
+Custom languages can be added like any other language and fallbacks work as expected.
+It means that if the `en-microsoft.some_key` is missing, then it will fallback to
+`en.some_key`. So you only need to translate keys that need to be customized.
+
+Note that fallback are chained, so `fr-be-custom` will fallback to `fr-be` that will
+itself fallback to `fr`.
+
+Using GetText syntax, it will only fallback to the source language. So either you
+create a fallback mechanism by yourself or you will need to avoid fallbacking
+by translating everything in Translation.io for the the custom language.
 
 ## Change the current locale
 
