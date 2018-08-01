@@ -206,7 +206,7 @@ application or for a specific customer.
 
 The structure of a custom language is : existing language code + "-" + custom text.
 
-Examples: `en-microsoft` or `fr-be-custom`.
+Examples: `en-microsoft` or `fr-BE-custom`.
 
 Custom languages can be added like any other language and fallbacks work as expected.
 It means that if the `en-microsoft.some_key` is missing, then it will fallback to
