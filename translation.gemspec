@@ -13,6 +13,14 @@ Gem::Specification.new do |s|
   s.has_rdoc         = false
   s.license          = "MIT"
 
+  s.metadata = {
+    "bug_tracker_uri"   => "https://github.com/translation/rails/issues",
+    "changelog_uri"     => "https://github.com/translation/rails/blob/master/CHANGELOG.md",
+    "documentation_uri" => "https://translation.io/usage",
+    "homepage_uri"      => "https://translation.io",
+    "source_code_uri"   => "https://github.com/translation/rails"
+  }
+
   s.add_dependency('gettext', '~> 3.2', '>= 3.2.5')
 
   s.add_development_dependency('rake')

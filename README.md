@@ -3,6 +3,8 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/translation/rails/master.svg?style=flat-square)](https://travis-ci.org/translation/rails)
 [![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/coverage)
+[![Gem Version](https://badge.fury.io/rb/translation.svg)](https://badge.fury.io/rb/translation)
+[![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
 
 Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
 [GetText](#gettext) syntaxes.
@@ -30,6 +32,7 @@ Table of contents
    * [Sync and Purge](#sync-and-purge)
  * [Manage Languages](#manage-languages)
    * [Add or Remove Language](#add-or-remove-language)
+   * [Edit Language](#edit-language)
    * [Custom Languages](#custom-languages)
  * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
@@ -181,6 +184,19 @@ You can add or remove a language by updating `config.target_locales = []` in you
 If you want to add a new language with existing translations (ex. if you already have
 a translated YAML file in your project), you will need to create a new project on
 Translation.io and run `rake translation:init` for them to appear.
+
+### Edit Language
+
+To edit existing languages while keeping their translations (e.g. changing from `en` to `en-US`).
+
+ 1. Create a new project on Translation.io with the correct languages.
+ 2. Adapt the `config/initializers/translation.rb` file (new api_key and languages)
+ 3. Adapt the language names and root keys of the YAML files in your project (optional: adapt gettext directories and `.po` headers)
+ 4. Execute "rake translation:init" and check that everything went fine.
+ 5. Invite your collaborators in the new project.
+ 6. Remove the old project.
+
+Since you created a new project, the translation history and tags will unfortunately be lost.
 
 ### Custom Languages
 
