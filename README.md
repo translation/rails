@@ -190,8 +190,8 @@ Translation.io and run `rake translation:init` for them to appear.
 To edit existing languages while keeping their translations (e.g. changing from `en` to `en-US`).
 
  1. Create a new project on Translation.io with the correct languages.
- 2. Adapt the `config/initializers/translation.rb` file (new api_key and languages)
- 3. Adapt the language names and root keys of the YAML files in your project (optional: adapt gettext directories and `.po` headers)
+ 2. Adapt `config/initializers/translation.rb` (new API key and languages)
+ 3. Adapt language names and root keys of the YAML files in your project (optional: adapt GetText directories and `.po` headers)
  4. Execute "rake translation:init" and check that everything went fine.
  5. Invite your collaborators in the new project.
  6. Remove the old project.
