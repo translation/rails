@@ -6,10 +6,11 @@
 [![Gem Version](https://badge.fury.io/rb/translation.svg)](https://badge.fury.io/rb/translation)
 [![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
 
-Add this gem to translate your application with [I18n (YAML)](#i18n-yaml) or
-[GetText](#gettext) syntaxes.
+Add this gem to localize your Ruby on Rails application.
 
-Keep it synchronized with your translators on [Translation.io](https://translation.io).
+Use the official Rails syntax (with [YAML](#i18n-yaml) files) or use the [GetText](#gettext) syntax.
+
+Write only the source text, and keep it synchronized with your translators on [Translation.io](https://translation.io).
 
 <a href="https://translation.io">
   <img width="720px" alt="Translation.io interface" src="https://translation.io/gifs/translation.gif">
@@ -88,7 +89,10 @@ You can keep your source YAML file automatically updated using [i18n-tasks](http
 ### GetText
 
 This gem adds the GetText support to Rails. We [strongly suggest](https://translation.io/blog/gettext-is-better-than-rails-i18n)
-that you use GetText to translate your applications since it allows a simpler and more maintainable syntax.
+that you use GetText to translate your application since it allows an easier and more complete syntax.
+
+Also, you won't need to create and manage any YAML file since your code will be
+automatically scanned for any string to translate.
 
 ```ruby
 # Regular
@@ -106,9 +110,6 @@ np_("context", "Singular text", "Plural text", number)
 # Interpolations
 _('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
 ```
-
-You don't need another file with source text or translations, everything will
-be synchronized from Translation.io, and stored on PO/MO files.
 
 More information about GetText syntax [here](https://github.com/ruby-gettext/gettext#usage).
 
