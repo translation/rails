@@ -80,7 +80,7 @@ EOS
     File.read('tmp/translation/haml-gettext-00000014.rb').strip.should include('np_("Fruit", "Apple", "%{num} Apples", 3)')
   end
 
-  it 'works with SLIM', :focus => true do
+  it 'works with SLIM' do
     slim_path_1 = "tmp/#{Time.now.to_i}.slim"
     slim_path_2 = "tmp/#{Time.now.to_i}.html.slim"
 
