@@ -116,7 +116,37 @@ describe TranslationIO::FlatHash do
       subject.to_hash(flat_hash).should == hash
     end
 
-    it 'returns another flash hash with nil values' do
+    it 'returns another flat hash with nil values at root' do
+      hash =  {
+        "ja" => nil
+      }
+
+      flat_hash = subject.to_flat_hash(hash)
+
+      flat_hash.should == {
+        "ja" => nil
+      }
+
+      subject.to_hash(flat_hash).should == hash
+    end
+
+    it 'returns another flat hash with nil values at sublevel' do
+      hash =  {
+        "nl" => {
+          "hello" => nil
+        }
+      }
+
+      flat_hash = subject.to_flat_hash(hash)
+
+      flat_hash.should == {
+        "nl.hello" => nil
+      }
+
+      subject.to_hash(flat_hash).should == hash
+    end
+
+    it 'returns another flat hash with nil values in arrays' do
       hash =  {
         "nl" => {
           "date" => {

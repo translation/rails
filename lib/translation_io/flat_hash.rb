@@ -86,8 +86,8 @@ module TranslationIO
       end
 
       def no_key?(array_or_hash, key)
-        is_a_hash_without_key   = array_or_hash.is_a?(Hash)  && !array_or_hash.has_key?(key)
-        is_an_array_without_key = array_or_hash.is_a?(Array) && !array_or_hash[key]
+        is_a_hash_without_key   = array_or_hash.is_a?(Hash)  && (!array_or_hash.has_key?(key) || array_or_hash[key] == nil)
+        is_an_array_without_key = array_or_hash.is_a?(Array) && array_or_hash[key] == nil
 
         is_a_hash_without_key || is_an_array_without_key
       end
