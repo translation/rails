@@ -33,7 +33,7 @@ module TranslationIO
             key_string = '[' + key_string
           end
 
-          while key_string != ''
+          while key_string != '' && !current_object.is_a?(String) && !current_object.nil?
             # Next is array
             if key_string[0] == '['
               array_pos = key_string.split(']', 2)[0]
@@ -54,7 +54,7 @@ module TranslationIO
                 current_object[array_pos] = value if current_object.is_a?(Array)
               end
             # next is hash
-            elsif key_string[0] != '[' && (key_string.include?('.') or key_string.include?('['))
+            elsif key_string[0] != '[' && (key_string.include?('.') || key_string.include?('['))
               splitted   = key_string.split(/\.|\[/, 2)
               new_key    = splitted[0]
               key_string = splitted[1]

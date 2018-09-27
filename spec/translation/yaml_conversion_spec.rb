@@ -1,8 +1,30 @@
 require 'spec_helper'
 
 describe TranslationIO::YAMLConversion do
-  describe '#get_yaml_data_from_po_data' do
-    it 'returns correct YAML data' do
+  describe 'get_yaml_data_from_po_data with inconherent keys' do
+    it 'returns correct YAML data (1)' do
+      po_data = <<EOS
+msgctxt "services.renting.description"
+msgid "Renting is great!"
+msgstr "Louer est super !"
+
+msgctxt "services.renting.description.price.header"
+msgid "What is the price?"
+msgstr "Quel est le prix ?"
+EOS
+
+      yaml_data = subject.get_yaml_data_from_po_data(po_data, :fr)
+
+      yaml_data.should == <<EOS
+---
+fr:
+  services:
+    renting:
+      description: Louer est super !
+EOS
+    end
+
+    it 'returns correct YAML data (2)' do
       po_data = <<EOS
 msgctxt "hello"
 msgid "Hello world"

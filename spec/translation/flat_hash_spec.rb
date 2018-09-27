@@ -438,6 +438,32 @@ describe TranslationIO::FlatHash do
     }
   end
 
+  it 'handles nil values' do
+    flat_hash = {
+      "key"  => nil
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      "key" => nil
+    }
+  end
+
+  it 'handles nil values with sublevel' do
+    flat_hash = {
+      "key.test"  => nil
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      "key" => {
+        "test" => nil
+      }
+    }
+  end
+
   it 'handles joker square brackets in hash keys' do
     flat_hash = {
       'helpers.label.startup<@~<attachments_attributes>@~><@~<new_attachments>@~>.permissions' => 'Permissions',
@@ -485,7 +511,7 @@ describe TranslationIO::FlatHash do
     subject.to_flat_hash(hash).should == flat_hash
   end
 
-  it 'handle inconsistant values in hashs' do
+  it 'handles inconsistant values in hashs' do
     flat_hash = {
       "errors.messages.too_long"       => "est trop long (pas plus de %{count} caractères)",
       "errors.messages.too_long.one"   => "est trop long (pas plus d'un caractère)",
@@ -503,7 +529,7 @@ describe TranslationIO::FlatHash do
     }
   end
 
-  it 'handle inconsistant values in hashs - 2' do
+  it 'handles inconsistant values in hashs - 2' do
     flat_hash = {
       "menus[0].a" => "Menu A",
       "menus.b"    => "Menu B",
@@ -524,7 +550,7 @@ describe TranslationIO::FlatHash do
     }
   end
 
-  it 'handle inconsistant values in hashs - 3' do
+  it 'handles inconsistant values in hashs - 3' do
     flat_hash = {
       "menus.a"      => "Menu A",
       "menus.a.test" => "test"
@@ -539,7 +565,7 @@ describe TranslationIO::FlatHash do
     }
   end
 
-  it 'handle inconsistant values in hashs - 4' do
+  it 'handles inconsistant values in hashs - 4' do
     flat_hash = {
       "title.edit" => "Modifier",
       "title.new"  => "Nouveau",
@@ -550,6 +576,57 @@ describe TranslationIO::FlatHash do
 
     hash.should == {
       "title" => "",
+    }
+  end
+
+  it 'handles inconsistant values in hashs - 5' do
+    flat_hash = {
+      "services.renting.description"              => 'Renting is great!',
+      "services.renting.description.price.header" => 'What is the price?',
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'services' => {
+        'renting' => {
+          'description' => "Renting is great!"
+        }
+      }
+    }
+  end
+
+  it "handles inconsistant values in hash - 6", :focus => true do
+    flat_hash = {
+      "services.renting.description"                   => 'Renting is great!',
+      "services.renting.description.price.header.test" => 'What is the price?',
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'services' => {
+        'renting' => {
+          'description' => "Renting is great!"
+        }
+      }
+    }
+  end
+
+  it "handles inconsistant values in hash - 7" do
+    flat_hash = {
+      "services.renting.description.price.header.test" => 'What is the price?',
+      "services.renting.description"                   => 'Renting is great!',
+    }
+
+    hash = subject.to_hash(flat_hash)
+
+    hash.should == {
+      'services' => {
+        'renting' => {
+          'description' => "Renting is great!"
+        }
+      }
     }
   end
 end
