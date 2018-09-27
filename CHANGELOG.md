@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.15](https://github.com/translation/rails/releases/tag/v1.15) (2018-09-27)
+
+#### Fixes (bugs & defects):
+
+ * Debug error and more specs for inconsistent YAML.
+
 ## [v1.14](https://github.com/translation/rails/releases/tag/v1.14) (2018-03-23)
 
 #### New features:
