@@ -10,9 +10,10 @@ module TranslationIO
 
         config = TranslationIO.config
 
+        source_files      = config.source_files
+        erb_source_files  = config.erb_source_files
         haml_source_files = config.haml_source_files
         slim_source_files = config.slim_source_files
-        source_files      = config.source_files
         pot_path          = config.pot_path
         source_locale     = config.source_locale
         target_locales    = config.target_locales
@@ -27,7 +28,7 @@ module TranslationIO
           BaseOperation::DumpMarkupGettextKeysStep.new(slim_source_files, :slim).run
         end
 
-        UpdatePotFileStep.new(pot_path, source_files).run(params)
+        UpdatePotFileStep.new(pot_path, source_files + erb_source_files).run(params)
         CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
 
         if purge
