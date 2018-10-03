@@ -311,7 +311,8 @@ end
 
 If you are using GetText and you want to manage other file formats than:
 
- * `rb`, `erb`, `ruby` and `rabl` for Ruby.
+ * `rb`, `ruby` and `rabl` for Ruby.
+ * `erb` and `inky` for Ruby templating.
  * `haml` and `mjmlhaml` for [HAML](http://haml.info/).
  * `slim` and `mjmlslim` for [SLIM](http://slim-lang.com/).
 
@@ -321,6 +322,7 @@ Just add them in your configuration file like this:
 TranslationIO.configure do |config|
   ...
   config.source_formats      << 'rb2'
+  config.erb_source_formats  << 'erb2'
   config.haml_source_formats << 'haml2'
   config.slim_source_formats << 'slim2'
   ...

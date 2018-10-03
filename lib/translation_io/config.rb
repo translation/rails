@@ -11,6 +11,7 @@ module TranslationIO
     attr_accessor :ignored_source_files
 
     attr_accessor :source_formats
+    attr_accessor :erb_source_formats
     attr_accessor :haml_source_formats
     attr_accessor :slim_source_formats
 
@@ -38,7 +39,8 @@ module TranslationIO
       self.ignored_source_paths      = ['vendor/', 'tmp/']
       self.ignored_source_files      = [] # Files not parsed for GetText entries
 
-      self.source_formats            = ['rb', 'erb', 'ruby', 'rabl']
+      self.source_formats            = ['rb', 'ruby', 'rabl']
+      self.erb_source_formats        = ['erb', 'inky']
       self.haml_source_formats       = ['haml', 'mjmlhaml']
       self.slim_source_formats       = ['slim', 'mjmlslim']
 
@@ -66,6 +68,10 @@ module TranslationIO
 
     def source_files
       source_files_for_formats(source_formats)
+    end
+
+    def erb_source_files
+      source_files_for_formats(erb_source_formats)
     end
 
     def haml_source_files

@@ -4,7 +4,7 @@ describe TranslationIO::Client::InitOperation::UpdatePotFileStep do
 
   it 'works' do
     pot_path     = 'tmp/test.pot'
-    source_files = Dir['spec/support/**/*.{rb,erb}']
+    source_files = Dir['spec/support/**/*.{rb,erb,inky}']
     params       = {}
 
     TranslationIO::Client::InitOperation::UpdatePotFileStep.new(pot_path, source_files).run(params)
@@ -23,6 +23,10 @@ msgctxt "contexte"
 msgid "salut"
 msgstr ""
 
+#: ../spec/support/rails_app/app/views/mailer/greetings.inky:4
+msgid "Sincerely,"
+msgstr ""
+
 #: ../spec/support/rails_app/tmp/translation/haml-gettext-00000000.rb:1
 msgctxt "Printer"
 msgid "Open"
@@ -34,7 +38,7 @@ EOS
     params['pot_data'].should start_with '# SOME DESCRIPTIVE TITLE' # also contains header
   end
 
- it 'works with custom POT config' do
+  it 'works with custom POT config' do
     pot_path     = 'tmp/test.pot'
     source_files = Dir['spec/support/**/*.{rb,erb}']
     params       = {}
