@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.16](https://github.com/translation/rails/releases/tag/v1.16) (2018-10-10)
+
+#### New features:
+
+ * Make the parsing compatible with .inky extension files (like erb templating) + add custom "erb-like" extensions in configuration.
+
 ## [v1.15](https://github.com/translation/rails/releases/tag/v1.15) (2018-09-27)
 
 #### Fixes (bugs & defects):
