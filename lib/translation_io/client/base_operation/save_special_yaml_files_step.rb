@@ -49,7 +49,8 @@ module TranslationIO
               params["yaml_data_#{target_locale}"] = File.read(yaml_path)
             end
 
-            TranslationIO.info "Collecting YAML localization entries"
+            TranslationIO.info "Collecting YAML localization entries from server."
+
             uri             = URI("#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/fill_yaml_localizations")
             parsed_response = BaseOperation.perform_request(uri, params)
 
