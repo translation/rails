@@ -7,6 +7,7 @@ module TranslationIO
       def run(options = {})
         purge          = options.fetch(:purge,          false)
         show_purgeable = options.fetch(:show_purgeable, false)
+        readonly       = options.fetch(:readonly,       false)
 
         config = TranslationIO.config
 
@@ -33,6 +34,10 @@ module TranslationIO
 
         if purge
           params['purge'] = 'true'
+        end
+
+        if readonly
+          params['readonly'] = 'true'
         end
 
         uri             = URI("#{client.endpoint}/projects/#{client.api_key}/sync")

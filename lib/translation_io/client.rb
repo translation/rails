@@ -26,5 +26,9 @@ module TranslationIO
     def sync_and_purge
       TranslationIO::Client::SyncOperation.new(self).run(:purge => true)
     end
+
+    def sync_readonly
+      TranslationIO::Client::SyncOperation.new(self).run(:readonly => true)
+    end
   end
 end

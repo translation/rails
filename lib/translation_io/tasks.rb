@@ -38,6 +38,13 @@ namespace :translation do
     end
   end
 
+  desc "Sync translations but only get translated segments without changing anything on Translation.io (it allows concurrent syncing for CI)."
+  task :sync_readonly => :environment do
+    if client_ready?
+      TranslationIO.client.sync_readonly
+    end
+  end
+
   def client_ready?
     if TranslationIO.client
       true
