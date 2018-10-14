@@ -58,8 +58,9 @@ module TranslationIO
       end
 
       def display_unused_segments(parsed_response, show_purgeable, purge)
-        yaml_unused_segments    = parsed_response['unused_segments'].select { |unused_segment| unused_segment['kind'] == 'yaml' }
-        gettext_unused_segments = parsed_response['unused_segments'].select { |unused_segment| unused_segment['kind'] == 'gettext' }
+        unused_segments         = parsed_response['unused_segments'] || []
+        yaml_unused_segments    = unused_segments.select { |unused_segment| unused_segment['kind'] == 'yaml' }
+        gettext_unused_segments = unused_segments.select { |unused_segment| unused_segment['kind'] == 'gettext' }
 
         yaml_size    = yaml_unused_segments.size
         gettext_size = gettext_unused_segments.size
