@@ -7,6 +7,7 @@ module TranslationIO
   ]
 
   TEXT_DOMAIN = 'app'
+  BRANDED_DOMAIN = 'dmptuuli'
 end
 
 require 'translation_io/config'
@@ -46,6 +47,10 @@ module TranslationIO
         Proxy.send(:include, GetText)
 
         Proxy.bindtextdomain(TEXT_DOMAIN, {
+          :path           => @config.locales_path,
+          :output_charset => @config.charset
+        })
+        Proxy.bindtextdomain(BRANDED_DOMAIN, {
           :path           => @config.locales_path,
           :output_charset => @config.charset
         })
