@@ -12,7 +12,13 @@ namespace :translation do
 
   desc "Initialize Translation.io with existing keys/strings."
   task :init => :environment do
-    if client_ready?
+    if @config.multi_domain
+      domain_names.each do |domain|
+        set_domain(domain)
+        TranslationIO.client = Client.new(@config.api_key, @config.endpoint)
+        TranslationIO.client.init
+      end
+    elsif client_ready?
       TranslationIO.client.init
     end
   end

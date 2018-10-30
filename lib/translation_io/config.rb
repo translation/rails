@@ -6,6 +6,10 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
 
+    attr_accessor :multi_domain, :domain_names, :domain_api_keys
+    attr_accessor :domain_source_locales, :domain_folders
+    attr_accessor :text_domain
+
     attr_accessor :ignored_key_prefixes
     attr_accessor :ignored_source_paths
     attr_accessor :ignored_source_files
@@ -54,10 +58,11 @@ module TranslationIO
       self.pot_package_version       = '1.0'
       self.pot_copyright_holder      = File.basename(Dir.pwd)
       self.pot_copyright_year        = Date.today.year
+      self.text_domain               = TEXT_DOMAIN
     end
 
     def pot_path
-      File.join(locales_path, "#{TEXT_DOMAIN}.pot")
+      File.join(locales_path, "#{text_domain}.pot")
     end
 
     def yaml_file_paths
@@ -98,6 +103,22 @@ module TranslationIO
 
     def to_s
       "API Key: #{api_key} | Languages: #{source_locale} => [#{target_locales.join(', ')}]"
+    end
+
+    def set_domain(domain=TEXT_DOMAIN)
+      self.text_domain = domain
+      if multi_domain
+        idx = domain_names.index(domain)
+        self.api_key = domain_api_keys[idx]
+        self.source_locale = domain_source_locales[idx]
+        self.target_locales = domain_target_locales[idx]
+        folders = domain_folders[idx]
+        avoid_folders = (domain_folders - [folders]).flatten
+        self.ignored_source_paths = ['vendor/', 'tmp/'] + avoid_folders
+        # dont need to do anything if the folder is none
+        # CASE NONE: want to ignore all folders defined in other domains
+        # CASE Folder: TODO How does this get used???????
+      end
     end
   end
 end
