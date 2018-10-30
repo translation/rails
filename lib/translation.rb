@@ -50,7 +50,7 @@ module TranslationIO
 
         if @config.multi_domain
           # TODO: Here we iterate over the langauges to initialize them
-          @config.domains_names.each do |domain|
+          @config.domain_names.each do |domain|
             Proxy.bindtextdomain(domain, {
               path: @config.locales_path,
               output_charset: @config.charset

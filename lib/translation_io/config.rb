@@ -7,7 +7,7 @@ module TranslationIO
     attr_accessor :test
 
     attr_accessor :multi_domain, :domain_names, :domain_api_keys
-    attr_accessor :domain_source_locales, :domain_folders
+    attr_accessor :domain_source_locales, :domain_target_locales, :domain_folders
     attr_accessor :text_domain
 
     attr_accessor :ignored_key_prefixes
