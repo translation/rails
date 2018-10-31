@@ -24,7 +24,8 @@ module TranslationIO
   end
 
   class << self
-    attr_reader :config, :client
+    attr_reader :config
+    attr_accessor :client
 
     def configure(&block)
       ENV['LANG'] = 'en_US.UTF-8' if ENV['LANG'].blank?
@@ -34,7 +35,7 @@ module TranslationIO
       yield @config
 
       # setup for default config (aka should work the same but avoid app/views/branded)
-      @config.set_domain
+      @config.change_domain
 
       unless @config.disable_gettext
         require_gettext_dependencies
