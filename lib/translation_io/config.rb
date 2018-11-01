@@ -127,7 +127,6 @@ module TranslationIO
         self.forced_source_paths = domain_folders[idx]
         avoid_folders = (domain_folders - [forced_source_paths]).flatten
         self.ignored_source_paths = ['vendor/', 'tmp/'] + avoid_folders
-        pp ignored_source_paths
         # dont need to do anything if the folder is none
         # CASE NONE: want to ignore all folders defined in other domains
         # CASE Folder: TODO How does this get used???????
