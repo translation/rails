@@ -35,7 +35,7 @@ module TranslationIO
         warn_source_locale_unfound(source_locale, all_used_yaml_locales)
         warn_target_locale_unfound(target_locales, all_used_yaml_locales)
 
-        TranslationIO.info "Sending data to server (Init may take some time, please be patient. Sync will be faster)."
+        TranslationIO.info "Sending data to server (it may take some time, please be patient. Sync will be faster)."
 
         uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
         parsed_response = BaseOperation.perform_request(uri, params)

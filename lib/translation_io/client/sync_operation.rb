@@ -40,7 +40,7 @@ module TranslationIO
           params['readonly'] = 'true'
         end
 
-        TranslationIO.info "Sending data to server."
+        TranslationIO.info "Sending data to server (it may take some time, please be patient)."
 
         uri             = URI("#{client.endpoint}/projects/#{client.api_key}/sync")
         parsed_response = BaseOperation.perform_request(uri, params)
