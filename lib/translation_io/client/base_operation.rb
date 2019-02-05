@@ -28,7 +28,7 @@ module TranslationIO
 
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = uri.scheme == 'https'
-          http.read_timeout = 500
+          http.read_timeout = 20 * 60 # 20 minutes
 
           request = Net::HTTP::Post.new(uri.request_uri)
           request.set_form_data(params)

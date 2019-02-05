@@ -1,5 +1,12 @@
 #  Changelog
 
+## [v1.17](https://github.com/translation/rails/releases/tag/v1.17) (2018-11-12)
+
+#### New features:
+
+ * New 'rake translation:sync_readonly' task for concurrent syncing (CI). See README.
+ * Increase timeout for HTTP requests.
+
 ## [v1.16](https://github.com/translation/rails/releases/tag/v1.16) (2018-10-10)
 
 #### New features:

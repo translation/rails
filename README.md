@@ -38,6 +38,7 @@ Table of contents
  * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
    * [Locally](#locally)
+ * [Continuous Integration](#continuous-integration)
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText](#disable-gettext)
    * [Ignored YAML keys](#ignored-yaml-keys)
@@ -261,6 +262,18 @@ I18n.locale = 'fr'
 You can call it several times in the same page if you want to switch between languages.
 
 More examples here: https://translation.io/blog/rails-i18n-with-locale
+
+## Continuous Integration
+
+If you want fresh translations in your Continuous Integration workflow, you may find yourself calling `bundle exec rake translation:sync` very frequently. 
+
+Since this task can't be concurrently executed (we have a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) strategy with a queue but it returns an error under heavy load), we implemented this threadsafe readonly task: 
+
+```bash
+$ bundle exec rake translation:sync_readonly
+```
+
+This task will prevent your CI to fail and still provide new translations. But be aware that it won't send new keys from your code to Translation.io so you still need to call `bundle exec rake translation:sync` at some point during development.
 
 ## Advanced Configuration Options
 
