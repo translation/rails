@@ -6,9 +6,14 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
 
+    attr_accessor :multi_domain, :domain_names, :domain_api_keys
+    attr_accessor :domain_source_locales, :domain_target_locales, :domain_folders
+    attr_accessor :text_domain
+
     attr_accessor :ignored_key_prefixes
     attr_accessor :ignored_source_paths
     attr_accessor :ignored_source_files
+    attr_accessor :forced_source_paths
 
     attr_accessor :source_formats
     attr_accessor :erb_source_formats
@@ -38,6 +43,7 @@ module TranslationIO
       self.ignored_key_prefixes      = []
       self.ignored_source_paths      = ['vendor/', 'tmp/']
       self.ignored_source_files      = [] # Files not parsed for GetText entries
+      self.forced_source_paths       = []
 
       self.source_formats            = ['rb', 'ruby', 'rabl']
       self.erb_source_formats        = ['erb', 'inky']
@@ -54,10 +60,11 @@ module TranslationIO
       self.pot_package_version       = '1.0'
       self.pot_copyright_holder      = File.basename(Dir.pwd)
       self.pot_copyright_year        = Date.today.year
+      self.text_domain               = TEXT_DOMAIN
     end
 
     def pot_path
-      File.join(locales_path, "#{TEXT_DOMAIN}.pot")
+      File.join(locales_path, "#{text_domain}.pot")
     end
 
     def yaml_file_paths
@@ -88,9 +95,19 @@ module TranslationIO
       # remove ignored files
       file_paths = file_paths - ignored_source_files
 
-      # remove ignored paths
-      ignored_source_paths.each do |ignored_source_path|
-        file_paths = file_paths.select { |file_path| !file_path.start_with?(ignored_source_path) }
+      # check for forced_source_paths
+      if forced_source_paths.any?
+        # only output forced paths by filtering entire list and collecting
+        orig_file_paths = file_paths.dup
+        file_paths = []
+        forced_source_paths.each do |forced_source_path|
+          file_paths += orig_file_paths.select { |file_path| file_path.start_with?(forced_source_path)}
+        end
+      else
+        # remove ignored paths
+        ignored_source_paths.each do |ignored_source_path|
+          file_paths = file_paths.select { |file_path| !file_path.start_with?(ignored_source_path) }
+        end
       end
 
       file_paths
@@ -98,6 +115,27 @@ module TranslationIO
 
     def to_s
       "API Key: #{api_key} | Languages: #{source_locale} => [#{target_locales.join(', ')}]"
+    end
+
+    def change_domain(domain=TEXT_DOMAIN)
+      self.text_domain = domain
+      if multi_domain
+        idx = domain_names.index(domain)
+        self.api_key = domain_api_keys[idx]
+        self.source_locale = domain_source_locales[idx]
+        self.target_locales = domain_target_locales[idx]
+        self.forced_source_paths = domain_folders[idx]
+        avoid_folders = (domain_folders - [forced_source_paths]).flatten
+        self.ignored_source_paths = ['vendor/', 'tmp/'] + avoid_folders
+        # dont need to do anything if the folder is none
+        # CASE NONE: want to ignore all folders defined in other domains
+        # CASE Folder: TODO How does this get used???????
+      end
+    end
+
+  private
+    def exclude_other_paths(paths)
+
     end
   end
 end
