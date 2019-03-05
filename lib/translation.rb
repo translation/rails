@@ -35,7 +35,7 @@ module TranslationIO
       yield @config
 
       # setup for default config (aka should work the same but avoid app/views/branded)
-      @config.change_domain
+      @config.set_domain(@config.domains.nil? ? nil : @config.domains.first)
 
       unless @config.disable_gettext
         require_gettext_dependencies
@@ -49,29 +49,24 @@ module TranslationIO
         # include is private until Ruby 2.1
         Proxy.send(:include, GetText)
 
-        if @config.multi_domain
-          # TODO: Here we iterate over the langauges to initialize them
-          @config.domain_names.each do |domain|
-            Proxy.bindtextdomain(domain, {
-              path: @config.locales_path,
-              output_charset: @config.charset
-              })
-          end
-        else
+        if @config.domains.nil?
           Proxy.bindtextdomain(@config.text_domain, {
             :path           => @config.locales_path,
             :output_charset => @config.charset
           })
+        else
+          @config.domains.each do |domain|
+            Proxy.bindtextdomain(domain[:name], {
+              path: @config.locales_path,
+              output_charset: @config.charset
+              })
+          end
         end
 
         Proxy.textdomain(@config.text_domain)
         Object.delegate *GETTEXT_METHODS, :to => Proxy
       end
 
-      # TODO: this needs overridden to have the different api-keys when referred
-      #       to by the different stages of the rake task
-      #       We also need to hot-swap some other aspects of config so maybe a
-      #       function there is the best solution
       @client = Client.new(@config.api_key, @config.endpoint)
 
       return true

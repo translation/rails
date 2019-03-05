@@ -6,9 +6,7 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
 
-    attr_accessor :multi_domain, :domain_names, :domain_api_keys
-    attr_accessor :domain_source_locales, :domain_target_locales, :domain_folders
-    attr_accessor :text_domain
+    attr_accessor :domains, :text_domain
 
     attr_accessor :ignored_key_prefixes
     attr_accessor :ignored_source_paths
@@ -117,25 +115,23 @@ module TranslationIO
       "API Key: #{api_key} | Languages: #{source_locale} => [#{target_locales.join(', ')}]"
     end
 
-    def change_domain(domain=TEXT_DOMAIN)
-      self.text_domain = domain
-      if multi_domain
-        idx = domain_names.index(domain)
-        self.api_key = domain_api_keys[idx]
-        self.source_locale = domain_source_locales[idx]
-        self.target_locales = domain_target_locales[idx]
-        self.forced_source_paths = domain_folders[idx]
+    def set_domain(domain=nil)
+      if domain.nil?
+        self.text_domain = TEXT_DOMAIN
+      else
+        self.text_domain = domain[:name]
+        self.api_key = domain[:api_key]
+        self.source_locale = domain[:source_locale]
+        self.target_locales = domain[:target_locales]
+        self.forced_source_paths = domain[:folders]
         avoid_folders = (domain_folders - [forced_source_paths]).flatten
         self.ignored_source_paths = ['vendor/', 'tmp/'] + avoid_folders
-        # dont need to do anything if the folder is none
-        # CASE NONE: want to ignore all folders defined in other domains
-        # CASE Folder: TODO How does this get used???????
       end
     end
 
   private
-    def exclude_other_paths(paths)
-
+    def domain_folders
+      self.domains.nil? ? [] : self.domains.map{|d| d[:folders]}
     end
   end
 end
