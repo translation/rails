@@ -2,6 +2,7 @@ module TranslationIO
   class Config
     attr_accessor :api_key, :locales_path, :yaml_locales_path
     attr_accessor :source_locale, :target_locales
+    attr_accessor :load_gems
     attr_accessor :endpoint
     attr_accessor :verbose
     attr_accessor :test
@@ -28,6 +29,7 @@ module TranslationIO
 
     def initialize
       self.locales_path              = File.join('config', 'locales', 'gettext')
+      self.load_gems                 = []
       self.yaml_locales_path         = File.join('config', 'locales')
       self.source_locale             = :en
       self.target_locales            = []
@@ -85,6 +87,10 @@ module TranslationIO
     def source_files_for_formats(formats)
       file_paths = Dir["**/*.{#{formats.join(',')}}"]
 
+      if load_gems
+        file_paths.concat gemspec_files(formats)
+      end
+
       # remove ignored files
       file_paths = file_paths - ignored_source_files
 
@@ -94,6 +100,15 @@ module TranslationIO
       end
 
       file_paths
+    end
+
+    def gemspec_files(formats)
+      load_gems.map do |name|
+        gemspec = Gem.loaded_specs[name]
+        next unless gemspec
+
+        Dir["#{gemspec.full_gem_path}/lib/**/*.{#{formats.join(',')}}"]
+      end.flatten.compact
     end
 
     def to_s
