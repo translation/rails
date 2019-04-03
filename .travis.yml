@@ -28,6 +28,12 @@ matrix:
 
 sudo: false
 
+# https://docs.travis-ci.com/user/languages/ruby/
+# To stay on bundler 1 for compatibility with rails 4.1
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
+
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
