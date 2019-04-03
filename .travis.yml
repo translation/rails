@@ -20,12 +20,8 @@ gemfile:
 
 matrix:
   exclude:
-    - rvm: 2.1   # Rails 5 is not compatible with ruby < 2.2.2
-      jdk: gemfiles/latest.gemfile
-    - rvm: 2.2   # Rails 5 is not compatible with ruby < 2.2.2
-      jdk: gemfiles/latest.gemfile
     - rvm: jruby # Seems to use bundler 2.0 even with before_install commands that worked for other rubies
-      jdk: gemfiles/lowest.gemfile
+      gemfile: gemfiles/lowest.gemfile
 
 sudo: false
 
