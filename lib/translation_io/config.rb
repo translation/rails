@@ -35,46 +35,62 @@ module TranslationIO
     attr_accessor :pot_copyright_year
 
     def initialize
-
+      #######
       # Global options
+      #######
 
-      self.api_key                   = ''
-      self.source_locale             = :en
-      self.target_locales            = []
-      self.endpoint                  = 'https://translation.io/api'
-      self.metadata_path             = File.join('config', 'locales', '.translation_io')
-      self.verbose                   = 1
-      self.test                      = false
+      self.api_key        = ''
+      self.source_locale  = :en
+      self.target_locales = []
+      self.endpoint       = 'https://translation.io/api'
+      self.metadata_path  = File.join('config', 'locales', '.translation_io')
+      self.verbose        = 1
+      self.test           = false
 
+      #######
       # YAML options
+      #######
 
-      self.yaml_locales_path         = File.join('config', 'locales') # YAML directory
-      self.ignored_key_prefixes      = []                             # Ignored YAML key prefixes (like 'will_paginate.')
-      self.localization_key_prefixes = []                             # see https://github.com/translation/rails#custom-localization-key-prefixes
+      # YAML directory
+      self.yaml_locales_path = File.join('config', 'locales')
 
+      # Ignored YAML key prefixes (like 'will_paginate.')
+      self.ignored_key_prefixes = []
+
+      # Cf. https://github.com/translation/rails#custom-localization-key-prefixes
+      self.localization_key_prefixes = []
+
+      #######
       # GetText options
+      #######
 
-      self.disable_gettext           = false
+      self.disable_gettext = false
 
-      self.locales_path              = File.join('config', 'locales', 'gettext') # GetText directory for PO/MO files
+      # GetText directory for PO and MO files
+      self.locales_path = File.join('config', 'locales', 'gettext')
 
-      self.ignored_source_paths      = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/'] # Paths not parsed for GetText entries
-      self.ignored_source_files      = []                                                     # Files not parsed for GetText entries
+      # These paths and files will not be parsed for GetText entries
+      self.ignored_source_paths = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/']
+      self.ignored_source_files = []
 
-      self.source_formats            = ['rb', 'ruby', 'rabl']
-      self.erb_source_formats        = ['erb', 'inky']
-      self.haml_source_formats       = ['haml', 'mjmlhaml']
-      self.slim_source_formats       = ['slim', 'mjmlslim']
+      # Extensions for rb/erb/haml/slim file parsers
+      self.source_formats      = ['rb', 'ruby', 'rabl']
+      self.erb_source_formats  = ['erb', 'inky']
+      self.haml_source_formats = ['haml', 'mjmlhaml']
+      self.slim_source_formats = ['slim', 'mjmlslim']
 
-      self.text_domain               = 'app'   # this textdomain will be synced
-      self.binded_text_domains       = ['app'] # These textdomains will be read in that order during execution
-      self.charset                   = 'UTF-8'
+      # 'text_domain' will be synced (name of .po/.mo files)
+      # 'binded_text_domains' will be read during execution (in that priority order)
+      self.text_domain         = 'app'
+      self.binded_text_domains = ['app']
+      self.charset             = 'UTF-8'
 
-      self.pot_msgid_bugs_address    = 'contact@translation.io'
-      self.pot_package_name          = File.basename(Dir.pwd)
-      self.pot_package_version       = '1.0'
-      self.pot_copyright_holder      = File.basename(Dir.pwd)
-      self.pot_copyright_year        = Date.today.year
+      # POT header informations
+      self.pot_msgid_bugs_address = 'contact@translation.io'
+      self.pot_package_name       = File.basename(Dir.pwd)
+      self.pot_package_version    = '1.0'
+      self.pot_copyright_holder   = File.basename(Dir.pwd)
+      self.pot_copyright_year     = Date.today.year
     end
 
     def pot_path
