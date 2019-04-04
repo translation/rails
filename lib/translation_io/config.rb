@@ -1,12 +1,21 @@
 module TranslationIO
   class Config
-    attr_accessor :api_key, :locales_path, :yaml_locales_path
-    attr_accessor :source_locale, :target_locales
+    attr_accessor :api_key
+    attr_accessor :source_locale
+    attr_accessor :target_locales
     attr_accessor :endpoint
+    attr_accessor :metadata_path
     attr_accessor :verbose
     attr_accessor :test
 
+    attr_accessor :yaml_locales_path
     attr_accessor :ignored_key_prefixes
+    attr_accessor :localization_key_prefixes
+
+    attr_accessor :disable_gettext
+
+    attr_accessor :locales_path
+
     attr_accessor :ignored_source_paths
     attr_accessor :ignored_source_files
 
@@ -15,10 +24,9 @@ module TranslationIO
     attr_accessor :haml_source_formats
     attr_accessor :slim_source_formats
 
-    attr_accessor :localization_key_prefixes
-    attr_accessor :disable_gettext
+    attr_accessor :text_domain
+    attr_accessor :binded_text_domains
     attr_accessor :charset
-    attr_accessor :metadata_path
 
     attr_accessor :pot_msgid_bugs_address
     attr_accessor :pot_package_name
@@ -27,27 +35,40 @@ module TranslationIO
     attr_accessor :pot_copyright_year
 
     def initialize
-      self.locales_path              = File.join('config', 'locales', 'gettext')
-      self.yaml_locales_path         = File.join('config', 'locales')
+
+      # Global options
+
+      self.api_key                   = ''
       self.source_locale             = :en
       self.target_locales            = []
       self.endpoint                  = 'https://translation.io/api'
+      self.metadata_path             = File.join('config', 'locales', '.translation_io')
       self.verbose                   = 1
       self.test                      = false
 
-      self.ignored_key_prefixes      = []
-      self.ignored_source_paths      = ['vendor/', 'tmp/']
-      self.ignored_source_files      = [] # Files not parsed for GetText entries
+      # YAML options
+
+      self.yaml_locales_path         = File.join('config', 'locales') # YAML directory
+      self.ignored_key_prefixes      = []                             # Ignored YAML key prefixes (like 'will_paginate.')
+      self.localization_key_prefixes = []                             # see https://github.com/translation/rails#custom-localization-key-prefixes
+
+      # GetText options
+
+      self.disable_gettext           = false
+
+      self.locales_path              = File.join('config', 'locales', 'gettext') # GetText directory for PO/MO files
+
+      self.ignored_source_paths      = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/'] # Paths not parsed for GetText entries
+      self.ignored_source_files      = []                                                     # Files not parsed for GetText entries
 
       self.source_formats            = ['rb', 'ruby', 'rabl']
       self.erb_source_formats        = ['erb', 'inky']
       self.haml_source_formats       = ['haml', 'mjmlhaml']
       self.slim_source_formats       = ['slim', 'mjmlslim']
 
-      self.localization_key_prefixes = []
-      self.disable_gettext           = false
+      self.text_domain               = 'app'   # this textdomain will be synced
+      self.binded_text_domains       = ['app'] # These textdomains will be read in that order during execution
       self.charset                   = 'UTF-8'
-      self.metadata_path             = File.join('config', 'locales', '.translation_io')
 
       self.pot_msgid_bugs_address    = 'contact@translation.io'
       self.pot_package_name          = File.basename(Dir.pwd)
@@ -57,7 +78,7 @@ module TranslationIO
     end
 
     def pot_path
-      File.join(locales_path, "#{TEXT_DOMAIN}.pot")
+      File.join(locales_path, "#{text_domain}.pot")
     end
 
     def yaml_file_paths

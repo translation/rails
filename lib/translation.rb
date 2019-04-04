@@ -5,8 +5,6 @@ module TranslationIO
     :nsgettext, :pgettext, :npgettext, :sgettext, :ngettext, :gettext,
     :np_, :ns_, :Nn_, :n_, :p_, :s_, :N_, :_
   ]
-
-  TEXT_DOMAIN = 'app'
 end
 
 require 'translation_io/config'
@@ -45,12 +43,14 @@ module TranslationIO
         # include is private until Ruby 2.1
         Proxy.send(:include, GetText)
 
-        Proxy.bindtextdomain(TEXT_DOMAIN, {
-          :path           => @config.locales_path,
-          :output_charset => @config.charset
-        })
+        @config.binded_text_domains.each do |binded_text_domain|
+          Proxy.bindtextdomain(binded_text_domain, {
+            :path           => @config.locales_path,
+            :output_charset => @config.charset
+          })
+        end
 
-        Proxy.textdomain(TEXT_DOMAIN)
+        Proxy.textdomain(@config.text_domain)
         Object.delegate *GETTEXT_METHODS, :to => Proxy
       end
 

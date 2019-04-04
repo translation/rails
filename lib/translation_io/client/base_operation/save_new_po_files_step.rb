@@ -11,9 +11,11 @@ module TranslationIO
         def run
           TranslationIO.info "Saving new PO files."
 
+          text_domain = TranslationIO.config.text_domain
+
           @target_locales.each do |target_locale|
             if @parsed_response.has_key?("po_data_#{target_locale}")
-              po_path = File.join(@locales_path, Locale::Tag.parse(target_locale).to_s, "#{TEXT_DOMAIN}.po")
+              po_path = File.join(@locales_path, Locale::Tag.parse(target_locale).to_s, "#{text_domain}.po")
               FileUtils.mkdir_p(File.dirname(po_path))
               TranslationIO.info po_path, 2, 2
 

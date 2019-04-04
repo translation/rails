@@ -11,8 +11,10 @@ module TranslationIO
         def run(params)
           TranslationIO.info "Updating PO files."
 
+          text_domain = TranslationIO.config.text_domain
+
           @target_locales.each do |target_locale|
-            po_path = "#{@locales_path}/#{Locale::Tag.parse(target_locale).to_s}/#{TEXT_DOMAIN}.po"
+            po_path = "#{@locales_path}/#{Locale::Tag.parse(target_locale).to_s}/#{text_domain}.po"
             TranslationIO.info po_path, 2, 2
 
             if File.exist?(po_path)
