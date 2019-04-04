@@ -19,6 +19,8 @@ module TranslationIO
     attr_accessor :ignored_source_paths
     attr_accessor :ignored_source_files
 
+    attr_accessor :parsed_gems
+
     attr_accessor :source_formats
     attr_accessor :erb_source_formats
     attr_accessor :haml_source_formats
@@ -35,6 +37,7 @@ module TranslationIO
     attr_accessor :pot_copyright_year
 
     def initialize
+
       #######
       # Global options
       #######
@@ -72,6 +75,9 @@ module TranslationIO
       # These paths and files will not be parsed for GetText entries
       self.ignored_source_paths = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/']
       self.ignored_source_files = []
+
+      # These gems will be parsed by GetText (use gem names)
+      self.parsed_gems = []
 
       # Extensions for rb/erb/haml/slim file parsers
       self.source_formats      = ['rb', 'ruby', 'rabl']
@@ -121,6 +127,14 @@ module TranslationIO
 
     def source_files_for_formats(formats)
       file_paths = Dir["**/*.{#{formats.join(',')}}"]
+
+      # Add gems that need to be parsed by GetText
+      parsed_gems.each do |gem_name|
+        if Gem.loaded_specs[gem_name]
+          gem_path   = Gem.loaded_specs[gem_name].full_gem_path
+          file_paths += Dir["#{gem_path}/**/*.{#{formats.join(',')}}"]
+        end
+      end
 
       # remove ignored files
       file_paths = file_paths - ignored_source_files
