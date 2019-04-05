@@ -40,7 +40,7 @@ Table of contents
    * [Locally](#locally)
  * [Continuous Integration](#continuous-integration)
  * [Advanced Configuration Options](#advanced-configuration-options)
-   * [Disable GetText](#disable-gettext)
+   * [Disable GetText or YAML](#disable-gettext-or-yaml)
    * [Ignored YAML keys](#ignored-yaml-keys)
    * [Source file formats (for GetText)](#source-file-formats-for-gettext)
    * [Custom localization key prefixes](#custom-localization-key-prefixes)
@@ -265,9 +265,9 @@ More examples here: https://translation.io/blog/rails-i18n-with-locale
 
 ## Continuous Integration
 
-If you want fresh translations in your Continuous Integration workflow, you may find yourself calling `bundle exec rake translation:sync` very frequently. 
+If you want fresh translations in your Continuous Integration workflow, you may find yourself calling `bundle exec rake translation:sync` very frequently.
 
-Since this task can't be concurrently executed (we have a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) strategy with a queue but it returns an error under heavy load), we implemented this threadsafe readonly task: 
+Since this task can't be concurrently executed (we have a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) strategy with a queue but it returns an error under heavy load), we implemented this threadsafe readonly task:
 
 ```bash
 $ bundle exec rake translation:sync_readonly
@@ -281,17 +281,25 @@ The `TranslationIO.configure` block in `config/initializers/translation.rb` can 
 
 Some options are described below but for an exhaustive list, please refer to [config.rb](https://github.com/translation/rails/blob/master/lib/translation_io/config.rb).
 
-### Disable GetText
+### Disable GetText or YAML
 
-Sometimes, you only want to use YAML and don't want to be bothered by GetText at all.
-For these cases, you just have to add `disable_gettext` in the config file.
-
-For example:
+If you want to only use YAML files and totally ignore GetText syntax, use:
 
 ```ruby
 TranslationIO.configure do |config|
   ...
   config.disable_gettext = true
+  ...
+end
+```
+
+In contrast, if you only want to synchronize GetText files and leave the YAML
+files unchanged, use:
+
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.disable_yaml = true
   ...
 end
 ```
