@@ -1,5 +1,17 @@
 #  Changelog
 
+## [v1.18](https://github.com/translation/rails/releases/tag/v1.18) (2019-04-05)
+
+#### New features:
+
+ * Parse GetText strings from specified gems ([#28](https://github.com/translation/rails/pull/28)). Cf. https://github.com/translation/rails#gems-with-gettext-strings
+ * Add `config.disable_yaml` option ([#26](https://github.com/translation/rails/issues/26))
+ * Add `config.text_domain` and `config.binded_text_domains` options for GetText fine-tuning.
+
+#### Fixes (bugs & defects):
+
+ * Deprecation warning for #has_rdoc (Rubygems) ([#29](https://github.com/translation/rails/issues/29))
+
 ## [v1.17](https://github.com/translation/rails/releases/tag/v1.17) (2018-11-12)
 
 #### New features:
