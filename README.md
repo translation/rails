@@ -43,7 +43,7 @@ Table of contents
    * [Disable GetText or YAML](#disable-gettext-or-yaml)
    * [Ignored YAML keys](#ignored-yaml-keys)
    * [Source file formats (for GetText)](#source-file-formats-for-gettext)
-   * [Parse gem files for GetText strings](#parse-gem-files-for-gettext-strings)
+   * [Gems with GetText strings](#gems-with-gettext-strings)
    * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
@@ -351,7 +351,7 @@ TranslationIO.configure do |config|
 end
 ```
 
-### Parse gem files for GetText strings
+### Gems with GetText strings
 
 Public gems usually don't make use of GetText strings, but if you created and localized your own gems
 with the GetText syntax, you'll want to be able to synchronize them:
