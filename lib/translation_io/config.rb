@@ -8,6 +8,8 @@ module TranslationIO
     attr_accessor :verbose
     attr_accessor :test
 
+    attr_accessor :disable_yaml
+
     attr_accessor :yaml_locales_path
     attr_accessor :ignored_key_prefixes
     attr_accessor :localization_key_prefixes
@@ -53,6 +55,8 @@ module TranslationIO
       #######
       # YAML options
       #######
+
+      self.disable_yaml = false
 
       # YAML directory
       self.yaml_locales_path = File.join('config', 'locales')

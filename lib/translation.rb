@@ -31,7 +31,7 @@ module TranslationIO
 
       yield @config
 
-      unless @config.disable_gettext
+      if !@config.disable_gettext
         require_gettext_dependencies
         add_missing_locales
         add_parser_for_erb_source_formats(@config.erb_source_formats)

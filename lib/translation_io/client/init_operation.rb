@@ -19,7 +19,7 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
-        unless config.disable_gettext
+        if !config.disable_gettext
           BaseOperation::DumpMarkupGettextKeysStep.new(haml_source_files, :haml).run
           BaseOperation::DumpMarkupGettextKeysStep.new(slim_source_files, :slim).run
         end
@@ -27,27 +27,34 @@ module TranslationIO
         UpdatePotFileStep.new(pot_path, source_files + erb_source_files).run(params)
         UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path).run(params)
 
-        create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
-        create_yaml_pot_files_step.run(params)
+        if !config.disable_yaml
+          create_yaml_pot_files_step = CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
+          create_yaml_pot_files_step.run(params)
 
-        all_used_yaml_locales = create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s).sort
+          all_used_yaml_locales = create_yaml_pot_files_step.all_used_yaml_locales.to_a.map(&:to_s).sort
 
-        warn_source_locale_unfound(source_locale, all_used_yaml_locales)
-        warn_target_locale_unfound(target_locales, all_used_yaml_locales)
+          warn_source_locale_unfound(source_locale, all_used_yaml_locales)
+          warn_target_locale_unfound(target_locales, all_used_yaml_locales)
+        end
 
         TranslationIO.info "Sending data to server (it may take some time, please be patient. Sync will be faster)."
 
         uri             = URI("#{client.endpoint}/projects/#{client.api_key}/init")
         parsed_response = BaseOperation.perform_request(uri, params)
 
-        unless parsed_response.nil?
-          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
-          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
-          CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
-          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+        if !parsed_response.nil?
+          if !config.disable_gettext
+            BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+            BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+          end
 
-          info_yaml_directory_structure
+          if !config.disable_yaml
+            BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+            BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+            CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path).run
+            info_yaml_directory_structure
+          end
+
           info_project_url(parsed_response)
         end
 

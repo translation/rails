@@ -22,15 +22,20 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
-        ApplyYamlSourceEditsStep.new(yaml_file_paths, source_locale).run(params)
+        if !config.disable_yaml
+          ApplyYamlSourceEditsStep.new(yaml_file_paths, source_locale).run(params)
+        end
 
-        unless config.disable_gettext
+        if !config.disable_gettext
           BaseOperation::DumpMarkupGettextKeysStep.new(haml_source_files, :haml).run
           BaseOperation::DumpMarkupGettextKeysStep.new(slim_source_files, :slim).run
         end
 
         UpdatePotFileStep.new(pot_path, source_files + erb_source_files).run(params)
-        CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
+
+        if !config.disable_yaml
+          CreateYamlPotFileStep.new(source_locale, yaml_file_paths).run(params)
+        end
 
         if purge
           params['purge'] = 'true'
@@ -45,11 +50,16 @@ module TranslationIO
         uri             = URI("#{client.endpoint}/projects/#{client.api_key}/sync")
         parsed_response = BaseOperation.perform_request(uri, params)
 
-        unless parsed_response.nil?
-          BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
-          BaseOperation::CreateNewMoFilesStep.new(locales_path).run
-          BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
-          BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+        if !parsed_response.nil?
+          if !config.disable_gettext
+            BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+            BaseOperation::CreateNewMoFilesStep.new(locales_path).run
+          end
+
+          if !config.disable_yaml
+            BaseOperation::SaveNewYamlFilesStep.new(target_locales, yaml_locales_path, parsed_response).run
+            BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths).run
+          end
 
           display_unused_segments(parsed_response, show_purgeable, purge)
 
