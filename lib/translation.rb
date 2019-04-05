@@ -43,8 +43,8 @@ module TranslationIO
         # include is private until Ruby 2.1
         Proxy.send(:include, GetText)
 
-        @config.binded_text_domains.each do |binded_text_domain|
-          Proxy.bindtextdomain(binded_text_domain, {
+        @config.bound_text_domains.each do |bound_text_domain|
+          Proxy.bindtextdomain(bound_text_domain, {
             :path           => @config.locales_path,
             :output_charset => @config.charset
           })

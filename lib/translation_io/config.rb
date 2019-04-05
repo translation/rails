@@ -29,7 +29,7 @@ module TranslationIO
     attr_accessor :slim_source_formats
 
     attr_accessor :text_domain
-    attr_accessor :binded_text_domains
+    attr_accessor :bound_text_domains
     attr_accessor :charset
 
     attr_accessor :pot_msgid_bugs_address
@@ -90,10 +90,10 @@ module TranslationIO
       self.slim_source_formats = ['slim', 'mjmlslim']
 
       # 'text_domain' will be synced (name of .po/.mo files)
-      # 'binded_text_domains' will be read during execution (in that priority order)
-      self.text_domain         = 'app'
-      self.binded_text_domains = ['app']
-      self.charset             = 'UTF-8'
+      # 'bound_text_domains' will be read during execution (in that priority order)
+      self.text_domain        = 'app'
+      self.bound_text_domains = ['app']
+      self.charset            = 'UTF-8'
 
       # POT header informations
       self.pot_msgid_bugs_address = 'contact@translation.io'
