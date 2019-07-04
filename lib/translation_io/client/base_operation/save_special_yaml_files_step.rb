@@ -35,13 +35,15 @@ module TranslationIO
 
             yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations)
 
-            File.open(yaml_path, 'wb') do |file|
-              file.write(self.class.top_comment)
-              file.write(yaml_data)
+            if !YAML::load(yaml_data).empty?
+              File.open(yaml_path, 'wb') do |file|
+                file.write(self.class.top_comment)
+                file.write(yaml_data)
+              end
             end
           end
 
-          if not TranslationIO.config.test
+          if !TranslationIO.config.test
             # Get YAML localization entries
             params = {}
             @target_locales.each do |target_locale|

@@ -51,4 +51,33 @@ EOS
     File.read('tmp/config/locales/localization.fr.yml').strip.should == expected_yaml_content_fr.strip
   end
 
+  it "doesn't write a localization.xx.yml file if it doesn't contain any value" do
+    yaml_locales_path = 'tmp/config/locales'
+    FileUtils.mkdir_p(yaml_locales_path)
+
+    File.open("#{yaml_locales_path}/en.yml", 'wb') do |file|
+      file.write <<EOS
+---
+en:
+  value: 42
+EOS
+    end
+
+    File.open("#{yaml_locales_path}/fr.yml", 'wb') do |file|
+      file.write <<EOS
+---
+fr:
+EOS
+    end
+
+    yaml_file_paths = Dir["#{yaml_locales_path}/*.yml"]
+    source_locale   = 'en'
+    target_locales  = ['fr']
+
+    operation_step = TranslationIO::Client::BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths)
+    operation_step.run
+
+    File.exist?('tmp/config/locales/localization.fr.yml').should be false
+  end
+
 end
