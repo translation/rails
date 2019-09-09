@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake',      '~> 12.0'
   s.add_development_dependency 'simplecov', '~> 0.11'
   s.add_development_dependency 'rspec',     '~> 2.14'
-  s.add_development_dependency 'rails',     '>= 4.1', '< 7.0'
+  s.add_development_dependency 'rails',     '>= 4.1'
 end
