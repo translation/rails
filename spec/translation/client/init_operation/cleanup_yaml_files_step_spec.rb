@@ -161,8 +161,6 @@ en:
       a particularly long
       message.
 EOS
-
-    TranslationIO.config.yaml_line_width = nil
   end
 
 end

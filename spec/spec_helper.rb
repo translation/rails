@@ -12,10 +12,11 @@ RSpec.configure do |config|
       config.test                      = true
       config.source_locale             = :en
       config.target_locales            = []
+      config.metadata_path             = 'tmp/config/locales/.translation_io'
+      config.yaml_locales_path         = File.join('tmp', 'config', 'locales')
       config.ignored_key_prefixes      = []
       config.localization_key_prefixes = []
-      config.yaml_locales_path         = File.join('tmp', 'config', 'locales')
-      config.metadata_path             = 'tmp/config/locales/.translation_io'
+      config.yaml_line_width           = nil
     end
 
     if File.exist?('tmp')

@@ -113,8 +113,6 @@ fr:
 EOS
 
     File.read('tmp/config/locales/translation.fr.yml').strip.should == expected_yaml_content_fr.strip
-
-    TranslationIO.config.yaml_line_width = nil
   end
 
 end

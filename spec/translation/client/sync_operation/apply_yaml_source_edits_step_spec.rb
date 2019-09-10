@@ -164,7 +164,5 @@ en:
       Hello world, this is a very
       long line to test line_width
 EOS
-
-    TranslationIO.config.yaml_line_width = nil
   end
 end
