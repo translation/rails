@@ -152,7 +152,18 @@ EOS
     operation_step = TranslationIO::Client::InitOperation::CleanupYamlFilesStep.new(source_locale, target_locales, yaml_file_paths, yaml_locales_path)
     operation_step.run
 
-    File.read("#{yaml_locales_path}/localization.en.yml").should == <<-EOS
+    # ruby <= 2.2
+    rails_2_2_result = <<-EOS
+---
+en:
+  contact:
+    title: Contact us
+      with a particularly
+      long message.
+EOS
+
+    # ruby >= 2.3
+    rails_2_3_result = <<-EOS
 ---
 en:
   contact:
@@ -161,6 +172,8 @@ en:
       a particularly long
       message.
 EOS
+
+    File.read("#{yaml_locales_path}/localization.en.yml").should be_in [rails_2_2_result, rails_2_3_result]
   end
 
 end

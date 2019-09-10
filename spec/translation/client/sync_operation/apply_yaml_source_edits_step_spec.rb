@@ -156,7 +156,17 @@ EOS
     params = {}
     step_operation.run(params)
 
-    File.read("#{yaml_locales_path}/en.yml").should == <<-EOS
+    # ruby <= 2.2
+    rails_2_2_result = <<-EOS
+---
+en:
+  main:
+    hello: Hello world, this is
+      a very long line to test line_width
+EOS
+
+    # ruby >= 2.3
+    rails_2_3_result = <<-EOS
 ---
 en:
   main:
@@ -164,5 +174,7 @@ en:
       Hello world, this is a very
       long line to test line_width
 EOS
+
+    File.read("#{yaml_locales_path}/en.yml").should be_in [rails_2_2_result, rails_2_3_result]
   end
 end
