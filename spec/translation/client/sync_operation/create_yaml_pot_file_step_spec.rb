@@ -7,7 +7,7 @@ describe TranslationIO::Client::SyncOperation::CreateYamlPotFileStep do
     FileUtils.mkdir_p(yaml_locales_path)
 
     File.open("#{yaml_locales_path}/en.yml", 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 en:
   main:
@@ -31,7 +31,7 @@ EOS
     params = {}
     step_operation.run(params)
 
-    params['yaml_pot_data'].should == <<EOS
+    params['yaml_pot_data'].should == <<-EOS
 msgctxt "main.hello"
 msgid "Hello world"
 msgstr ""

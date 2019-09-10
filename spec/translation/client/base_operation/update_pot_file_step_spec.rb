@@ -9,7 +9,7 @@ describe TranslationIO::Client::InitOperation::UpdatePotFileStep do
 
     TranslationIO::Client::InitOperation::UpdatePotFileStep.new(pot_path, source_files).run(params)
 
-    pot_data = <<EOS
+    pot_data = <<-EOS
 #: ../spec/support/rails_app/app/models/fake_model.rb:3
 msgid "Hi kids, do you like violence ?"
 msgstr ""
@@ -51,7 +51,7 @@ EOS
 
     TranslationIO::Client::InitOperation::UpdatePotFileStep.new(pot_path, source_files).run(params)
 
-    pot_data = <<EOS
+    pot_data = <<-EOS
 #: ../spec/support/rails_app/app/models/fake_model.rb:3
 msgid "Hi kids, do you like violence ?"
 msgstr ""
@@ -89,7 +89,7 @@ EOS
     params = {}
     step_operation.run(params)
 
-    params['pot_data'].should end_with <<EOS
+    params['pot_data'].should end_with <<-EOS
 #: ../spec/support/rails_app/app/models/fake_model.rb:3
 msgid "Hi kids, do you like violence ?"
 msgstr ""

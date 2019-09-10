@@ -37,7 +37,14 @@ module TranslationIO
 
       def get_yaml_data_from_flat_translations(flat_translations)
         translations = FlatHash.to_hash(flat_translations)
-        return translations.to_yaml
+
+        if TranslationIO.config.yaml_line_width
+          data = translations.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
+        else
+          data = translations.to_yaml
+        end
+
+        data.gsub(/ $/, '') # remove trailing spaces
       end
 
     end

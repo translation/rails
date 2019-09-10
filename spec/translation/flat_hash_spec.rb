@@ -596,7 +596,7 @@ describe TranslationIO::FlatHash do
     }
   end
 
-  it "handles inconsistant values in hash - 6", :focus => true do
+  it "handles inconsistant values in hash - 6" do
     flat_hash = {
       "services.renting.description"                   => 'Renting is great!',
       "services.renting.description.price.header.test" => 'What is the price?',

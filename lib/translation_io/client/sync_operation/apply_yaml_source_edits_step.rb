@@ -31,8 +31,10 @@ module TranslationIO
                       if locale_file_path_in_project?(file_path)
                         flat_yaml_hash[key] = source_edit['new_text']
 
+                        file_content = to_hash_to_yaml(flat_yaml_hash)
+
                         File.open(file_path, 'w') do |f|
-                          f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
+                          f.write(file_content)
                         end
                       else # override source text of gem
                         yaml_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
@@ -47,8 +49,10 @@ module TranslationIO
 
                         flat_yaml_hash["#{@source_locale}.#{source_edit['key']}"] = source_edit['new_text']
 
+                        file_content = to_hash_to_yaml(flat_yaml_hash)
+
                         File.open(yaml_path, 'w') do |f|
-                          f.write(FlatHash.to_hash(flat_yaml_hash).to_yaml)
+                          f.write(file_content)
                         end
                       end
 
@@ -71,6 +75,18 @@ module TranslationIO
         end
 
         private
+
+        def to_hash_to_yaml(flat_yaml_hash)
+          yaml_hash = FlatHash.to_hash(flat_yaml_hash)
+
+          if TranslationIO.config.yaml_line_width
+            content = yaml_hash.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
+          else
+            content = yaml_hash.to_yaml
+          end
+
+          content.gsub(/ $/, '') # remove trailing spaces
+        end
 
         def metadata_timestamp
           if File.exist?(TranslationIO.config.metadata_path)

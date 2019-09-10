@@ -23,8 +23,17 @@ module TranslationIO
 
                 if new_content_hash.keys.any?
                   TranslationIO.info "Rewriting #{locale_file_path}", 2, 2
+
+                  if TranslationIO.config.yaml_line_width
+                    file_content = new_content_hash.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
+                  else
+                    file_content = new_content_hash.to_yaml
+                  end
+
+                  file_content = file_content.gsub(/ $/, '') # remove trailing spaces
+
                   File.open(locale_file_path, 'wb') do |file|
-                    file.write(new_content_hash.to_yaml)
+                    file.write(file_content)
                   end
                 else
                   TranslationIO.info "Removing #{locale_file_path}", 2, 2

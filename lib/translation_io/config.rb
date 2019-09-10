@@ -13,6 +13,7 @@ module TranslationIO
     attr_accessor :yaml_locales_path
     attr_accessor :ignored_key_prefixes
     attr_accessor :localization_key_prefixes
+    attr_accessor :yaml_line_width
 
     attr_accessor :disable_gettext
 
@@ -66,6 +67,11 @@ module TranslationIO
 
       # Cf. https://github.com/translation/rails#custom-localization-key-prefixes
       self.localization_key_prefixes = []
+
+      # Define max line width of generated YAML files:
+      # Can be nil (default behaviour of Ruby version), -1 (no wrapping) or positive integer (wrapping)
+      # Cf. https://github.com/translation/rails/issues/19
+      self.yaml_line_width = nil
 
       #######
       # GetText options

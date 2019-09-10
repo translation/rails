@@ -9,7 +9,7 @@ describe TranslationIO::Client::BaseOperation::CreateNewMoFilesStep do
     FileUtils.mkdir_p("#{locales_path}/fr")
     FileUtils.mkdir_p("#{locales_path}/nl")
 
-    po_data_fr = <<EOS
+    po_data_fr = <<-EOS
 msgid "Hi kids, do you like violence ?"
 msgstr "Salut les enfants, vous aimez la violence?"
 

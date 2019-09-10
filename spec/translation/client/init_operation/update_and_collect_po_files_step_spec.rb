@@ -7,7 +7,7 @@ describe TranslationIO::Client::InitOperation::UpdateAndCollectPoFilesStep do
     pot_path       = 'tmp/app.pot'
     locales_path   = 'tmp'
 
-    pot_data = <<EOS
+    pot_data = <<-EOS
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\\n"
@@ -37,7 +37,7 @@ EOS
     operation_step = TranslationIO::Client::InitOperation::UpdateAndCollectPoFilesStep.new(target_locales, pot_path, locales_path)
     operation_step.run(params)
 
-    po_data_fr = <<EOS
+    po_data_fr = <<-EOS
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\\n"
@@ -59,7 +59,7 @@ msgid "Let's get ready to rumble!"
 msgstr ""
 EOS
 
-  po_data_nl = <<EOS
+  po_data_nl = <<-EOS
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\\n"

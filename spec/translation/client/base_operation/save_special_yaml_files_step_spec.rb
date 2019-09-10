@@ -7,7 +7,7 @@ describe TranslationIO::Client::BaseOperation::SaveSpecialYamlFilesStep do
     FileUtils.mkdir_p(yaml_locales_path)
 
     File.open("#{yaml_locales_path}/en.yml", 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 en:
   main:
@@ -21,7 +21,7 @@ EOS
     end
 
     File.open("#{yaml_locales_path}/fr.yml", 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 fr:
   main:
@@ -40,7 +40,7 @@ EOS
     operation_step = TranslationIO::Client::BaseOperation::SaveSpecialYamlFilesStep.new(source_locale, target_locales, yaml_locales_path, yaml_file_paths)
     operation_step.run
 
-    expected_yaml_content_fr = <<EOS
+    expected_yaml_content_fr = <<-EOS
 #{TranslationIO::Client::BaseOperation::SaveSpecialYamlFilesStep.top_comment}---
 fr:
   main:
@@ -56,7 +56,7 @@ EOS
     FileUtils.mkdir_p(yaml_locales_path)
 
     File.open("#{yaml_locales_path}/en.yml", 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 en:
   value: 42
@@ -64,7 +64,7 @@ EOS
     end
 
     File.open("#{yaml_locales_path}/fr.yml", 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 fr:
 EOS

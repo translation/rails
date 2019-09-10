@@ -9,14 +9,14 @@ describe TranslationIO::Client::BaseOperation::DumpMarkupGettextKeysStep do
     haml_path_2 = "tmp/#{Time.now.to_i}.html.haml"
 
     File.open(haml_path_1, 'w') do |file|
-      file.puts <<EOS
+      file.puts <<-EOS
 %p= _("I am a text")
 %p= _('I am another text')
 EOS
     end
 
     File.open(haml_path_2, 'w') do |file|
-      file.puts <<EOS
+      file.puts <<-EOS
 %section.container
   %h1= _("I am a text from a HAML file")
 
@@ -85,13 +85,13 @@ EOS
     slim_path_2 = "tmp/#{Time.now.to_i}.html.slim"
 
     File.open(slim_path_1, 'w') do |file|
-      file.puts <<EOS
+      file.puts <<-EOS
 p = _("I am a text from a SLIM file")
 EOS
     end
 
     File.open(slim_path_2, 'w') do |file|
-      file.puts <<EOS
+      file.puts <<-EOS
 doctype html
 html
   head

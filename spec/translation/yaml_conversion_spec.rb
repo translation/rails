@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TranslationIO::YAMLConversion do
   describe 'get_yaml_data_from_po_data with inconherent keys' do
     it 'returns correct YAML data (1)' do
-      po_data = <<EOS
+      po_data = <<-EOS
 msgctxt "services.renting.description"
 msgid "Renting is great!"
 msgstr "Louer est super !"
@@ -15,7 +15,7 @@ EOS
 
       yaml_data = subject.get_yaml_data_from_po_data(po_data, :fr)
 
-      yaml_data.should == <<EOS
+      yaml_data.should == <<-EOS
 ---
 fr:
   services:
@@ -25,7 +25,7 @@ EOS
     end
 
     it 'returns correct YAML data (2)' do
-      po_data = <<EOS
+      po_data = <<-EOS
 msgctxt "hello"
 msgid "Hello world"
 msgstr "Bonjour le monde entier"
@@ -57,7 +57,7 @@ EOS
 
       yaml_data = subject.get_yaml_data_from_po_data(po_data, :fr)
 
-      yaml_data.should == <<EOS
+      yaml_data.should == <<-EOS
 ---
 fr:
   hello: Bonjour le monde entier
@@ -117,7 +117,7 @@ EOS
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
 
-      expected_result_1 = <<EOS
+      expected_result_1 = <<-EOS
 ---
 en:
   hello: Hello world
@@ -128,7 +128,7 @@ en:
   empty: ' '
 EOS
 
-      expected_result_2 = <<EOS
+      expected_result_2 = <<-EOS
 ---
 en:
   hello: Hello world
@@ -149,7 +149,7 @@ EOS
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
 
-      expected_result = <<EOS
+      expected_result = <<-EOS
 ---
 en:
   architects:

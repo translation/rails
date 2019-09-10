@@ -7,7 +7,7 @@ describe TranslationIO::Client::InitOperation::CreateYamlPoFilesStep do
     FileUtils.mkdir_p(yaml_root_path)
 
     File.open('tmp/config/locales/en.yml', 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 en:
   home:
@@ -30,7 +30,7 @@ EOS
     end
 
         File.open('tmp/config/locales/fr.yml', 'wb') do |file|
-      file.write <<EOS
+      file.write <<-EOS
 ---
 fr:
   home:
@@ -56,7 +56,7 @@ EOS
     operation_step = TranslationIO::Client::InitOperation::CreateYamlPoFilesStep.new(source_locale, target_locales, yaml_file_paths)
     operation_step.run(params)
 
-    params['yaml_po_data_fr'].should == <<EOS
+    params['yaml_po_data_fr'].should == <<-EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
 msgstr "Titre génial"
@@ -74,7 +74,7 @@ msgid " "
 msgstr " "
 EOS
 
-    params['yaml_po_data_nl'].should == <<EOS
+    params['yaml_po_data_nl'].should == <<-EOS
 msgctxt "home.show.title"
 msgid "Awesome Title"
 msgstr ""

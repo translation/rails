@@ -70,7 +70,7 @@ module TranslationIO
         end
 
         def self.top_comment
-          <<EOS
+          <<-EOS
 # THIS FILE CONTAINS LOCALIZATION KEYS : date and number formats, number precisions,
 # number separators and all non-textual values depending on the language.
 # These values must not reach the translator, so they are separated in this file.
