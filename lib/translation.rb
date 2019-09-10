@@ -51,7 +51,10 @@ module TranslationIO
         end
 
         Proxy.textdomain(@config.text_domain)
-        Object.delegate *GETTEXT_METHODS, :to => Proxy
+
+        if @config.gettext_object_delegate
+          Object.delegate *GETTEXT_METHODS, :to => Proxy
+        end
       end
 
       @client = Client.new(@config.api_key, @config.endpoint)

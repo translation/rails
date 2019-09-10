@@ -46,6 +46,7 @@ Table of contents
    * [Gems with GetText strings](#gems-with-gettext-strings)
    * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
+   * [GetText Object Class Monkey-Patching](#gettext-object-class-monkey-patching)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
  * [Testing](#testing)
  * [Contributing](#contributing)
@@ -400,6 +401,30 @@ TranslationIO.configure do |config|
   config.locales_path      = 'some/path' # defaults to config/locales/gettext
   config.yaml_locales_path = 'some/path' # defaults to config/locales
   ...
+end
+```
+
+### GetText Object Class Monkey-Patching
+
+GetText methods (`_('')`, etc.) are available everywhere in your application.
+This is made by extending the global `Object` class.
+
+You can disable the built-in `Object` monkey-patching if you
+prefer a more granular approach:
+
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.gettext_object_delegate = false
+  ...
+end
+```
+
+Don't forget to manually include the GetText methods where needed:
+
+```ruby
+class Contact < ApplicationRecord
+  extend TranslationIO::Proxy
 end
 ```
 

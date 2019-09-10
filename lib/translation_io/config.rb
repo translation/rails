@@ -17,6 +17,8 @@ module TranslationIO
 
     attr_accessor :disable_gettext
 
+    attr_accessor :gettext_object_delegate
+
     attr_accessor :locales_path
 
     attr_accessor :ignored_source_paths
@@ -78,6 +80,9 @@ module TranslationIO
       #######
 
       self.disable_gettext = false
+
+      # Cf. https://github.com/translation/rails#gettext-object-class-monkey-patching
+      self.gettext_object_delegate = true
 
       # GetText directory for PO and MO files
       self.locales_path = File.join('config', 'locales', 'gettext')
