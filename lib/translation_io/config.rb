@@ -88,7 +88,7 @@ module TranslationIO
       self.locales_path = File.join('config', 'locales', 'gettext')
 
       # These paths and files will not be parsed for GetText entries
-      self.ignored_source_paths = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/']
+      self.ignored_source_paths = ['vendor/', 'tmp/', 'node_modules/', 'logs/', '.git/', 'public/', 'private/']
       self.ignored_source_files = []
 
       # These gems will be parsed by GetText (use gem names)
@@ -141,25 +141,43 @@ module TranslationIO
     end
 
     def source_files_for_formats(formats)
-      file_paths = Dir["**/*.{#{formats.join(',')}}"]
+      file_paths = []
+      root_paths = ['.']
 
-      # Add gems that need to be parsed by GetText
+      # Add gem paths that need to be parsed by GetText ("parsed_gem" option)
       parsed_gems.each do |gem_name|
         if Gem.loaded_specs[gem_name]
-          gem_path   = Gem.loaded_specs[gem_name].full_gem_path
-          file_paths += Dir["#{gem_path}/**/*.{#{formats.join(',')}}"]
+          root_paths << Gem.loaded_specs[gem_name].full_gem_path
         end
       end
 
-      # remove ignored files
-      file_paths = file_paths - ignored_source_files
-
-      # remove ignored paths
-      ignored_source_paths.each do |ignored_source_path|
-        file_paths = file_paths.select { |file_path| !file_path.start_with?(ignored_source_path) }
+      root_paths.each do |root_path|
+        Pathname.new(root_path).find do |path|
+          if path.directory?
+            if is_ignored_path?(path)
+              Find.prune
+            end
+          else
+            if formats.include?(path.extname[1..-1]) && !is_ignored_file?(path)
+              file_paths << path.to_s
+            end
+          end
+        end
       end
 
       file_paths
+    end
+
+    def is_ignored_path?(path)
+      ignored_source_paths.any? do |ignored_source_path|
+        path == Pathname.new(ignored_source_path).cleanpath
+      end
+    end
+
+    def is_ignored_file?(path)
+      ignored_source_files.any? do |ignored_source_file|
+        path == Pathname.new(ignored_source_file).cleanpath
+      end
     end
 
     def to_s

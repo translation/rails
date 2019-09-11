@@ -62,7 +62,7 @@ module TranslationIO
       end
 
       def warn_source_locale_unfound(source_locale, all_used_yaml_locales)
-        is_source_locale_unfound = !source_locale.in?(all_used_yaml_locales)
+        is_source_locale_unfound = !all_used_yaml_locales.include?(source_locale)
 
         if is_source_locale_unfound
           puts
