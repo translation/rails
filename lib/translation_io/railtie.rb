@@ -49,8 +49,12 @@ if defined?(GetText)
             begin
               parse_path(path, po)
             rescue SystemExit => e
-              # puts(_("Error parsing %{path}") % {:path => path})
               puts
+              puts "---------------"
+              puts "Error while parsing this file for GetText: #{path}"
+              puts "Are you sure the file is correctly formatted?"
+              puts "Feel free to contact us to get some help: contact@translation.io"
+              puts "---------------"
               puts
             end
           end
