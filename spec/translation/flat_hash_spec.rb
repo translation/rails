@@ -629,4 +629,52 @@ describe TranslationIO::FlatHash do
       }
     }
   end
+
+  it "can remove empty keys if specified" do
+    flat_hash = {
+      "services.blih"           => nil,
+      "services.renting"        => 'Renting is great!',
+      "services.blah"           => '',
+      "services.array[0]"       => 'first_item',
+      "services.array[1]"       => '',
+      "services.array[2]"       => nil,
+      "services.array[3]"       => 'something',
+      "services.array[4].hello" => 'bonjour',
+      "services.array[4].bye"   => nil
+    }
+
+    hash = subject.to_hash(flat_hash, true)
+
+    hash.should == {
+      'services' => {
+        'renting' => "Renting is great!",
+        'blah'    => '',
+        'array'   => [
+          'first_item',
+          '',
+          nil,
+          'something',
+          { 'hello' => 'bonjour' }
+        ]
+      }
+    }
+
+    # Same but without empty key removal!
+    hash = subject.to_hash(flat_hash, false)
+
+    hash.should == {
+      'services' => {
+        'blih'    => nil,
+        'renting' => "Renting is great!",
+        'blah'    => '',
+        'array'   => [
+          'first_item',
+          '',
+          nil,
+          'something',
+          { 'hello' => 'bonjour', 'bye' => nil }
+        ]
+      }
+    }
+  end
 end

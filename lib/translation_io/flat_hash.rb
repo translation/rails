@@ -7,8 +7,12 @@ module TranslationIO
         get_flat_hash_for_level(hash)
       end
 
-      def to_hash(flat_hash)
+      def to_hash(flat_hash, remove_empty_keys = false)
         hash = {}
+
+        if remove_empty_keys
+          flat_hash = flat_hash.reject { |k, v| v.nil? && !k.end_with?(']') }
+        end
 
         flat_hash.each_pair do |key, value|
           build_hash_with_flat(hash, key, value)
