@@ -2,7 +2,7 @@ module TranslationIO
   module YamlEntry
 
     IGNORED_KEY_PREFIXES = [
-      'faker.'
+      'faker'
     ]
 
     LOCALIZATION_KEY_PREFIXES = [
@@ -31,7 +31,7 @@ module TranslationIO
       end
 
       def ignored?(key)
-        key.present? && ignored_key_prefixes.any? { |p| key_without_locale(key).start_with?(p) }
+        key.present? && ignored_key_prefixes.any? { |p| key_without_locale(key).match(/^#{p}\b/) != nil }
       end
 
       def localization?(key, value)
@@ -40,7 +40,7 @@ module TranslationIO
 
       def localization_prefix?(key)
         localization_key_prefixes.any? do |prefix|
-          key_without_locale(key).start_with?(prefix)
+          key_without_locale(key).match(/^#{prefix}\b/) != nil
         end
       end
 

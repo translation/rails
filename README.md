@@ -317,14 +317,14 @@ For example:
 TranslationIO.configure do |config|
   ...
   config.ignored_key_prefixes = [
-    'number.human.',
-    'admin.',
-    'errors.messages.',
-    'activerecord.errors.messages.',
-    'will_paginate.',
-    'helpers.page_entries_info.',
-    'views.pagination.',
-    'enumerize.visibility.'
+    'number.human',
+    'admin',
+    'errors.messages',
+    'activerecord.errors.messages',
+    'will_paginate',
+    'helpers.page_entries_info',
+    'views.pagination',
+    'enumerize.visibility'
   ]
   ...
 end

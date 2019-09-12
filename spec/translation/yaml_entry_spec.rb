@@ -25,11 +25,19 @@ describe TranslationIO::YamlEntry do
 
   describe '#ignored?' do
     it do
-      TranslationIO::YamlEntry.ignored?('en.faker.yo').should be true
-      TranslationIO::YamlEntry.ignored?('en.yo').should be false
+      TranslationIO::YamlEntry.ignored?('en.faker.yo'      ).should be true
+      TranslationIO::YamlEntry.ignored?('en.faker'         ).should be true
+      TranslationIO::YamlEntry.ignored?('en.faker.aa.aa.bb').should be true
+      TranslationIO::YamlEntry.ignored?('en.yo'            ).should be false
+      TranslationIO::YamlEntry.ignored?('en.fakeryo'       ).should be false
+      TranslationIO::YamlEntry.ignored?('fr.faker'         ).should be true
 
       TranslationIO.config.ignored_key_prefixes = ['world']
+
       TranslationIO::YamlEntry.ignored?('en.world.hello').should be true
+      TranslationIO::YamlEntry.ignored?('en.world'      ).should be true
+      TranslationIO::YamlEntry.ignored?('en.worldbla'   ).should be false
+      TranslationIO::YamlEntry.ignored?('fr.world.hello').should be true
     end
   end
 
@@ -57,10 +65,12 @@ describe TranslationIO::YamlEntry do
 
   describe '#localization_prefix?' do
     it do
-      TranslationIO::YamlEntry.localization_prefix?('en.date.formats.default').should be true
-      TranslationIO::YamlEntry.localization_prefix?('en.date.order[0]'       ).should be true
-      TranslationIO::YamlEntry.localization_prefix?('en.date.order[1]'       ).should be true
-      TranslationIO::YamlEntry.localization_prefix?('en.date.order[2]'       ).should be true
+      TranslationIO::YamlEntry.localization_prefix?('en.date.formats.default'  ).should be true
+      TranslationIO::YamlEntry.localization_prefix?('en.date.formatsss.default').should be false
+      TranslationIO::YamlEntry.localization_prefix?('en.date.order[0]'         ).should be true
+      TranslationIO::YamlEntry.localization_prefix?('en.date.order[1]'         ).should be true
+      TranslationIO::YamlEntry.localization_prefix?('en.date.order[2]'         ).should be true
+      TranslationIO::YamlEntry.localization_prefix?('en.date.orders[2]'        ).should be false
 
       TranslationIO::YamlEntry.localization_prefix?('en.yo'                                       ).should be false
       TranslationIO::YamlEntry.localization_prefix?('en.number.human.decimal_units.units.thousand').should be false
