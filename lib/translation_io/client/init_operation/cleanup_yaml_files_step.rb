@@ -13,21 +13,19 @@ module TranslationIO
           @yaml_file_paths.each do |locale_file_path|
             if locale_file_removable?(locale_file_path)
               if File.exist?(locale_file_path)
-                content_hash = YAML::load(File.read(locale_file_path))
+                content_hash        = YAML::load(File.read(locale_file_path)) || {}
+                source_content_hash = content_hash.select { |k| k.to_s == @source_locale.to_s }
 
-                if content_hash
-                  new_content_hash = content_hash.keep_if { |k| k.to_s == @source_locale.to_s }
-                else # loading an empty file returns false
-                  new_content_hash = {}
-                end
-
-                if new_content_hash.keys.any?
+                if source_content_hash.empty?
+                  TranslationIO.info "Removing #{locale_file_path}", 2, 2
+                  FileUtils.rm(locale_file_path)
+                elsif content_hash != source_content_hash # in case of mixed languages in source YAML file
                   TranslationIO.info "Rewriting #{locale_file_path}", 2, 2
 
                   if TranslationIO.config.yaml_line_width
-                    file_content = new_content_hash.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
+                    file_content = source_content_hash.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
                   else
-                    file_content = new_content_hash.to_yaml
+                    file_content = source_content_hash.to_yaml
                   end
 
                   file_content = file_content.gsub(/ $/, '') # remove trailing spaces
@@ -36,8 +34,7 @@ module TranslationIO
                     file.write(file_content)
                   end
                 else
-                  TranslationIO.info "Removing #{locale_file_path}", 2, 2
-                  FileUtils.rm(locale_file_path)
+                  # don't touch source
                 end
               end
             end
