@@ -13,7 +13,7 @@
 
 #### Fixes (bugs & defects):
 
- * Improved `config.ignored_key_prefixes` so "errors.message" would not block "errors.messageandstuff" key.
+ * Improved `config.ignored_key_prefixes` so `errors.message` would not ignore `errors.messageandstuff` key.
 
 ## [v1.18](https://github.com/translation/rails/releases/tag/v1.18) (2019-04-05)
 
