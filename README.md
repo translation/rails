@@ -530,9 +530,15 @@ Credits: [@deecewan](https://github.com/deecewan)
 
 ### Others
 
-If you want to create a new client for your favorite language or framework, feel
-free to reach us on [contact@translation.io](mailto:contact@translation.io) and
-we'll assist you with the workflow logic and send you API docs.
+We made it easy to create new clients
+
+We created a special documentation and endpoints page to create a new Translation.io
+library for your own favorite language or framework: https://translation.io/docs/create-library
+
+You can also use our more traditional API here: https://translation.io/docs/api
+
+Feel free to contact us on [contact@translation.io](mailto:contact@translation.io) if
+you need some help or if you want to share your library.
 
 ## License
 
