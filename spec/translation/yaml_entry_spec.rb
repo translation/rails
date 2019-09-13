@@ -34,8 +34,15 @@ describe TranslationIO::YamlEntry do
 
       TranslationIO.config.ignored_key_prefixes = ['world']
 
-      TranslationIO::YamlEntry.ignored?('en.world.hello').should be true
       TranslationIO::YamlEntry.ignored?('en.world'      ).should be true
+      TranslationIO::YamlEntry.ignored?('en.world.hello').should be true
+      TranslationIO::YamlEntry.ignored?('en.worldbla'   ).should be false
+      TranslationIO::YamlEntry.ignored?('fr.world.hello').should be true
+
+      TranslationIO.config.ignored_key_prefixes = ['world.']
+
+      TranslationIO::YamlEntry.ignored?('en.world'      ).should be false
+      TranslationIO::YamlEntry.ignored?('en.world.hello').should be true
       TranslationIO::YamlEntry.ignored?('en.worldbla'   ).should be false
       TranslationIO::YamlEntry.ignored?('fr.world.hello').should be true
     end

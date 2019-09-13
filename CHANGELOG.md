@@ -1,5 +1,20 @@
 #  Changelog
 
+## [v1.19](https://github.com/translation/rails/releases/tag/v1.19) (2019-09-13)
+
+#### New features:
+
+ * Add `config.yaml_line_width` option to wrap YAML files ([#19](https://github.com/translation/rails/issues/19)).
+ * Add `config.gettext_object_delegate` option to avoid monkey-patching of Object ([#30](https://github.com/translation/rails/issues/30)).
+ * Remove extra-whitespace in YAML files (issue with libYAML) ([#13](https://github.com/translation/rails/issues/13)).
+ * Only write localization.xx.yml files if they are not empty.
+ * Faster GetText parsing by ignoring paths using `Pathname#find` API instead of `Dir[].reject`. Big speed up if lots of files in the project (`node_modules` etc.)!
+ * `translation:init`: won't rewrite source YAML files if that's not needed.
+
+#### Fixes (bugs & defects):
+
+ * Improved `config.ignored_key_prefixes` so "errors.message" would not block "errors.messageandstuff" key.
+
 ## [v1.18](https://github.com/translation/rails/releases/tag/v1.18) (2019-04-05)
 
 #### New features:
