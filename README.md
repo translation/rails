@@ -530,12 +530,13 @@ Credits: [@deecewan](https://github.com/deecewan)
 
 ### Others
 
-We made it easy to create new clients
+If you want to create a new client for your favorite language or framework, please read our
+["Create a Translation.io Library"](https://translation.io/docs/create-library)
+guide and use our special
+[init](https://translation.io/docs/create-library#initialization) and
+[sync](https://translation.io/docs/create-library#synchronization) endpoints.
 
-We created a special documentation and endpoints page to create a new Translation.io
-library for your own favorite language or framework: https://translation.io/docs/create-library
-
-You can also use our more traditional API here: https://translation.io/docs/api
+You can also use our more [traditional API](https://translation.io/docs/api).
 
 Feel free to contact us on [contact@translation.io](mailto:contact@translation.io) if
 you need some help or if you want to share your library.
