@@ -24,6 +24,8 @@ module TranslationIO
             YamlEntry.localization?(key, value)
           end
 
+          params = {}
+
           @target_locales.each do |target_locale|
             yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
 
@@ -35,34 +37,36 @@ module TranslationIO
 
             yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations)
 
-            if !YAML::load(yaml_data).empty?
-              File.open(yaml_path, 'wb') do |file|
-                file.write(self.class.top_comment)
-                file.write(yaml_data)
+            params["yaml_data_#{target_locale}"] = yaml_data
+
+            # To have a localization.xx.yml file during tests (without call to backend)
+            if TranslationIO.config.test
+              if YAML::load(yaml_data).present?
+                File.open(yaml_path, 'wb') do |file|
+                  file.write(self.class.top_comment)
+                  file.write(yaml_data)
+                end
               end
             end
           end
 
+          TranslationIO.info "Collecting YAML localization entries from server."
+
+          # To have a localization.xx.yml file with call to backend
           if !TranslationIO.config.test
-            # Get YAML localization entries
-            params = {}
-            @target_locales.each do |target_locale|
-              yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
-              params["yaml_data_#{target_locale}"] = File.read(yaml_path)
-            end
-
-            TranslationIO.info "Collecting YAML localization entries from server."
-
             uri             = URI("#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/fill_yaml_localizations")
             parsed_response = BaseOperation.perform_request(uri, params)
 
-            unless parsed_response.nil?
+            if !parsed_response.nil?
               @target_locales.each do |target_locale|
                 yaml_path = File.join(@yaml_locales_path, "localization.#{target_locale}.yml")
+                yaml_data = parsed_response["yaml_data_#{target_locale}"]
 
-                File.open(yaml_path, 'wb') do |file|
-                  file.write(self.class.top_comment)
-                  file.write(parsed_response["yaml_data_#{target_locale}"])
+                if yaml_data.present? && YAML::load(yaml_data).present?
+                  File.open(yaml_path, 'wb') do |file|
+                    file.write(self.class.top_comment)
+                    file.write(yaml_data)
+                  end
                 end
               end
             end

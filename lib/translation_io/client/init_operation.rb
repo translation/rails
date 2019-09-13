@@ -88,7 +88,7 @@ module TranslationIO
           puts
           puts "----------"
           puts "Your `config.target_locales` are [#{target_locales.sort.join(', ')}]."
-          puts "But we haven't found any YAML key for [#{target_locales_unfound.join(', ')}], is this normal?"
+          puts "But we haven't found any YAML key for [#{target_locales_unfound.sort.join(', ')}], is this normal?"
           puts "If not, check that you haven't misspelled the locale (ex. 'en-GB' instead of 'en')."
           puts "----------"
           puts "Do you want to continue? (y/N)"
