@@ -45,6 +45,9 @@ describe TranslationIO::YamlEntry do
       TranslationIO::YamlEntry.ignored?('en.world.hello').should be true
       TranslationIO::YamlEntry.ignored?('en.worldbla'   ).should be false
       TranslationIO::YamlEntry.ignored?('fr.world.hello').should be true
+
+      # check "." on ignored key prefix is not used as special char in the regexp
+      TranslationIO::YamlEntry.ignored?('fr.worlda').should be false
     end
   end
 
@@ -67,6 +70,10 @@ describe TranslationIO::YamlEntry do
 
       TranslationIO.config.localization_key_prefixes = ['date.first_day_of_week_in_english']
       TranslationIO::YamlEntry.localization?('en.date.first_day_of_week_in_english', 'monday').should be true
+
+      # check "." on ignored key prefix is not used as special char in the regexp
+      TranslationIO.config.localization_key_prefixes = ['date.']
+      TranslationIO::YamlEntry.localization?('en.date2', 'monday').should be false
     end
   end
 
