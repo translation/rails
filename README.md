@@ -204,20 +204,23 @@ Since you created a new project, the translation history and tags will unfortuna
 
 ### Custom Languages
 
-You may want to add a custom language that is derived from an existing language.
-It's useful if you want to change some translations for another instance of the
-application or for a specific customer.
+A custom language is always derived from an existing language. It's useful if you want
+to adapt some translations to another instance of your application, or to a specific
+customer.
 
-The structure of a custom language is : existing language code + "-" + custom text.
+The structure of a custom language is: `existing language code` + `-` + `custom text`, where
+`custom text` can only contain alphanumeric characters and `-`.
 
 Examples: `en-microsoft` or `fr-BE-custom`.
 
-Custom languages can be added like any other language and fallbacks work as expected.
-It means that if the `en-microsoft.some_key` is missing, then it will fallback to
-`en.some_key`. So you only need to translate keys that should be customized.
+Custom languages can be added and used like any other language.
 
-Note that fallback are chained, so `fr-be-custom` will fallback to `fr-be` that will
-itself fallback to `fr`.
+Fallbacks work as expected. It means that if the `en-microsoft.some_key` is missing,
+then it will fallback to `en.some_key`. So you only need to translate keys that
+should be customized.
+
+Note that fallback are chained, so `fr-BE-custom` will fallback to `fr-BE` that will
+fallback to `fr`.
 
 Using GetText syntax, it will only fallback to the source language. So either you
 create a fallback mechanism by yourself or you avoid fallbacking
@@ -237,9 +240,12 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-It will automatically set the locale extracted from the user's browser `HTTP_ACCEPT_LANGUAGE` value, and keep it in the session between requests.
+First time the user will connect, it will automatically set the locale extracted
+from the user's browser `HTTP_ACCEPT_LANGUAGE` value, and keep it in the session between
+requests.
 
-Update the current locale by redirecting the user to https://yourdomain.com?locale=fr or even https://yourdomain.com/fr if you scoped your routes like this:
+Update the current locale by redirecting the user to https://yourdomain.com?locale=fr
+or even https://yourdomain.com/fr if you scoped your routes like this:
 
 ```ruby
 scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
@@ -247,7 +253,8 @@ scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
 end
 ```
 
-The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3), feel free to override it with your own locale management.
+The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3),
+feel free to override it with your own locale management.
 
 Don't forget to define your available locales with [I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
 
