@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.20](https://github.com/translation/rails/releases/tag/v1.20) (2019-10-10)
+
+#### Fixes (bugs & defects):
+
+ * Improved `config.ignored_key_prefixes` to escape prefix from Regexp (prevent `.` to be any char).
+
 ## [v1.19](https://github.com/translation/rails/releases/tag/v1.19) (2019-09-13)
 
 #### New features:
