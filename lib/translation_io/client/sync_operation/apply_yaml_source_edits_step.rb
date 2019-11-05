@@ -16,13 +16,12 @@ module TranslationIO
           unless parsed_response.nil?
             TranslationIO.info "Applying YAML source editions."
 
+            sources = read_locale_sources
+
             parsed_response['source_edits'].each do |source_edit|
               inserted = false
 
-              sort_by_project_locales_first(@yaml_file_paths).each do |file_path|
-                yaml_hash      = YAML::load(File.read(file_path))
-                flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
-
+              sources.each do |(file_path, flat_yaml_hash)|
                 flat_yaml_hash.each do |key, value|
                   if key == "#{@source_locale}.#{source_edit['key']}"
                     if value == source_edit['old_text']
@@ -86,6 +85,15 @@ module TranslationIO
           end
 
           content.gsub(/ $/, '') # remove trailing spaces
+        end
+
+        def read_locale_sources
+          sort_by_project_locales_first(@yaml_file_paths).map do |file_path|
+            yaml_hash      = YAML::load(File.read(file_path))
+            flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
+
+            [file_path, flat_yaml_hash]
+          end.to_h
         end
 
         def metadata_timestamp
