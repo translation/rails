@@ -45,6 +45,7 @@ module TranslationIO
                         else
                           FileUtils::mkdir_p File.dirname(yaml_path)
                           flat_yaml_hash = {}
+                          @yaml_file_paths = [yaml_path] + @yaml_file_paths
                         end
 
                         flat_yaml_hash["#{@source_locale}.#{source_edit['key']}"] = source_edit['new_text']
