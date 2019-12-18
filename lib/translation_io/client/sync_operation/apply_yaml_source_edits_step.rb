@@ -12,73 +12,112 @@ module TranslationIO
 
           params.merge!({ :timestamp => metadata_timestamp })
           parsed_response = perform_source_edits_request(params)
+          source_edits    = parsed_response['source_edits'].to_a
 
-          unless parsed_response.nil?
-            TranslationIO.info "Applying YAML source editions."
+          TranslationIO.info "Applying YAML source editions."
 
-            parsed_response['source_edits'].each do |source_edit|
-              inserted = false
+          source_edits.each do |source_edit|
+            inserted = false
 
-              sort_by_project_locales_first(@yaml_file_paths).each do |file_path|
-                yaml_hash      = YAML::load(File.read(file_path))
-                flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
+            reload_or_reuse_yaml_sources
 
-                flat_yaml_hash.each do |key, value|
-                  if key == "#{@source_locale}.#{source_edit['key']}"
-                    if value == source_edit['old_text']
-                      TranslationIO.info "#{source_edit['key']} | #{source_edit['old_text']} -> #{source_edit['new_text']}", 2, 2
+            @yaml_sources.each do |yaml_source|
+              yaml_file_path = yaml_source[:yaml_file_path]
+              yaml_flat_hash = yaml_source[:yaml_flat_hash]
 
-                      if locale_file_path_in_project?(file_path)
-                        flat_yaml_hash[key] = source_edit['new_text']
-
-                        file_content = to_hash_to_yaml(flat_yaml_hash)
-
-                        File.open(file_path, 'w') do |f|
-                          f.write(file_content)
-                        end
-                      else # override source text of gem
-                        yaml_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
-
-                        if File.exists?(yaml_path) # source yaml file
-                          yaml_hash      = YAML::load(File.read(yaml_path))
-                          flat_yaml_hash = FlatHash.to_flat_hash(yaml_hash)
-                        else
-                          FileUtils::mkdir_p File.dirname(yaml_path)
-                          flat_yaml_hash = {}
-                          @yaml_file_paths = [yaml_path] + @yaml_file_paths
-                        end
-
-                        flat_yaml_hash["#{@source_locale}.#{source_edit['key']}"] = source_edit['new_text']
-
-                        file_content = to_hash_to_yaml(flat_yaml_hash)
-
-                        File.open(yaml_path, 'w') do |f|
-                          f.write(file_content)
-                        end
-                      end
-
-                      inserted = true
-                      break
-                    else
-                      TranslationIO.info "#{source_edit['key']} | Ignored because translation was also updated in source YAML file", 2, 2
-                    end
-                  end
+              yaml_flat_hash.each do |full_key, value|
+                if full_key == "#{@source_locale}.#{source_edit['key']}"
+                  inserted = apply_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+                  break if inserted
                 end
-
-                break if inserted
               end
+
+              break if inserted
             end
           end
 
-          File.open(TranslationIO.config.metadata_path, 'w') do |f|
-            f.write({ 'timestamp' => Time.now.utc.to_i }.to_yaml)
-          end
+          update_metadata_timestamp
         end
 
         private
 
-        def to_hash_to_yaml(flat_yaml_hash)
-          yaml_hash = FlatHash.to_hash(flat_yaml_hash)
+        def reload_or_reuse_yaml_sources
+          if yaml_sources_reload_needed?
+            @yaml_sources = sort_by_project_locales_first(@yaml_file_paths).collect do |yaml_file_path|
+              yaml_content   = File.read(yaml_file_path)
+              yaml_hash      = YAML::load(yaml_content)
+              yaml_flat_hash = FlatHash.to_flat_hash(yaml_hash)
+
+              {
+                :yaml_file_path => yaml_file_path,
+                :yaml_flat_hash => yaml_flat_hash
+              }
+            end
+          else
+            @yaml_sources
+          end
+        end
+
+        def yaml_sources_reload_needed?
+          @yaml_file_paths.sort != @yaml_sources.to_a.collect { |y_s| y_s[:yaml_file_path] }.sort
+        end
+
+        # Sort YAML file paths by project locales first, gem locales after
+        # (to replace "overridden" source first)
+        def sort_by_project_locales_first(yaml_file_paths)
+          yaml_file_paths.sort do |x, y|
+            a = locale_file_path_in_project?(x)
+            b = locale_file_path_in_project?(y)
+            (!a && b) ? 1 : ((a && !b) ? -1 : 0)
+          end
+        end
+
+        def apply_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+          full_key = "#{@source_locale}.#{source_edit['key']}"
+
+          if yaml_flat_hash[full_key] == source_edit['old_text']
+            TranslationIO.info "#{source_edit['key']} | #{source_edit['old_text']} -> #{source_edit['new_text']}", 2, 2
+
+            if locale_file_path_in_project?(yaml_file_path)
+              apply_application_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+            else # override source text of gem inside the app
+              apply_gem_source_edit(source_edit)
+            end
+
+            return true
+          else
+            TranslationIO.info "#{source_edit['key']} | Ignored because translation was also updated in source YAML file", 2, 2
+            return false
+          end
+        end
+
+        def apply_application_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+          full_key                 = "#{@source_locale}.#{source_edit['key']}"
+          yaml_flat_hash[full_key] = source_edit['new_text']
+          file_content             = to_hash_to_yaml(yaml_flat_hash)
+
+          File.open(yaml_file_path, 'w') do |f|
+            f.write(file_content)
+          end
+        end
+
+        def apply_gem_source_edit(source_edit)
+          yaml_file_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
+
+          if File.exists?(yaml_file_path) # source yaml file
+            existing_yaml_source = @yaml_sources.detect { |y_s| y_s[:yaml_file_path] == yaml_file_path }
+            yaml_flat_hash       = existing_yaml_source[:yaml_flat_hash]
+          else
+            FileUtils::mkdir_p File.dirname(yaml_file_path)
+            yaml_flat_hash = {}
+            @yaml_file_paths = [yaml_file_path] + @yaml_file_paths
+          end
+
+          apply_application_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+        end
+
+        def to_hash_to_yaml(yaml_flat_hash)
+          yaml_hash = FlatHash.to_hash(yaml_flat_hash)
 
           if TranslationIO.config.yaml_line_width
             content = yaml_hash.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
@@ -104,19 +143,15 @@ module TranslationIO
           end
         end
 
+        def update_metadata_timestamp
+          File.open(TranslationIO.config.metadata_path, 'w') do |f|
+            f.write({ 'timestamp' => Time.now.utc.to_i }.to_yaml)
+          end
+        end
+
         def perform_source_edits_request(params)
           uri             = URI("#{TranslationIO.client.endpoint}/projects/#{TranslationIO.client.api_key}/source_edits")
           parsed_response = BaseOperation.perform_request(uri, params)
-        end
-
-        # Sort YAML file paths by project locales first, gem locales after
-        # (to replace "overridden" source first)
-        def sort_by_project_locales_first(yaml_file_paths)
-          yaml_file_paths.sort do |x, y|
-            a = locale_file_path_in_project?(x)
-            b = locale_file_path_in_project?(y)
-            (!a && b) ? 1 : ((a && !b) ? -1 : 0)
-          end
         end
 
         def locale_file_path_in_project?(locale_file_path)
