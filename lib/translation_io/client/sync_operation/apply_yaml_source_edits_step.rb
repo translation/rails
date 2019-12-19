@@ -17,7 +17,7 @@ module TranslationIO
           TranslationIO.info "Applying YAML source editions."
 
           source_edits.each do |source_edit|
-            inserted = false
+            applied = false
 
             reload_or_reuse_yaml_sources
 
@@ -27,12 +27,13 @@ module TranslationIO
 
               yaml_flat_hash.each do |full_key, value|
                 if full_key == "#{@source_locale}.#{source_edit['key']}"
-                  inserted = apply_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
-                  break if inserted
+                  apply_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
+                  applied = true
+                  break
                 end
               end
 
-              break if inserted
+              break if applied
             end
           end
 
@@ -80,14 +81,11 @@ module TranslationIO
 
             if locale_file_path_in_project?(yaml_file_path)
               apply_application_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
-            else # override source text of gem inside the app
+            else # Override source text of gem inside the app
               apply_gem_source_edit(source_edit)
             end
-
-            return true
           else
-            TranslationIO.info "#{source_edit['key']} | Ignored because translation was also updated in source YAML file", 2, 2
-            return false
+            TranslationIO.info "#{source_edit['key']} | #{source_edit['old_text']} -> #{source_edit['new_text']} | Ignored because translation was also updated in source YAML file", 2, 2
           end
         end
 
@@ -102,15 +100,18 @@ module TranslationIO
         end
 
         def apply_gem_source_edit(source_edit)
-          yaml_file_path = File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml")
+          # Source yaml file like config/locales/en.yml
+          yaml_file_path = File.expand_path(File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml"))
 
-          if File.exists?(yaml_file_path) # source yaml file
-            existing_yaml_source = @yaml_sources.detect { |y_s| y_s[:yaml_file_path] == yaml_file_path }
+          if File.exists?(yaml_file_path)
+            # Complete existing hash if YAML file already exists
+            existing_yaml_source = @yaml_sources.detect { |y_s| normalize_path(y_s[:yaml_file_path]) == normalize_path(yaml_file_path) }
             yaml_flat_hash       = existing_yaml_source[:yaml_flat_hash]
           else
+            # Create new hash if YAML file doesn't exist yet
             FileUtils::mkdir_p File.dirname(yaml_file_path)
             yaml_flat_hash = {}
-            @yaml_file_paths = [yaml_file_path] + @yaml_file_paths
+            @yaml_file_paths.push(yaml_file_path) # Application YAML are at the end of the list
           end
 
           apply_application_source_edit(source_edit, yaml_file_path, yaml_flat_hash)
@@ -155,9 +156,13 @@ module TranslationIO
         end
 
         def locale_file_path_in_project?(locale_file_path)
-          TranslationIO.normalize_path(locale_file_path).start_with?(
-            TranslationIO.normalize_path(TranslationIO.config.yaml_locales_path)
+          normalize_path(locale_file_path).start_with?(
+            normalize_path(TranslationIO.config.yaml_locales_path)
           )
+        end
+
+        def normalize_path(path)
+          TranslationIO.normalize_path(path)
         end
       end
     end
