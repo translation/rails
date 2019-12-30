@@ -1,5 +1,14 @@
 #  Changelog
 
+## [v1.21](https://github.com/translation/rails/releases/tag/v1.21) (2019-12-30)
+
+#### Fixes (bugs & defects):
+
+ * Refactor YAML source editions service #35
+   * Faster when many source editions are applied.
+   * Better behavior when overriding the same key from a gem multiple times in a single sync.
+   * Better paths normalization.
+
 ## [v1.20](https://github.com/translation/rails/releases/tag/v1.20) (2019-10-10)
 
 #### Fixes (bugs & defects):
