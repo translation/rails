@@ -6,3 +6,4 @@ tmp/*
 coverage
 Gemfile.lock
 .ruby-version
+.bundle
