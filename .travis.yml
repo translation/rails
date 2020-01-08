@@ -22,7 +22,7 @@ gemfile:
 
 matrix:
   exclude:
-    - rvm: jruby # Seems to use bundler 2.0 even with before_install commands that worked for other rubies
+    - rvm: 2.7 # BigDecimal.new was removed and it was used on rails 4.1
       gemfile: gemfiles/lowest.gemfile
 
 sudo: false
