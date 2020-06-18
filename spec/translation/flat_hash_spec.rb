@@ -648,7 +648,6 @@ describe TranslationIO::FlatHash do
     hash.should == {
       'services' => {
         'renting' => "Renting is great!",
-        'blah'    => '',
         'array'   => [
           'first_item',
           '',
