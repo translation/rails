@@ -4,7 +4,7 @@
 
 #### Fixes (bugs & defects):
 
- * Fix deprecation warnings on Rails 6 [#38](https://github.com/translation/rails/issues/38).
+ * Fix deprecation warnings on Rails 6 ([#38](https://github.com/translation/rails/issues/38)).
 
 #### New features:
 
@@ -14,7 +14,7 @@
 
 #### Fixes (bugs & defects):
 
- * Refactor YAML source editions service #35
+ * Refactor YAML source editions service ([#35](https://github.com/translation/rails/pull/35)).
    * Faster when many source editions are applied.
    * Better behavior when overriding the same key from a gem multiple times in a single sync.
    * Better paths normalization.
