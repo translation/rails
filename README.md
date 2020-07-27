@@ -43,9 +43,9 @@ Table of contents
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText or YAML](#disable-gettext-or-yaml)
    * [Ignored YAML keys](#ignored-yaml-keys)
+   * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Source file formats (for GetText)](#source-file-formats-for-gettext)
    * [Gems with GetText strings](#gems-with-gettext-strings)
-   * [Custom localization key prefixes](#custom-localization-key-prefixes)
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
    * [GetText Object Class Monkey-Patching](#gettext-object-class-monkey-patching)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
@@ -348,6 +348,32 @@ TranslationIO.configure do |config|
 end
 ```
 
+### Custom localization key prefixes
+
+Rails YAML files contain not only translation strings but also localization values (integers, arrays, booleans)
+in the same place and that's bad. For example: date formats, number separators, default
+currency or measure units, etc.
+
+A translator is supposed to translate, not localize. That's not his role to choose how you want your dates or
+numbers to be displayed, right? Moreover, this special keys often contain special constructions (e.g.,
+with percent signs or spaces) that he might break.
+
+We think localization is part of the configuration of the app and it should not reach the translator UI at all.
+That's why these localization keys are detected and separated on a dedicated YAML file with Translation.io.
+
+We automatically treat [known localization keys](lib/translation_io/yaml_entry.rb), but if you would like
+to add some more, use the `localization_key_prefixes` option.
+
+For example:
+
+```ruby
+TranslationIO.configure do |config|
+  ...
+  config.localization_key_prefixes = ['my_gem.date.formats']
+  ...
+end
+```
+
 ### Source file formats (for GetText)
 
 If you are using GetText and you want to manage other file formats than:
@@ -379,32 +405,6 @@ with the GetText syntax, you'll want to be able to synchronize them:
 TranslationIO.configure do |config|
   ...
   config.parsed_gems = ['your_gem_name']
-  ...
-end
-```
-
-### Custom localization key prefixes
-
-Rails YAML files contain not only translation strings but also localization values (integers, arrays, booleans)
-in the same place and that's bad. For example: date formats, number separators, default
-currency or measure units, etc.
-
-A translator is supposed to translate, not localize. That's not his role to choose how you want your dates or
-numbers to be displayed, right? Moreover, this special keys often contain special constructions (e.g.,
-with percent signs or spaces) that he might break.
-
-We think localization is part of the configuration of the app and it should not reach the translator UI at all.
-That's why these localization keys are detected and separated on a dedicated YAML file with Translation.io.
-
-We automatically treat [known localization keys](lib/translation_io/yaml_entry.rb), but if you would like
-to add some more, use the `localization_key_prefixes` option.
-
-For example:
-
-```ruby
-TranslationIO.configure do |config|
-  ...
-  config.localization_key_prefixes = ['my_gem.date.formats']
   ...
 end
 ```

@@ -1,5 +1,15 @@
 #  Changelog
 
+## [v1.22](https://github.com/translation/rails/releases/tag/v1.22) (2020-07-27)
+
+#### Fixes (bugs & defects):
+
+ * Fix deprecation warnings on Rails 6 [#38](https://github.com/translation/rails/issues/38).
+
+#### New features:
+
+ * Add `config.yaml_remove_empty_keys` option ([#37](https://github.com/translation/rails/pull/37)). Thanks @Uepsilon!
+
 ## [v1.21](https://github.com/translation/rails/releases/tag/v1.21) (2019-12-30)
 
 #### Fixes (bugs & defects):

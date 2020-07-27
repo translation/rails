@@ -76,6 +76,7 @@ module TranslationIO
       # Cf. https://github.com/translation/rails/issues/19
       self.yaml_line_width = nil
 
+      # Remove empty keys from translated YAML files
       # Cf. https://github.com/translation/rails/pull/37
       self.yaml_remove_empty_keys = false
 
