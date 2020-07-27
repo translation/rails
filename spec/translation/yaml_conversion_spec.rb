@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TranslationIO::YAMLConversion do
-  describe 'get_yaml_data_from_po_data with inconherent keys' do
+  describe 'get_yaml_data_from_po_data with inconsistant keys' do
     it 'returns correct YAML data (1)' do
       po_data = <<-EOS
 msgctxt "services.renting.description"
@@ -34,6 +34,14 @@ msgctxt "main.menu.stuff"
 msgid "This is stuff"
 msgstr "Ce sont des choses"
 
+msgctxt "main.menu.empty_string"
+msgid "This is stuff"
+msgstr ""
+
+msgctxt "main.menu.space"
+msgid "This is stuff"
+msgstr " "
+
 msgctxt "bye"
 msgid "Good bye world"
 msgstr "Au revoir le monde"
@@ -64,6 +72,8 @@ fr:
   main:
     menu:
       stuff: Ce sont des choses
+      empty_string:
+      space: " "
   bye: Au revoir le monde
   helpers:
     label:
@@ -87,7 +97,9 @@ EOS
         "en.hello"                  => "Hello world",
         "en.main.menu.stuff"        => "This is stuff",
         "en.bye"                    => "Good bye world",
-        "en.empty"                  => " ",
+        "en.empty"                  => nil,
+        "en.empty_string"           => "",
+        "en.space"                  => " ",
         "en.symbol"                 => :hello,
         "en.date.order[0]"          => :day,
         "en.date.order[1]"          => :month,
@@ -112,7 +124,9 @@ EOS
         "en.hello"           => "Hello world",
         "en.main.menu.stuff" => "This is stuff",
         "en.bye"             => "Good bye world",
-        "en.empty"           => " "
+        "en.empty"           => nil,
+        "en.empty_string"    => "",
+        "en.space"           => " "
       }
 
       result = subject.get_yaml_data_from_flat_translations(flat_data)
@@ -125,7 +139,9 @@ en:
     menu:
       stuff: This is stuff
   bye: Good bye world
-  empty: ' '
+  empty:
+  empty_string: ''
+  space: ' '
 EOS
 
       expected_result_2 = <<-EOS
@@ -136,10 +152,39 @@ en:
     menu:
       stuff: This is stuff
   bye: Good bye world
-  empty: " "
+  empty:
+  empty_string: ''
+  space: " "
 EOS
 
+      # for single or double quotes
       ((result == expected_result_1) || (result == expected_result_2)).should be true
+    end
+
+    it 'drops empty keys' do
+       TranslationIO.config.yaml_remove_empty_keys = true
+
+       flat_data = {
+         "en.hello"           => "Hello world",
+         "en.main.menu.stuff" => "This is stuff",
+         "en.bye"             => "Good bye world",
+         "en.empty"           => nil,
+         "en.empty_string"    => '',
+         "en.space"           => ' '
+       }
+
+       result = subject.get_yaml_data_from_flat_translations(flat_data)
+
+       expected_result = <<-EOS
+---
+en:
+  hello: Hello world
+  main:
+    menu:
+      stuff: This is stuff
+  bye: Good bye world
+EOS
+      result.should eql(expected_result)
     end
 
     it 'works with weird not-escaped code' do

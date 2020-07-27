@@ -630,11 +630,12 @@ describe TranslationIO::FlatHash do
     }
   end
 
-  it "can remove empty keys if specified" do
+  it "removes empty keys if specified (don't remove in arrays to keep correct indexes)" do
     flat_hash = {
-      "services.blih"           => nil,
+      "services.empty"          => nil,
+      "services.empty_string"   => '',
+      "services.space"          => ' ',
       "services.renting"        => 'Renting is great!',
-      "services.blah"           => '',
       "services.array[0]"       => 'first_item',
       "services.array[1]"       => '',
       "services.array[2]"       => nil,
@@ -648,7 +649,6 @@ describe TranslationIO::FlatHash do
     hash.should == {
       'services' => {
         'renting' => "Renting is great!",
-        'blah'    => '',
         'array'   => [
           'first_item',
           '',
@@ -664,10 +664,11 @@ describe TranslationIO::FlatHash do
 
     hash.should == {
       'services' => {
-        'blih'    => nil,
-        'renting' => "Renting is great!",
-        'blah'    => '',
-        'array'   => [
+        'empty'        => nil,
+        'empty_string' => '',
+        'space'        => ' ',
+        'renting'      => "Renting is great!",
+        'array'        => [
           'first_item',
           '',
           nil,

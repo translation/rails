@@ -11,7 +11,7 @@ module TranslationIO
         hash = {}
 
         if remove_empty_keys
-          flat_hash = flat_hash.reject { |k, v| v.nil? && !k.end_with?(']') }
+          flat_hash = flat_hash.reject { |k, v| v.blank? && !k.end_with?(']') }
         end
 
         flat_hash.each_pair do |key, value|

@@ -35,6 +35,7 @@ Table of contents
    * [Add or Remove Language](#add-or-remove-language)
    * [Edit Language](#edit-language)
    * [Custom Languages](#custom-languages)
+   * [Fallbacks](#fallbacks)
  * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
    * [Locally](#locally)
@@ -204,26 +205,35 @@ Since you created a new project, the translation history and tags will unfortuna
 
 ### Custom Languages
 
-A custom language is always derived from an existing language. It's useful if you want
-to adapt some translations to another instance of your application, or to a specific
-customer.
+Custom languages are convenient if you want to customize translations for a specific customer
+or another instance of your application.
 
-The structure of a custom language is: `existing language code` + `-` + `custom text`, where
-`custom text` can only contain alphanumeric characters and `-`.
+A custom language is always be derived from an [existing language](https://translation.io/docs/languages).
+Its structure should be like:
+
+```ruby
+"#{existing_language_code}-#{custom_text}"
+```
+
+where `custom_text` can only contain alphanumeric characters and `-`.
 
 Examples: `en-microsoft` or `fr-BE-custom`.
 
-Custom languages can be added and used like any other language.
+### Fallbacks
 
-Fallbacks work as expected. It means that if the `en-microsoft.some_key` is missing,
-then it will fallback to `en.some_key`. So you only need to translate keys that
-should be customized.
+Using [I18n (YAML)](#i18n-yaml) syntax, fallbacks will work as expected for any regional or custom
+language. It means that if the `en-microsoft.example` key is missing,
+then it will fallback to `en.example`. So you only need to translate keys that
+are different from the main language.
 
-Note that fallback are chained, so `fr-BE-custom` will fallback to `fr-BE` that will
+Note that fallbacks are chained, so `fr-BE-custom` will fallback to `fr-BE` that will
 fallback to `fr`.
 
-Using GetText syntax, it will only fallback to the source language. So either you
-create a fallback mechanism by yourself or you avoid fallbacking
+Just make sure to add `config.i18n.fallbacks = true` to your `config/application.rb` file.
+More information about this [here](https://guides.rubyonrails.org/configuring.html#configuring-i18n).
+
+Using [GetText](#gettext) syntax, it will only fallback to the source language.
+So either you create a fallback mechanism by yourself or you avoid fallbacking
 by translating everything in Translation.io for that custom language.
 
 ## Change the current locale

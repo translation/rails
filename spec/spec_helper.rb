@@ -17,6 +17,7 @@ RSpec.configure do |config|
       config.ignored_key_prefixes      = []
       config.localization_key_prefixes = []
       config.yaml_line_width           = nil
+      config.yaml_remove_empty_keys    = false
     end
 
     if File.exist?('tmp')

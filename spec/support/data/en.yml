@@ -4,7 +4,9 @@ en:
     menu:
       stuff: "This is stuff"
   bye: "Good bye world"
-  empty: " "
+  empty:
+  empty_string: ""
+  space: " "
   symbol: :hello
   date:
     order:

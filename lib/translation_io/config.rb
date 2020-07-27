@@ -14,6 +14,7 @@ module TranslationIO
     attr_accessor :ignored_key_prefixes
     attr_accessor :localization_key_prefixes
     attr_accessor :yaml_line_width
+    attr_accessor :yaml_remove_empty_keys
 
     attr_accessor :disable_gettext
 
@@ -74,6 +75,9 @@ module TranslationIO
       # Can be nil (default behaviour of Ruby version), -1 (no wrapping) or positive integer (wrapping)
       # Cf. https://github.com/translation/rails/issues/19
       self.yaml_line_width = nil
+
+      # Cf. https://github.com/translation/rails/pull/37
+      self.yaml_remove_empty_keys = false
 
       #######
       # GetText options
