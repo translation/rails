@@ -7,8 +7,10 @@ module TranslationIO
       require 'translation_io/tasks'
     end
 
-    initializer 'translation.rails_extensions' do
-      ActionController::Base.send(:include, TranslationIO::Controller)
+    initializer 'translation.controller_helper' do
+      ActiveSupport.on_load :action_controller do
+        ActionController::Base.send(:include, TranslationIO::Controller)
+      end
     end
 
     config.after_initialize do
