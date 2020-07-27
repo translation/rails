@@ -6,6 +6,8 @@ require 'yaml'
 require 'translation'
 
 RSpec.configure do |config|
+  config.expect_with(:rspec) { |c| c.syntax = [:should, :expect] }
+
   config.before :each do
     TranslationIO.configure do |config|
       config.verbose                   = -1

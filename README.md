@@ -230,11 +230,12 @@ Note that fallbacks are chained, so `fr-BE-custom` will fallback to `fr-BE` that
 fallback to `fr`.
 
 Just make sure to add `config.i18n.fallbacks = true` to your `config/application.rb` file.
-More information about this [here](https://guides.rubyonrails.org/configuring.html#configuring-i18n).
+You can find more information about this
+[here](https://guides.rubyonrails.org/configuring.html#configuring-i18n).
 
 Using [GetText](#gettext) syntax, it will only fallback to the source language.
 So either you create a fallback mechanism by yourself or you avoid fallbacking
-by translating everything in Translation.io for that custom language.
+by translating everything in Translation.io for the regional or custom language.
 
 ## Change the current locale
 
