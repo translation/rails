@@ -45,7 +45,7 @@ script:
   - bundle _1.17.3_ exec rspec
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build -t simplecov --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
   email:
