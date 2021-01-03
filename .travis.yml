@@ -14,6 +14,7 @@ rvm:
   - 2.5
   - 2.6
   - 2.7
+  - 3.0
   - jruby
 
 gemfile:
@@ -22,7 +23,10 @@ gemfile:
 
 matrix:
   exclude:
-    - rvm: 2.7 # BigDecimal.new was removed and it was used on rails 4.1
+    # Ruby > 2.6 removed BigDecimal.new which was used on Rails 4.1 (removed with Rails 4.2 though)
+    - rvm: 2.7
+      gemfile: gemfiles/lowest.gemfile
+    - rvm: 3.0
       gemfile: gemfiles/lowest.gemfile
 
 sudo: false
