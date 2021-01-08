@@ -3,7 +3,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://travis-ci.org/translation/rails.svg?branch=master)](https://travis-ci.org/translation/rails)
 [![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/test_coverage)
-[![Gem Version](https://badge.fury.io/rb/translation.svg)](https://rubygems.org/gems/translation)
+[![Gem Version](https://badgen.net/rubygems/v/translation)](https://rubygems.org/gems/translation)
 [![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
 
 Add this gem to localize your Ruby on Rails application.
