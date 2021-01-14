@@ -49,6 +49,8 @@ module TranslationIO
               yaml_hash      = YAML::load(yaml_content)
               yaml_flat_hash = FlatHash.to_flat_hash(yaml_hash)
 
+              yaml_file_path = yaml_file_path.to_s if yaml_file_path.is_a?(Pathname)
+
               {
                 :yaml_file_path => yaml_file_path,
                 :yaml_flat_hash => yaml_flat_hash
@@ -60,7 +62,7 @@ module TranslationIO
         end
 
         def yaml_sources_reload_needed?
-          @yaml_file_paths.sort != @yaml_sources.to_a.collect { |y_s| y_s[:yaml_file_path] }.sort
+          @yaml_file_paths.map(&:to_s).sort != @yaml_sources.to_a.collect { |y_s| y_s[:yaml_file_path] }.sort
         end
 
         # Sort YAML file paths by project locales first, gem locales after
