@@ -124,7 +124,7 @@ module TranslationIO
     end
 
     def yaml_file_paths
-      I18n.load_path.select do |p|
+      I18n.load_path.collect(&:to_s).uniq.select do |p|
         File.exist?(p) && (File.extname(p) == '.yml' || File.extname(p) == '.yaml')
       end
     end
