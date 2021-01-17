@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.23](https://github.com/translation/rails/releases/tag/v1.23) (2021-01-17)
+
+#### Fixes (bugs & defects):
+
+ * Fix `ArgumentError: comparison of Pathname with String failed` if `I18n.load_path` contains a Pathname instead of a String ([#41](https://github.com/translation/rails/issues/41)). Thanks @11mdlow!
+
 ## [v1.22](https://github.com/translation/rails/releases/tag/v1.22) (2020-07-27)
 
 #### Fixes (bugs & defects):
