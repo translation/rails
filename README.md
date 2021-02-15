@@ -39,6 +39,7 @@ Table of contents
  * [Change the current locale](#change-the-current-locale)
    * [Globally](#globally)
    * [Locally](#locally)
+ * [Frontend Localization](#frontend-localization)
  * [Continuous Integration](#continuous-integration)
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText or YAML](#disable-gettext-or-yaml)
@@ -267,7 +268,8 @@ end
 The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3),
 feel free to override it with your own locale management.
 
-Don't forget to define your available locales with [I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
+Don't forget to define your available locales with
+[I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
 
 More examples here: https://translation.io/blog/set-current-locale-in-your-rails-app
 
@@ -283,17 +285,73 @@ You can call it several times in the same page if you want to switch between lan
 
 More examples here: https://translation.io/blog/rails-i18n-with-locale
 
+## Frontend Localization
+
+This gem is also able to cover frontend localization (React, Vue, ...).
+
+There are several ways to pass the translation strings from the backend
+to the frontend: JavaScript serialization, `data-` HTML attributes, JSON files etc.
+
+The easiest strategy when dealing with React/Vue would be to pass the corresponding
+translations as props when mounting the components.
+
+Assuming that you use [reactjs/react-rails](https://github.com/reactjs/react-rails),
+it would look like this if you want to use [I18n (YAML)](#i18n-yaml) syntax:
+
+```erb
+<%= react_component('MyComponent", {
+  :user_id => current_user.id,
+  :i18n    => YAML.load_file("config/locales/#{I18n.locale}.yml")[I18n.locale.to_s]["my_component"]
+}) %>
+```
+
+And `en.yml` looks like this:
+
+```yaml
+en:
+  my_component:
+    your_name: Your name
+    title: Title
+```
+
+You can also directly use the [GetText](#gettext) syntax:
+
+```erb
+<%= react_component('MyComponent", {
+  :user_id => current_user.id,
+  :i18n => {
+    :your_name => _('Your name'),
+    :title     => _('Title')
+  }
+}) %>
+```
+
+In both case, in your React component, you can simply call
+`this.props.i18n.yourName` and it will be localized with the current locale.
+
+**Notes:**
+
+ * You can also structure the i18n props with different levels of depth and pass the subtree as props to each of your sub-components.
+ * It works great with server-side rendering too!
+
 ## Continuous Integration
 
-If you want fresh translations in your Continuous Integration workflow, you may find yourself calling `bundle exec rake translation:sync` very frequently.
+If you want fresh translations in your Continuous Integration workflow, you may
+find yourself calling `bundle exec rake translation:sync` very frequently.
 
-Since this task can't be concurrently executed (we have a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) strategy with a queue but it returns an error under heavy load), we implemented this threadsafe readonly task:
+Since this task can't be concurrently executed
+(we have a [mutex](https://en.wikipedia.org/wiki/Mutual_exclusion) strategy with
+a queue but it returns an error under heavy load), we implemented this
+threadsafe readonly task:
 
 ```bash
 $ bundle exec rake translation:sync_readonly
 ```
 
-This task will prevent your CI to fail and still provide new translations. But be aware that it won't send new keys from your code to Translation.io so you still need to call `bundle exec rake translation:sync` at some point during development.
+This task will prevent your CI to fail and still provide new translations. But
+be aware that it won't send new keys from your code to Translation.io so you
+still need to call `bundle exec rake translation:sync` at some point during
+development.
 
 ## Advanced Configuration Options
 
