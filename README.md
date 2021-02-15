@@ -305,7 +305,7 @@ it would look like this if you want to use [I18n (YAML)](#i18n-yaml) syntax:
 }) %>
 ```
 
-And `en.yml` looks like this:
+Your `en.yml` should look like this:
 
 ```yaml
 en:
@@ -327,12 +327,12 @@ You can also directly use the [GetText](#gettext) syntax:
 ```
 
 In both case, in your React component, you can simply call
-`this.props.i18n.yourName` and it will be localized with the current locale.
+`this.props.i18n.yourName` and your text will be localized with the current locale.
 
 **Notes:**
 
- * You can also structure the i18n props with different levels of depth and pass the subtree as props to each of your sub-components.
- * It works great with server-side rendering too!
+ * You can also structure the i18n props with multiple levels of depth and pass the subtree as props to each of your sub-components.
+ * It also works great with server-side rendering of your components (`:prerender => true`).
 
 ## Continuous Integration
 
