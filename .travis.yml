@@ -1,3 +1,5 @@
+dist: focal
+
 env:
   global:
     - CC_TEST_REPORTER_ID=1ec0e82ac7a13e879f71d36abbf09c7c691c71ec58a8b7f74beef6086e3b65db
@@ -15,7 +17,7 @@ rvm:
   - 2.6
   - 2.7
   - 3.0
-  - jruby
+  - jruby-head
 
 gemfile:
   - gemfiles/lowest.gemfile
