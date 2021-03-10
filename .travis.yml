@@ -8,8 +8,8 @@ language: ruby
 
 # 2.0 has only one test not passing
 # (TranslationIO::YAMLConversion#get_yaml_data_from_flat_translations works with weird not-escaped code)
+# 2.1 passes but is not compatible with Travis on Bionic
 rvm:
-  - 2.1
   - 2.2
   - 2.3
   - 2.4
@@ -46,6 +46,7 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - ruby --version
 
 script:
   - bundle _1.17.3_ exec rspec
