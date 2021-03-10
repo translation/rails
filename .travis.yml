@@ -30,6 +30,8 @@ matrix:
       gemfile: gemfiles/lowest.gemfile
     - rvm: 3.0
       gemfile: gemfiles/lowest.gemfile
+    - rvm: jruby-head
+      gemfile: gemfiles/lowest.gemfile # Work on dev but error "no such file to load -- racc/info" on Travis (jruby 9.3.0.0-SNAPSHOT)
 
 sudo: false
 
