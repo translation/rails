@@ -216,7 +216,7 @@ Its structure should be like:
 "#{existing_language_code}-#{custom_text}"
 ```
 
-where `custom_text` can only contain alphanumeric characters and `-`.
+where `custom_text` can only contain alphabetic characters and `-`.
 
 Examples: `en-microsoft` or `fr-BE-custom`.
 
