@@ -33,7 +33,6 @@ module TranslationIO
 
       if !@config.disable_gettext
         require_gettext_dependencies
-        add_missing_locales
         add_parser_for_erb_source_formats(@config.erb_source_formats)
 
         if Rails.env.development?
@@ -69,12 +68,6 @@ module TranslationIO
       require 'gettext/tools'
       require 'gettext/text_domain_manager'
       require 'gettext/tools/xgettext'
-    end
-
-    # Missing languages from Locale that are in Translation.io
-    def add_missing_locales
-      Locale::Info.three_languages['wee'] = Locale::Info::Language.new('', 'wee', 'I', 'L', 'Lower Sorbian')
-      Locale::Info.three_languages['wen'] = Locale::Info::Language.new('', 'wen', 'I', 'L', 'Upper Sorbian')
     end
 
     def add_parser_for_erb_source_formats(new_erb_formats)
