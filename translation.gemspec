@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   }
 
   s.add_dependency             'gettext',   '~> 3.2', '>= 3.2.5', '<= 3.3.7' # 3.3.8 adds many dependencies and depends on an online resource, we don't want it
-                                                                             # more here: https://github.com/ruby-gettext/gettext/issues/85#issuecomment-861462382
+                                                                             # More here: https://github.com/ruby-gettext/gettext/issues/85#issuecomment-861462382
 
   s.add_development_dependency 'rake',      '~> 12.0'
   s.add_development_dependency 'simplecov', '~> 0.11'
