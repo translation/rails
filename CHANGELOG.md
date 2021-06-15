@@ -1,5 +1,15 @@
 #  Changelog
 
+## [v1.24](https://github.com/translation/rails/releases/tag/v1.24) (2021-06-15)
+
+#### Fixes (bugs & defects):
+
+ * Force max version of GetText (3.3.7) to avoid dependency to external online request (see [here](https://github.com/ruby-gettext/gettext/issues/85#issuecomment-861462382) for discussion).
+
+#### New features:
+
+ * Warnings when trying to init/sync with duplicate or empty `target_locales` in the configuration file.
+
 ## [v1.23](https://github.com/translation/rails/releases/tag/v1.23) (2021-01-17)
 
 #### Fixes (bugs & defects):
