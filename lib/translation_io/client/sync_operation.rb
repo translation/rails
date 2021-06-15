@@ -22,6 +22,8 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
+        warn_wrong_locales(source_locale, target_locales)
+
         if !config.disable_yaml
           ApplyYamlSourceEditsStep.new(yaml_file_paths, source_locale).run(params)
         end

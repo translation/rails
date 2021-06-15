@@ -19,6 +19,8 @@ module TranslationIO
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths
 
+        warn_wrong_locales(source_locale, target_locales)
+
         if !config.disable_gettext
           BaseOperation::DumpMarkupGettextKeysStep.new(haml_source_files, :haml).run
           BaseOperation::DumpMarkupGettextKeysStep.new(slim_source_files, :slim).run

@@ -17,6 +17,38 @@ module TranslationIO
 
       private
 
+      def warn_wrong_locales(source_locale, target_locales)
+        if target_locales.uniq != target_locales
+          duplicate_locale = target_locales.detect { |locale| target_locales.count(locale) > 1 }
+
+          puts
+          puts "----------"
+          puts "Your `config.target_locales` has a duplicate locale (#{duplicate_locale})."
+          puts "Please clean your configuration file and execute this command again."
+          puts "----------"
+          exit(true)
+        end
+
+        if target_locales.include?(source_locale)
+          puts
+          puts "----------"
+          puts "The `config.source_locale` (#{source_locale}) can't be included in the `config.target_locales`."
+          puts "If you want to customize your source locale, check this link: https://github.com/translation/rails#custom-languages"
+          puts "Please clean your configuration file and execute this command again."
+          puts "----------"
+          exit(true)
+        end
+
+        if target_locales.empty?
+          puts
+          puts "----------"
+          puts "Your `config.target_locales` is empty."
+          puts "Please clean your configuration file and execute this command again."
+          puts "----------"
+          exit(true)
+        end
+      end
+
       def self.perform_request(uri, params)
         begin
           params.merge!({
