@@ -199,7 +199,7 @@ EOS
         "en.space"           => ' '
       }
 
-      result = subject.get_yaml_data_from_flat_translations(flat_data, {
+      result = subject.get_yaml_data_from_flat_translations(flat_data, **{
         :force_keep_empty_keys => true
       })
 
