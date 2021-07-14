@@ -187,6 +187,37 @@ EOS
       result.should eql(expected_result)
     end
 
+    it 'does not drops empty keys if special "force_keep_empty_keys" parameter is passed' do
+      TranslationIO.config.yaml_remove_empty_keys = true
+
+      flat_data = {
+        "en.hello"           => "Hello world",
+        "en.main.menu.stuff" => "This is stuff",
+        "en.bye"             => "Good bye world",
+        "en.empty"           => nil,
+        "en.empty_string"    => '',
+        "en.space"           => ' '
+      }
+
+      result = subject.get_yaml_data_from_flat_translations(flat_data, {
+        :force_keep_empty_keys => true
+      })
+
+      expected_result = <<-EOS
+---
+en:
+  hello: Hello world
+  main:
+    menu:
+      stuff: This is stuff
+  bye: Good bye world
+  empty:
+  empty_string: ''
+  space: " "
+EOS
+      result.should eql(expected_result)
+    end
+
     it 'works with weird not-escaped code' do
       flat_data = {
         "en.architects.seo.image" => "<%= AController::Base.h.path('a/b.png') %>",

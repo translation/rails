@@ -35,7 +35,9 @@ module TranslationIO
               YamlEntry.from_locale?(key, target_locale) && !YamlEntry.ignored?(key)
             end
 
-            yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations)
+            yaml_data = YAMLConversion.get_yaml_data_from_flat_translations(target_flat_special_translations,
+              :force_keep_empty_keys => true # We want to keep empty keys from localization.xx.yml files (sometimes needed for delimiters!)
+            )
 
             params["yaml_data_#{target_locale}"] = yaml_data
 

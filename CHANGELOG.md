@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.25](https://github.com/translation/rails/releases/tag/v1.25) (2021-07-14)
+
+#### Fixes (bugs & defects):
+
+ * Don't remove empty keys in `localization.xx.yml` files when `config.yaml_remove_empty_keys = true`, they may be useful for delimiters, etc.
+
 ## [v1.24](https://github.com/translation/rails/releases/tag/v1.24) (2021-06-15)
 
 #### Fixes (bugs & defects):

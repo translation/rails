@@ -35,9 +35,14 @@ module TranslationIO
         end
       end
 
-      def get_yaml_data_from_flat_translations(flat_translations)
-        remove_empty_keys = TranslationIO.config.yaml_remove_empty_keys
-        translations      = FlatHash.to_hash(flat_translations, remove_empty_keys)
+      def get_yaml_data_from_flat_translations(flat_translations, force_keep_empty_keys: false)
+        if force_keep_empty_keys
+          remove_empty_keys = false
+        else
+          remove_empty_keys = TranslationIO.config.yaml_remove_empty_keys
+        end
+
+        translations = FlatHash.to_hash(flat_translations, remove_empty_keys)
 
         if TranslationIO.config.yaml_line_width
           data = translations.to_yaml(:line_width => TranslationIO.config.yaml_line_width)
