@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.26](https://github.com/translation/rails/releases/tag/v1.26) (2021-07-14)
+
+#### Fixes (bugs & defects):
+
+ * Fix issue with Ruby 3.0 and release v1.25 (that is now yanked!)
+
 ## [v1.25](https://github.com/translation/rails/releases/tag/v1.25) (2021-07-14)
 
 #### Fixes (bugs & defects):
