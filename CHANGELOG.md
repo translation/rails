@@ -4,7 +4,7 @@
 
 #### Fixes (bugs & defects):
 
- * Fix issue with Ruby 3.0 and release v1.25 (that is now yanked!)
+ * Fix syntax issue with Ruby 3.0 and release v1.25 (that is now yanked!)
 
 ## [v1.25](https://github.com/translation/rails/releases/tag/v1.25) (2021-07-14)
 
