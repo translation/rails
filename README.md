@@ -6,7 +6,7 @@
 [![Gem Version](https://badgen.net/rubygems/v/translation)](https://rubygems.org/gems/translation)
 [![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
 
-Add this gem to localize your Ruby on Rails application.
+Add this gem to localize your **Ruby on Rails** application.
 
 Use the official Rails syntax (with [YAML](#i18n-yaml) files) or use the [GetText](#gettext) syntax.
 
