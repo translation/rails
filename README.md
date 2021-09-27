@@ -40,8 +40,8 @@ Table of contents
    * [Globally](#globally)
    * [Locally](#locally)
  * [Frontend Localization](#frontend-localization)
-   * [With this Gem](#with-this-gem)
-   * [With our official React & JavaScript package](#with-our-official-react--javascript-package)
+   * [Using this Gem](#using-this-gem)
+   * [Using our official React & JavaScript package](#using-our-official-react--javascript-package)
  * [Continuous Integration](#continuous-integration)
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText or YAML](#disable-gettext-or-yaml)
@@ -290,7 +290,7 @@ More examples here: https://translation.io/blog/rails-i18n-with-locale
 
 ## Frontend Localization
 
-### With this Gem
+### Using this Gem
 
 This gem is also able to cover frontend localization (React, Vue, ...).
 
@@ -343,7 +343,7 @@ In both case, in your React component, you can simply call
  * You can also structure the i18n props with multiple levels of depth and pass the subtree as props to each of your sub-components.
  * It also works great with server-side rendering of your components (`:prerender => true`).
 
-### With our official React & JavaScript package
+### Using our official React & JavaScript package
 
 As Translation.io is directly integrated in the great
 [Lingui](https://lingui.js.org/) internationalization framework,
