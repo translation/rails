@@ -55,7 +55,7 @@ Table of contents
  * [List of clients for Translation.io](#list-of-clients-for-translationio)
    * [Ruby on Rails (Ruby)](#ruby-on-rails-ruby)
    * [Laravel (PHP)](#laravel-php)
-   * [React and React-Intl (JavaScript)](#react-and-react-intl-javascript)
+   * [React, React Native and JavaScript](#react-react-native-and-javasript)
    * [Others](#others)
  * [License](#license)
 
@@ -145,7 +145,7 @@ end
 $ bundle exec rake translation:init
 ```
 
-If you later need to add/remove target languages, please read our
+If you need to add or remove languages in the future, please read our
 [documentation](https://translation.io/blog/adding-target-languages) about that.
 
 ## Usage
@@ -178,7 +178,8 @@ $ bundle exec rake translation:sync_and_purge
 
 As the name says, this operation will also perform a sync at the same time.
 
-Warning: all keys that are not present in the current branch will be **permanently deleted from Translation.io**.
+Warning: all keys that are not present in the current local branch
+will be **permanently deleted from Translation.io**.
 
 ## Manage Languages
 
@@ -287,6 +288,8 @@ More examples here: https://translation.io/blog/rails-i18n-with-locale
 
 ## Frontend Localization
 
+### With this Gem
+
 This gem is also able to cover frontend localization (React, Vue, ...).
 
 There are several ways to pass the translation strings from the backend
@@ -337,6 +340,18 @@ In both case, in your React component, you can simply call
 
  * You can also structure the i18n props with multiple levels of depth and pass the subtree as props to each of your sub-components.
  * It also works great with server-side rendering of your components (`:prerender => true`).
+
+### With our React & JavaScript official package
+
+As Translation.io is directly integrated in the great
+[Lingui](https://lingui.js.org/) internationalization framework,
+you can also consider frontend localization as a completely different
+localization project.
+
+Please read more about this on:
+
+ * [https://translation.io/lingui](https://translation.io/lingui)
+ * [https://github.com/translation/lingui](https://github.com/translation/lingui)
 
 ## Continuous Integration
 
@@ -601,12 +616,15 @@ Officially Supported on [https://translation.io/laravel](https://translation.io/
 
 Credits: [@armandsar](https://github.com/armandsar), [@michaelhoste](https://github.com/michaelhoste)
 
-### React and React-Intl (JavaScript)
+### React, React Native and JavaScript
 
- * GitHub: https://github.com/deecewan/translation-io
- * NPM: https://www.npmjs.com/package/translation-io
+Officially Supported on [https://translation.io/lingui](https://translation.io/lingui)
 
-Credits: [@deecewan](https://github.com/deecewan)
+Translation.io is directly integrated in the great
+[Lingui](https://lingui.js.org/) internationalization project.
+
+ * GitHub: https://github.com/translation/lingui
+ * NPM: https://www.npmjs.com/package/@translation/lingui
 
 ### Others
 
