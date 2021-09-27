@@ -40,6 +40,8 @@ Table of contents
    * [Globally](#globally)
    * [Locally](#locally)
  * [Frontend Localization](#frontend-localization)
+   * [With this Gem](#with-this-gem)
+   * [With our official React & JavaScript package](#with-our-official-react--javascript-package)
  * [Continuous Integration](#continuous-integration)
  * [Advanced Configuration Options](#advanced-configuration-options)
    * [Disable GetText or YAML](#disable-gettext-or-yaml)
@@ -341,7 +343,7 @@ In both case, in your React component, you can simply call
  * You can also structure the i18n props with multiple levels of depth and pass the subtree as props to each of your sub-components.
  * It also works great with server-side rendering of your components (`:prerender => true`).
 
-### With our React & JavaScript official package
+### With our official React & JavaScript package
 
 As Translation.io is directly integrated in the great
 [Lingui](https://lingui.js.org/) internationalization framework,
@@ -350,8 +352,8 @@ localization project.
 
 Please read more about this on:
 
- * [https://translation.io/lingui](https://translation.io/lingui)
- * [https://github.com/translation/lingui](https://github.com/translation/lingui)
+ * [Translation.io/lingui](https://translation.io/lingui)
+ * [github.com/translation/lingui](https://github.com/translation/lingui)
 
 ## Continuous Integration
 
