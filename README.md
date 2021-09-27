@@ -352,8 +352,8 @@ localization project.
 
 Please read more about this on:
 
- * [Translation.io/lingui](https://translation.io/lingui)
- * [github.com/translation/lingui](https://github.com/translation/lingui)
+ * Website: [translation.io/lingui](https://translation.io/lingui)
+ * GitHub page: [github.com/translation/lingui](https://github.com/translation/lingui)
 
 ## Continuous Integration
 
