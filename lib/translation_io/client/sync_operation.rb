@@ -16,8 +16,8 @@ module TranslationIO
         haml_source_files = config.haml_source_files
         slim_source_files = config.slim_source_files
         pot_path          = config.pot_path
-        source_locale     = config.source_locale
-        target_locales    = config.target_locales
+        source_locale     = config.source_locale.to_s
+        target_locales    = config.target_locales.map(&:to_s)
         locales_path      = config.locales_path
         yaml_locales_path = config.yaml_locales_path
         yaml_file_paths   = config.yaml_file_paths

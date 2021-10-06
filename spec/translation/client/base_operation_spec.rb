@@ -15,8 +15,8 @@ describe TranslationIO::Client::BaseOperation do
   describe 'Locale inconsistency warnings' do
     it 'triggers error if config.target_locales has duplicate locale' do
       TranslationIO.configure do |config|
-        config.source_locale  = :en
-        config.target_locales = [:fr, :nl, :fr]
+        config.source_locale  = 'en'
+        config.target_locales = ['fr', 'nl', 'fr']
       end
 
       client = TranslationIO::Client.new('4242', 'https://translation.io')
@@ -38,8 +38,8 @@ EOS
 
     it 'triggers error if config.source_locale in included in config.target_locales' do
       TranslationIO.configure do |config|
-        config.source_locale  = :en
-        config.target_locales = [:fr, :en, :nl]
+        config.source_locale  = 'en'
+        config.target_locales = ['fr', 'en', 'nl']
       end
 
       client = TranslationIO::Client.new('4242', 'https://translation.io')
@@ -62,7 +62,7 @@ EOS
 
     it 'triggers error if config.target_locales is empty' do
       TranslationIO.configure do |config|
-        config.source_locale  = :en
+        config.source_locale  = 'en'
         config.target_locales = []
       end
 
