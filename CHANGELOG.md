@@ -1,5 +1,11 @@
 #  Changelog
 
+## [v1.27](https://github.com/translation/rails/releases/tag/v1.27) (2021-10-06)
+
+#### Fixes (bugs & defects):
+
+ * Improve symbol/string consistency of `source_locale` and `target_locales`.
+
 ## [v1.26](https://github.com/translation/rails/releases/tag/v1.26) (2021-07-14)
 
 #### Fixes (bugs & defects):
