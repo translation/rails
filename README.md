@@ -225,10 +225,16 @@ Examples: `en-microsoft` or `fr-BE-custom`.
 
 ### Fallbacks
 
-Using [I18n (YAML)](#i18n-yaml) syntax, fallbacks will work as expected for any regional or custom
-language. It means that if the `en-microsoft.example` key is missing,
-then it will fallback to `en.example`. So you only need to translate keys that
-are different from the main language.
+If a translation is missing for a regional (`fr-BE`) or custom (`fr-microsoft`)
+language, then it will fallback to the main language (`fr`).
+
+Locale fallbacks will work as expected with both [I18n (YAML)](#i18n-yaml) 
+and [GetText](#gettext) syntaxes.
+
+A good way to leverage this feature is to ignore sentences from a regional language
+that would have the same translation as the main language (usually most of them).
+It's way easier to maintain the project over time if only 10% of the regional sentences
+need to be adapted.
 
 Note that fallbacks are chained, so `fr-BE-custom` will fallback to `fr-BE` that will
 fallback to `fr`.
@@ -236,10 +242,6 @@ fallback to `fr`.
 Just make sure to add `config.i18n.fallbacks = true` to your `config/application.rb` file.
 You can find more information about this
 [here](https://guides.rubyonrails.org/configuring.html#configuring-i18n).
-
-Using [GetText](#gettext) syntax, it will only fallback to the source language.
-So either you create a fallback mechanism by yourself or you avoid fallbacking
-by translating everything in Translation.io for the regional or custom language.
 
 ## Change the current locale
 
