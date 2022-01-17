@@ -98,7 +98,7 @@ You can keep your source YAML file automatically updated using [i18n-tasks](http
 This gem adds the GetText support to Rails. We [strongly suggest](https://translation.io/blog/gettext-is-better-than-rails-i18n)
 that you use GetText to translate your application since it allows an easier and more complete syntax.
 
-Also, you won't need to create and manage any YAML file since your code will be
+Moreover, you won't need to create and manage any YAML file since your code will be
 automatically scanned for any string to translate.
 
 ```ruby

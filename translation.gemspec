@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.description      = 'Localize your app using either t(".keys") or _("source text") and type "rake translation:sync" to synchronize with your translators on Translation.io.'
   s.homepage         = 'https://translation.io'
   s.email            = 'contact@translation.io'
-  s.version          = '1.27'
+  s.version          = '1.28'
   s.authors          = ['Michael Hoste', 'Aurelien Malisart']
   s.license          = "MIT"
   s.require_paths    = ["lib"]
@@ -18,8 +18,7 @@ Gem::Specification.new do |s|
     "source_code_uri"   => "https://github.com/translation/rails"
   }
 
-  s.add_dependency             'gettext',   '~> 3.2', '>= 3.2.5', '<= 3.3.7' # 3.3.8 adds many dependencies and depends on an online resource, we don't want it
-                                                                             # More here: https://github.com/ruby-gettext/gettext/issues/85#issuecomment-861462382
+  s.add_dependency             'gettext',   '~> 3.2', '>= 3.2.5', '<= 3.4.2'
 
   s.add_development_dependency 'rake',      '~> 12.0'
   s.add_development_dependency 'simplecov', '~> 0.11'

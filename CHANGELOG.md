@@ -1,4 +1,12 @@
-#  Changelog
+# Changelog
+
+## [v1.28](https://github.com/translation/rails/releases/tag/v1.28) (2021-01-17)
+
+#### New features:
+
+ * Bump GetText dependency to 3.4.2 to support:
+   * Automatic locale fallbacks `fr_BE_Foo` -> `fr_BE` -> `fr` (cf. [ruby-gettext/gettext#89](https://github.com/ruby-gettext/gettext/issues/89))
+   * Ruby 3.1 (cf. [ruby-gettext/gettext#92](https://github.com/ruby-gettext/gettext/issues/92))
 
 ## [v1.27](https://github.com/translation/rails/releases/tag/v1.27) (2021-10-06)
 
