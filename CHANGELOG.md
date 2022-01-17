@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.28](https://github.com/translation/rails/releases/tag/v1.28) (2021-01-17)
+## [v1.28](https://github.com/translation/rails/releases/tag/v1.28) (2022-01-17)
 
 #### New features:
 
