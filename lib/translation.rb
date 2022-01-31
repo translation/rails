@@ -39,6 +39,10 @@ module TranslationIO
           GetText::TextDomainManager.cached = false
         end
 
+        # Set default GetText locale (last fallback) as config.source_locale instead of "en" (default)
+        gettext_locale = @config.source_locale.to_s.gsub('-', '_').to_sym
+        Locale.set_default(gettext_locale)
+
         # include is private until Ruby 2.1
         Proxy.send(:include, GetText)
 
