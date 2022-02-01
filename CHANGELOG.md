@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.29](https://github.com/translation/rails/releases/tag/v1.29) (2022-02-01)
+
+#### Fixes (bugs & defects):
+
+ * Use `source_locale` as last fallback for GetText (instead of default "en").
+
 ## [v1.28](https://github.com/translation/rails/releases/tag/v1.28) (2022-01-17)
 
 #### New features:
