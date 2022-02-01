@@ -7,3 +7,4 @@ coverage
 Gemfile.lock
 .ruby-version
 .bundle
+RELEASE.md
