@@ -49,5 +49,5 @@ jobs:
         with:
           debug: true
           verifyDownload: true
-          coverageCommand: bundle exec rspec ; ls /home/runner/work/rails/rails/coverage
+          coverageCommand: bundle exec rspec
 
