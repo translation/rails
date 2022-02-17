@@ -41,12 +41,11 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true # runs bundle install and caches installed gems automatically
           bundler: ${{ env.BUNDLER_VERSION || 'latest' }}
-      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      - run: chmod +x ./cc-test-reporter
-      - run: ./cc-test-reporter before-build
+#      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#      - run: chmod +x ./cc-test-reporter
+#      - run: ./cc-test-reporter before-build
       - run: ruby --version
       - name: Execute tests
         run: bundle exec rspec
-      - run: sleep 2 # JSON coverage report was sometimes not ready!?
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
