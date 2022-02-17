@@ -42,9 +42,9 @@ jobs:
           bundler: ${{ env.BUNDLER_VERSION || 'latest' }}
       - name: Prepare tests
         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        run: chmod +x ./cc-test-reporter
-        run: ./cc-test-reporter before-build
-        run: ruby --version
+      - run: chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+      - run: ruby --version
       - name: Execute tests
         run: bundle exec rspec
 #      - name: Test & publish code coverage
