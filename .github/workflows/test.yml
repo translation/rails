@@ -47,6 +47,7 @@ jobs:
         run: bundle exec rspec
       - run: cat coverage/.resultset.json
       - name: Publish code coverage
+        if: ${{ matrix.ruby == '3.1' && matrix.gemfile == 'latest' }} # only one is needed!
         uses: paambaati/codeclimate-action@v3.0.0
         with:
           debug: true
