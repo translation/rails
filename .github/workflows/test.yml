@@ -31,6 +31,7 @@ jobs:
             gemfile: lowest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      CC_TEST_REPORTER_ID: 945dfb58a832d233a3caeb84e3e6d3be212e8c7abcb48117fce63b9adcb43647
     steps:
       - uses: actions/checkout@v2
       - name: Setup Bundler 1.x for Rails 4.x
@@ -42,12 +43,12 @@ jobs:
           bundler-cache: true # runs bundle install and caches installed gems automatically
           bundler: ${{ env.BUNDLER_VERSION || 'latest' }}
       - run: ruby --version
-      - name: Test & publish code coverage
+      - name: Run specs
+        run: bundle exec rspec
+      - run: cat coverage/.resultset.json
+      - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: 945dfb58a832d233a3caeb84e3e6d3be212e8c7abcb48117fce63b9adcb43647
         with:
           debug: true
           verifyDownload: true
-          coverageCommand: bundle exec rspec
 
