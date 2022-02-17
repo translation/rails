@@ -36,6 +36,7 @@ jobs:
       - name: Setup Bundler 1.x for Rails 4.x
         if: ${{ matrix.gemfile == 'lowest' }}
         run: echo "BUNDLER_VERSION=1.17.3" >> $GITHUB_ENV
+      - run: gem update --system 3.2.3
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
