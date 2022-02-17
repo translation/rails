@@ -17,7 +17,7 @@ jobs:
           - 2.7
           - 3.0
           - 3.1
-          - jruby-head
+          - jruby-9.1.17.0
         gemfile:
           - gemfiles/lowest.gemfile
           - gemfiles/latest.gemfile
@@ -47,5 +47,6 @@ jobs:
       - run: ruby --version
       - name: Execute tests
         run: bundle exec rspec
+      - run: sleep 2 # JSON coverage report was sometimes not ready!?
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
