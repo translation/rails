@@ -39,7 +39,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          rubygems: latest
           bundler-cache: true # runs bundle install and caches installed gems automatically
           bundler: ${{ env.BUNDLER_VERSION || 'latest' }}
       - run: ruby --version
@@ -50,5 +49,5 @@ jobs:
         with:
           debug: true
           verifyDownload: true
-          coverageCommand: bundle exec rspec
+          coverageCommand: bundle exec rspec && ls /home/runner/work/rails/rails/coverage
 
