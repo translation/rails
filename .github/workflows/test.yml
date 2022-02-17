@@ -1,4 +1,4 @@
-name: Translation/Rails Gem CI
+name: Build Status
 
 on: [push, pull_request]
 
@@ -51,4 +51,3 @@ jobs:
         with:
           debug: true
           verifyDownload: true
-
