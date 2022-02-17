@@ -5,9 +5,8 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      CC_TEST_REPORTER_ID: 1ec0e82ac7a13e879f71d36abbf09c7c691c71ec58a8b7f74beef6086e3b65db
     strategy:
+      fail-fast: false
       matrix:
         ruby:
           - 2.2
@@ -40,8 +39,7 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true # runs bundle install and caches installed gems automatically
           bundler: ${{ env.BUNDLER_VERSION || 'latest' }}
-      - name: Prepare tests
-        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
       - run: chmod +x ./cc-test-reporter
       - run: ./cc-test-reporter before-build
       - run: ruby --version
