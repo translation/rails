@@ -19,21 +19,21 @@ jobs:
           - 3.1
           - jruby-9.1.17.0
         gemfile:
-          - gemfiles/lowest.gemfile
-          - gemfiles/latest.gemfile
+          - lowest
+          - latest
         exclude:
           # Ruby > 2.6 removed BigDecimal.new which was used on Rails 4.1 (removed with Rails 4.2 though)
           - ruby: 2.7
-            gemfile: gemfiles/lowest.gemfile
+            gemfile: lowest
           - ruby: 3.0
-            gemfile: gemfiles/lowest.gemfile
+            gemfile: lowest
     env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       CC_TEST_REPORTER_ID: 945dfb58a832d233a3caeb84e3e6d3be212e8c7abcb48117fce63b9adcb43647
     steps:
       - uses: actions/checkout@v2
       - name: Setup Bundler 1.x for Rails 4.x
-        if: ${{ matrix.gemfile == 'gemfiles/lowest.gemfile' }}
+        if: ${{ matrix.gemfile == 'lowest' }}
         run: echo "BUNDLER_VERSION=1.17.3" >> $GITHUB_ENV
       - uses: ruby/setup-ruby@v1
         with:
