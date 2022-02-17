@@ -1,7 +1,7 @@
 # [Translation.io](https://translation.io) client for Ruby on Rails
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://travis-ci.com/translation/rails.svg?branch=master)](https://app.travis-ci.com/github/translation/rails)
+[![Build Status](https://github.com/translation/rails/actions/workflows/test.yml/badge.svg)](https://github.com/translation/rails/actions/workflows/test.yml)
 [![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/test_coverage)
 [![Gem Version](https://badgen.net/rubygems/v/translation)](https://rubygems.org/gems/translation)
 [![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
