@@ -42,13 +42,11 @@ EOS
 
     # Comment must be present in new timestamp
     File.read("#{yaml_locales_path}/.translation_io").should == <<-EOS
-####
 # This file is used in the context of Translation.io source editions.
 # Please see: https://translation.io/blog/new-feature-copywriting
 #
 # If you have any git conflicts, either keep the smaller timestamp or
 # ignore the conflicts and "sync" again, it will fix this file for you.
-####
 
 ---
 timestamp: #{Time.now.to_i}

@@ -147,13 +147,11 @@ module TranslationIO
 
         def update_metadata_timestamp
           File.open(TranslationIO.config.metadata_path, 'w') do |f|
-            f.puts '####'
             f.puts '# This file is used in the context of Translation.io source editions.'
             f.puts '# Please see: https://translation.io/blog/new-feature-copywriting'
             f.puts '#'
             f.puts '# If you have any git conflicts, either keep the smaller timestamp or'
             f.puts '# ignore the conflicts and "sync" again, it will fix this file for you.'
-            f.puts '####'
             f.puts
 
             f.write({ 'timestamp' => Time.now.utc.to_i }.to_yaml)
