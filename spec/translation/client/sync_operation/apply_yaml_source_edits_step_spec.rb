@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TranslationIO::Client::SyncOperation::ApplyYamlSourceEditsStep do
-  it "doesn't accept a corrupted .translation_io file" do
+  it "Fix a conflicted .translation_io file by taking the lowest timestamp" do
     yaml_locales_path = TranslationIO.config.yaml_locales_path
     FileUtils.mkdir_p(yaml_locales_path)
 
@@ -10,7 +10,7 @@ describe TranslationIO::Client::SyncOperation::ApplyYamlSourceEditsStep do
 <<<<<<< HEAD
 timestamp: 1474639179
 =======
-timestamp: 1474629510
+timestamp: 1574629510
 >>>>>>> master
 EOS
     end
@@ -34,8 +34,25 @@ EOS
       }
     end
 
+    # Check that the lowest timestamp from the corrupted file is used!
+    step_operation.send(:metadata_timestamp).should == 1474639179
+
     params = {}
-    expect { step_operation.run(params) }.to raise_error(SystemExit)
+    step_operation.run(params)
+
+    # Comment must be present in new timestamp
+    File.read("#{yaml_locales_path}/.translation_io").should == <<-EOS
+####
+# This file is used in the context of Translation.io source editions.
+# Please see: https://translation.io/blog/new-feature-copywriting
+#
+# If you have any git conflicts, either keep the smaller timestamp or
+# ignore the conflicts and "sync" again, it will fix this file for you.
+####
+
+---
+timestamp: #{Time.now.to_i}
+EOS
   end
 
   it 'applies remote changes locally' do

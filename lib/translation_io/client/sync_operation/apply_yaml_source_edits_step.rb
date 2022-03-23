@@ -21,7 +21,7 @@ module TranslationIO
 
             reload_or_reuse_yaml_sources
 
-            @yaml_sources.each do |yaml_source|
+            @yaml_sources.to_a.each do |yaml_source|
               yaml_file_path = yaml_source[:yaml_file_path]
               yaml_flat_hash = yaml_source[:yaml_flat_hash]
 
@@ -55,7 +55,7 @@ module TranslationIO
               }
             end
           else
-            @yaml_sources
+            @yaml_source
           end
         end
 
@@ -133,9 +133,10 @@ module TranslationIO
           if File.exist?(TranslationIO.config.metadata_path)
             metadata_content = File.read(TranslationIO.config.metadata_path)
 
+            # If any conflicts in file, take the lowest timestamp and potentially reapply some source edits
             if metadata_content.include?('>>>>') || metadata_content.include?('<<<<')
-              TranslationIO.info "[Error] #{TranslationIO.config.metadata_path} file is corrupted and seems to have unresolved versioning conflicts. Please resolve them and try again."
-              exit(false)
+              timestamps = metadata_content.scan(/timestamp: (\d*)/).flatten.uniq.collect(&:to_i)
+              return timestamps.min || 0
             else
               return YAML::load(metadata_content)['timestamp'] rescue 0
             end
@@ -146,6 +147,15 @@ module TranslationIO
 
         def update_metadata_timestamp
           File.open(TranslationIO.config.metadata_path, 'w') do |f|
+            f.puts '####'
+            f.puts '# This file is used in the context of Translation.io source editions.'
+            f.puts '# Please see: https://translation.io/blog/new-feature-copywriting'
+            f.puts '#'
+            f.puts '# If you have any git conflicts, either keep the smaller timestamp or'
+            f.puts '# ignore the conflicts and "sync" again, it will fix this file for you.'
+            f.puts '####'
+            f.puts
+
             f.write({ 'timestamp' => Time.now.utc.to_i }.to_yaml)
           end
         end
