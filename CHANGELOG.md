@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.30](https://github.com/translation/rails/releases/tag/v1.30) (2022-03-23)
+
+#### New features:
+
+ * Don't raise an issue for a conflicted `.translation_io` file anymore, but fix it directly.
+
 ## [v1.29](https://github.com/translation/rails/releases/tag/v1.29) (2022-02-01)
 
 #### Fixes (bugs & defects):
