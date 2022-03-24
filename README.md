@@ -607,7 +607,7 @@ when 'received'
 These are the related discussions: [ruby/erb#4](https://github.com/ruby/erb/issues/4) and [translation/rails#44](https://github.com/translation/rails/issues/44).
 
 There is currently an open PR ([ruby-gettext/gettext#91](https://github.com/ruby-gettext/gettext/pull/91)), switching ERB for [Erubi](https://github.com/jeremyevans/erubi), 
-that is waiting to be merged into GetText, but it may have unknown indesirable 
+that is waiting to be merged into GetText, but it may have unknown undesirable  
 side effects.
 
 ## Testing
