@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.31](https://github.com/translation/rails/releases/tag/v1.31) (2022-04-04)
+
+#### Fixes (bugs & defects):
+
+ * Fix Psych 4 breaking change when loading YAML files with aliases. See [issue #47](https://github.com/translation/rails/issues/47).
+
 ## [v1.30](https://github.com/translation/rails/releases/tag/v1.30) (2022-03-23)
 
 #### New features:
