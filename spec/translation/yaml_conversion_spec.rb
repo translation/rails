@@ -96,7 +96,7 @@ EOS
       result.should == {
         "en.hello"                  => "Hello world",
         "en.main.menu.stuff"        => "This is stuff",
-        "en.other_main.menu.stuff"  => "This is stuff", # alias in origin YAML
+        "en.other_main.menu.stuff"  => "This is stuff", # alias in YAML
         "en.bye"                    => "Good bye world",
         "en.empty"                  => nil,
         "en.empty_string"           => "",

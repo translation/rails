@@ -26,7 +26,7 @@ module TranslationIO
       end
 
       def get_flat_translations_for_yaml_data(yaml_data)
-        translations = YAML::load(yaml_data)
+        translations = TranslationIO.yaml_load(yaml_data)
 
         if translations
           return FlatHash.to_flat_hash(translations)

@@ -46,7 +46,7 @@ module TranslationIO
           if yaml_sources_reload_needed?
             @yaml_sources = sort_by_project_locales_first(@yaml_file_paths).collect do |yaml_file_path|
               yaml_content   = File.read(yaml_file_path)
-              yaml_hash      = YAML::load(yaml_content)
+              yaml_hash      = TranslationIO.yaml_load(yaml_content)
               yaml_flat_hash = FlatHash.to_flat_hash(yaml_hash)
 
               {
@@ -138,7 +138,7 @@ module TranslationIO
               timestamps = metadata_content.scan(/timestamp: (\d*)/).flatten.uniq.collect(&:to_i)
               return timestamps.min || 0
             else
-              return YAML::load(metadata_content)['timestamp'] rescue 0
+              return YAML.load(metadata_content)['timestamp'] rescue 0
             end
           else
             return 0

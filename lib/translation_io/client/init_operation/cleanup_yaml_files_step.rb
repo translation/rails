@@ -13,7 +13,7 @@ module TranslationIO
           @yaml_file_paths.each do |locale_file_path|
             if locale_file_removable?(locale_file_path)
               if File.exist?(locale_file_path)
-                content_hash        = YAML::load(File.read(locale_file_path)) || {}
+                content_hash        = TranslationIO.yaml_load(File.read(locale_file_path)) || {}
                 source_content_hash = content_hash.select { |k| k.to_s == @source_locale.to_s }
 
                 if source_content_hash.empty?

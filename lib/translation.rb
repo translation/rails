@@ -93,6 +93,15 @@ module TranslationIO
       File.expand_path(relative_or_absolute_path).gsub("#{Dir.pwd}/", '')
     end
 
+    # Cf. https://github.com/translation/rails/issues/47
+    def yaml_load(source)
+      begin
+        YAML.load(source, :aliases => true) || {}
+      rescue ArgumentError
+        YAML.load(source) || {}
+      end
+    end
+
     def version
       Gem::Specification::find_by_name('translation').version.to_s
     end
