@@ -1,6 +1,6 @@
 en:
   hello: "Hello world"
-  main:
+  main: &main_alias
     menu:
       stuff: "This is stuff"
   bye: "Good bye world"
@@ -21,3 +21,5 @@ en:
   - sub_test:
       hello: hello
       no: "N°"
+  other_main:
+    *main_alias
