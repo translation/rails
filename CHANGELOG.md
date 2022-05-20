@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.32](https://github.com/translation/rails/releases/tag/v1.32) (2022-05-20)
+
+#### Fixes (bugs & defects):
+
+ * Fix bad `html.erb` parsing when there is a `case` in it, using new gettext 3.4.3 Erubi parser. (cf. [ruby-gettext/gettext PR #91](https://github.com/ruby-gettext/gettext/pull/91)).
+
 ## [v1.31](https://github.com/translation/rails/releases/tag/v1.31) (2022-04-04)
 
 #### Fixes (bugs & defects):
