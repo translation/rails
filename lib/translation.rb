@@ -72,7 +72,7 @@ module TranslationIO
       require 'gettext/tools'
       require 'gettext/text_domain_manager'
       require 'gettext/tools/xgettext'
-      require "gettext/tools/parser/erubi"
+      require "gettext/tools/parser/erubi" if Gem::Version.new(GetText::VERSION) >= Gem::Version.new('3.4.3')
     end
 
     def add_parser_for_erb_source_formats(new_erb_formats)
