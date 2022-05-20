@@ -52,7 +52,6 @@ Table of contents
    * [Paths where locales are stored (not recommended)](#paths-where-locales-are-stored-not-recommended)
    * [GetText Object Class Monkey-Patching](#gettext-object-class-monkey-patching)
  * [Pure Ruby (without Rails)](#pure-ruby-without-rails)
- * [Limitations](#limitations)
  * [Testing](#testing)
  * [Contributing](#contributing)
  * [List of clients for Translation.io](#list-of-clients-for-translationio)
@@ -582,33 +581,6 @@ This gem was created specifically for Rails, but you can also use it in a pure R
 ```
 
 (Thanks [@kubaw](https://github.com/kubaw) for this snippet!)
-
-## Limitations
-
-If you localize `.erb` files with the [GetText syntax](#gettext), please avoid
-the use of `case` and `when` that are not correctly parsed by ERB.
-
-This syntax will break and your file will be ignored:
-
-```erb
-<% case @state %>
-<% when 'received' %>
-```
-
-Instead, use `if`/`elsif` or this `case` syntax:
-
-```erb
-<% 
-case @state
-when 'received'
-%>
-```
-
-These are the related discussions: [ruby/erb#4](https://github.com/ruby/erb/issues/4) and [translation/rails#44](https://github.com/translation/rails/issues/44).
-
-There is currently an open PR ([ruby-gettext/gettext#91](https://github.com/ruby-gettext/gettext/pull/91)), switching ERB for [Erubi](https://github.com/jeremyevans/erubi), 
-that is waiting to be merged into GetText, but it may have unknown undesirable  
-side effects.
 
 ## Testing
 
