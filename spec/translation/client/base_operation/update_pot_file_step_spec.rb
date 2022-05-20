@@ -19,8 +19,16 @@ msgid "Let's get ready to rumble!"
 msgstr ""
 
 #: ../spec/support/rails_app/app/views/layouts/application.html.erb:2
-msgctxt "contexte"
-msgid "salut"
+msgctxt "Eminem"
+msgid "I'm Slim Shady, yes, I'm the real Shady"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:5
+msgid "Before case"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:8
+msgid "After case"
 msgstr ""
 
 #: ../spec/support/rails_app/app/views/mailer/greetings.inky:4
@@ -61,8 +69,16 @@ msgid "Let's get ready to rumble!"
 msgstr ""
 
 #: ../spec/support/rails_app/app/views/layouts/application.html.erb:2
-msgctxt "contexte"
-msgid "salut"
+msgctxt "Eminem"
+msgid "I'm Slim Shady, yes, I'm the real Shady"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:5
+msgid "Before case"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:8
+msgid "After case"
 msgstr ""
 
 #: ../spec/support/rails_app/tmp/translation/haml-gettext-00000000.rb:1
@@ -99,8 +115,16 @@ msgid "Let's get ready to rumble!"
 msgstr ""
 
 #: ../spec/support/rails_app/app/views/layouts/application.html.erb:2
-msgctxt "contexte"
-msgid "salut"
+msgctxt "Eminem"
+msgid "I'm Slim Shady, yes, I'm the real Shady"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:5
+msgid "Before case"
+msgstr ""
+
+#: ../spec/support/rails_app/app/views/layouts/application.html.erb:8
+msgid "After case"
 msgstr ""
 
 #: ../spec/support/rails_app/tmp/translation/haml-gettext-00000000.rb:1

@@ -72,13 +72,20 @@ module TranslationIO
       require 'gettext/tools'
       require 'gettext/text_domain_manager'
       require 'gettext/tools/xgettext'
+      require "gettext/tools/parser/erubi"
     end
 
     def add_parser_for_erb_source_formats(new_erb_formats)
-      existing_extensions = GetText::ErbParser.instance_variable_get("@config")[:extnames]
       new_extensions = new_erb_formats.collect { |ext| ".#{ext}" }
 
+      existing_extensions = GetText::ErbParser.instance_variable_get("@config")[:extnames]
       GetText::ErbParser.instance_variable_get("@config")[:extnames] = (existing_extensions + new_extensions).uniq
+
+      # for gettext >= 3.4.3 (erubi compatibility)
+      if defined?(GetText::ErubiParser)
+        existing_extensions = GetText::ErubiParser.instance_variable_get("@config")[:extnames]
+        GetText::ErubiParser.instance_variable_get("@config")[:extnames] = (existing_extensions + new_extensions).uniq
+      end
     end
 
     def info(message, level = 0, verbose_level = 0)
