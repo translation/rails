@@ -2,10 +2,6 @@
 
 Feel free to contribute to this repository by creating a Pull Request.
 
-Create an issue or reach us by email (contact@translation.io) before doing 
-the work if you want to increase the chances for your Pull Request to be 
-accepted.
-
 ## Pull Request Process
 
 1. Fork the repository.
