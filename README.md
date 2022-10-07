@@ -68,7 +68,7 @@ Table of contents
 
 The default [Rails Internationalization API](http://guides.rubyonrails.org/i18n.html).
 
-```ruby
+~~~ruby
 # Regular
 t('inbox.title')
 
@@ -77,11 +77,11 @@ t('inbox.message', count: n)
 
 # Interpolation
 t('inbox.hello', name: @user.name)
-```
+~~~
 
 With the source YAML file:
 
-```yaml
+~~~yaml
 en:
   inbox:
     title:   'Title to be translated'
@@ -90,7 +90,7 @@ en:
       one:   'one message'
       other: '%{count} messages'
     hello:   'Hello %{name}'
-```
+~~~
 
 You can keep your source YAML file automatically updated using [i18n-tasks](https://github.com/glebm/i18n-tasks).
 
@@ -102,7 +102,7 @@ that you use GetText to translate your application since it allows an easier and
 Moreover, you won't need to create and manage any YAML file since your code will be
 automatically scanned for any string to translate.
 
-```ruby
+~~~ruby
 # Regular
 _("Text to be translated")
 
@@ -117,7 +117,7 @@ np_("context", "Singular text", "Plural text", number)
 
 # Interpolations
 _('%{city1} is bigger than %{city2}') % { city1: "NYC", city2: "BXL" }
-```
+~~~
 
 More information about GetText syntax [here](https://github.com/ruby-gettext/gettext#usage).
 
@@ -125,28 +125,28 @@ More information about GetText syntax [here](https://github.com/ruby-gettext/get
 
  1. Add the gem to your project's Gemfile:
 
-```ruby
+~~~ruby
 gem 'translation'
-```
+~~~
 
  2. Create a new translation project [from the UI](https://translation.io).
  3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 The initializer looks like this:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   config.api_key        = 'abcdefghijklmnopqrstuvwxyz012345'
   config.source_locale  = 'en'
   config.target_locales = ['fr', 'nl', 'de', 'es']
 end
-```
+~~~
 
  4. Initialize your project and push existing translations to Translation.io with:
 
-```bash
+~~~bash
 $ bundle exec rake translation:init
-```
+~~~
 
 If you need to add or remove languages in the future, please read our
 [documentation](https://translation.io/blog/adding-target-languages) about that.
@@ -157,17 +157,17 @@ If you need to add or remove languages in the future, please read our
 
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
-```bash
+~~~bash
 $ bundle exec rake translation:sync
-```
+~~~
 
 ### Sync and Show Purgeable
 
 If you need to find out what are the unused keys/strings from Translation.io, using the current branch as reference:
 
-```bash
+~~~bash
 $ bundle exec rake translation:sync_and_show_purgeable
-```
+~~~
 
 As the name says, this operation will also perform a sync at the same time.
 
@@ -175,9 +175,9 @@ As the name says, this operation will also perform a sync at the same time.
 
 If you need to remove unused keys/strings from Translation.io, using the current branch as reference:
 
-```bash
+~~~bash
 $ bundle exec rake translation:sync_and_purge
-```
+~~~
 
 As the name says, this operation will also perform a sync at the same time.
 
@@ -216,9 +216,9 @@ or another instance of your application.
 A custom language is always be derived from an [existing language](https://translation.io/docs/languages).
 Its structure should be like:
 
-```ruby
+~~~ruby
 "#{existing_language_code}-#{custom_text}"
-```
+~~~
 
 where `custom_text` can only contain alphabetic characters and `-`.
 
@@ -250,13 +250,13 @@ You can find more information about this
 
 The easiest way to change the current locale is with `set_locale`.
 
-```ruby
+~~~ruby
 class ApplicationController < ActionController::Base
   before_action :set_locale
 
   [...]
 end
-```
+~~~
 
 First time the user will connect, it will automatically set the locale extracted
 from the user's browser `HTTP_ACCEPT_LANGUAGE` value, and keep it in the session between
@@ -265,11 +265,11 @@ requests.
 Update the current locale by redirecting the user to https://yourdomain.com?locale=fr
 or even https://yourdomain.com/fr if you scoped your routes like this:
 
-```ruby
+~~~ruby
 scope "/:locale", :constraints => { locale: /[a-z]{2}/ } do
   resources :pages
 end
-```
+~~~
 
 The `set_locale` code is [here](https://github.com/translation/rails/blob/master/lib/translation_io/controller.rb#L3),
 feel free to override it with your own locale management.
@@ -283,9 +283,9 @@ More examples here: https://translation.io/blog/set-current-locale-in-your-rails
 
 This command will change the locale for both [I18n (YAML)](#i18n-yaml) and [GetText](#gettext):
 
-```ruby
+~~~ruby
 I18n.locale = 'fr'
-```
+~~~
 
 You can call it several times in the same page if you want to switch between languages.
 
@@ -306,27 +306,27 @@ translations as props when mounting the components.
 Assuming that you use [reactjs/react-rails](https://github.com/reactjs/react-rails),
 it would look like this if you want to use [I18n (YAML)](#i18n-yaml) syntax:
 
-```erb
+~~~erb
 <%= 
 react_component('MyComponent", {
   :user_id => current_user.id,
   :i18n    => YAML.load_file("config/locales/#{I18n.locale}.yml")[I18n.locale.to_s]["my_component"]
 }) 
 %>
-```
+~~~
 
 Your `en.yml` should look like this:
 
-```yaml
+~~~yaml
 en:
   my_component:
     your_name: Your name
     title: Title
-```
+~~~
 
 You can also directly use the [GetText](#gettext) syntax:
 
-```erb
+~~~erb
 <%= 
 react_component('MyComponent", {
   :user_id => current_user.id,
@@ -336,7 +336,7 @@ react_component('MyComponent", {
   }
 }) 
 %>
-```
+~~~
 
 In both case, in your React component, you can simply call
 `this.props.i18n.yourName` and your text will be localized with the current locale.
@@ -368,9 +368,9 @@ Since this task can't be concurrently executed
 a queue but it returns an error under heavy load), we implemented this
 threadsafe readonly task:
 
-```bash
+~~~bash
 $ bundle exec rake translation:sync_readonly
-```
+~~~
 
 This task will prevent your CI to fail and still provide new translations. But
 be aware that it won't send new keys from your code to Translation.io so you
@@ -387,24 +387,24 @@ Some options are described below but for an exhaustive list, please refer to [co
 
 If you want to only use YAML files and totally ignore GetText syntax, use:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.disable_gettext = true
   ...
 end
-```
+~~~
 
 In contrast, if you only want to synchronize GetText files and leave the YAML
 files unchanged, use:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.disable_yaml = true
   ...
 end
-```
+~~~
 
 ### Ignored YAML keys
 
@@ -413,7 +413,7 @@ You can use the `ignored_key_prefixes` for that.
 
 For example:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.ignored_key_prefixes = [
@@ -428,7 +428,7 @@ TranslationIO.configure do |config|
   ]
   ...
 end
-```
+~~~
 
 ### Custom localization key prefixes
 
@@ -448,13 +448,13 @@ to add some more, use the `localization_key_prefixes` option.
 
 For example:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.localization_key_prefixes = ['my_gem.date.formats']
   ...
 end
-```
+~~~
 
 ### Source file formats (for GetText)
 
@@ -467,7 +467,7 @@ If you are using GetText and you want to manage other file formats than:
 
 Just add them in your configuration file like this:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.source_formats      << 'rb2'
@@ -476,33 +476,33 @@ TranslationIO.configure do |config|
   config.slim_source_formats << 'slim2'
   ...
 end
-```
+~~~
 
 ### Gems with GetText strings
 
 Public gems usually don't make use of GetText strings, but if you created and localized your own gems
 with the GetText syntax, you'll want to be able to synchronize them:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.parsed_gems = ['your_gem_name']
   ...
 end
-```
+~~~
 
 ### Paths where locales are stored (not recommended)
 
 You can specify where your GetText and YAML files are on disk:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.locales_path      = 'some/path' # defaults to config/locales/gettext
   config.yaml_locales_path = 'some/path' # defaults to config/locales
   ...
 end
-```
+~~~
 
 ### GetText Object Class Monkey-Patching
 
@@ -512,27 +512,27 @@ This is made by extending the global `Object` class.
 You can disable the built-in `Object` monkey-patching if you
 prefer a more granular approach:
 
-```ruby
+~~~ruby
 TranslationIO.configure do |config|
   ...
   config.gettext_object_delegate = false
   ...
 end
-```
+~~~
 
 Don't forget to manually include the GetText methods where needed:
 
-```ruby
+~~~ruby
 class Contact < ApplicationRecord
   extend TranslationIO::Proxy
 end
-```
+~~~
 
 ## Pure Ruby (without Rails)
 
 This gem was created specifically for Rails, but you can also use it in a pure Ruby project by making some arrangements:
 
-```ruby
+~~~ruby
   require 'rubygems'
   require 'active_support/all'
   require 'yaml'
@@ -579,7 +579,7 @@ This gem was created specifically for Rails, but you can also use it in a pure R
     config.target_locales    = ['nl', 'de']
     config.metadata_path     = 'i18n/.translation_io'
   end
-```
+~~~
 
 (Thanks [@kubaw](https://github.com/kubaw) for this snippet!)
 
@@ -587,9 +587,9 @@ This gem was created specifically for Rails, but you can also use it in a pure R
 
 To run the specs:
 
-```bash
+~~~bash
 $ bundle exec rspec
-```
+~~~
 
 ## Contributing
 
