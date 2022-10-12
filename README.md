@@ -308,7 +308,7 @@ it would look like this if you want to use [I18n (YAML)](#i18n-yaml) syntax:
 
 ~~~erb
 <%= 
-react_component('MyComponent", {
+react_component("MyComponent", {
   :user_id => current_user.id,
   :i18n    => YAML.load_file("config/locales/#{I18n.locale}.yml")[I18n.locale.to_s]["my_component"]
 }) 
@@ -328,7 +328,7 @@ You can also directly use the [GetText](#gettext) syntax:
 
 ~~~erb
 <%= 
-react_component('MyComponent", {
+react_component("MyComponent", {
   :user_id => current_user.id,
   :i18n => {
     :your_name => _('Your name'),
