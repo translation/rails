@@ -20,7 +20,7 @@ Write only the source text, and keep it synchronized with your translators on [T
 
 Need help? [contact@translation.io](mailto:contact@translation.io)
 
-== Table of contents
+## Table of contents
 
  * [Localization syntaxes](#localization-syntaxes)
    * [I18n (YAML)](#i18n-yaml)
