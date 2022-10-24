@@ -371,7 +371,7 @@ threadsafe readonly task:
 $ bundle exec rake translation:sync_readonly
 ~~~
 
-This task will prevent your CI to fail and still provide new translations. But
+This task will prevent your CI from failing and still provide new translations. But
 be aware that it won't send new keys from your code to Translation.io so you
 still need to call `bundle exec rake translation:sync` at some point during
 development.
