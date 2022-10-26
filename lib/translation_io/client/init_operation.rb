@@ -46,7 +46,7 @@ module TranslationIO
 
         if !parsed_response.nil?
           if !config.disable_gettext
-            BaseOperation::SaveNewPoFilesStep.new(target_locales, locales_path, parsed_response).run
+            BaseOperation::SaveNewPoFilesStep.new(source_locale, target_locales, locales_path, parsed_response).run
             BaseOperation::CreateNewMoFilesStep.new(locales_path).run
           end
 
