@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.33](https://github.com/translation/rails/releases/tag/v1.33) (2022-11-07)
+
+#### New features:
+
+ * Match I18n fallbacks in GetText (cf. [#48](https://github.com/translation/issues/48) and [#50](https://github.com/translation/pull/50)). Thanks @ryanb!
+ 
+**Important information:** a new directory with PO/MO files for the source language will be created in your `locales/gettext` directory. 
+Don't worry, it's expected: the purpose is to unify fallback management.
+
 ## [v1.32](https://github.com/translation/rails/releases/tag/v1.32) (2022-05-20)
 
 #### Fixes (bugs & defects):
