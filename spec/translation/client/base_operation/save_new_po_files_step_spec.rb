@@ -13,11 +13,7 @@ describe TranslationIO::Client::BaseOperation::SaveNewPoFilesStep do
 
     # Completed with either GetText (before 3.3.9 and the introduction of optional `red-datasets` dependency)
     # or this Gem (after 3.3.9 because the default plural rule without optional gem was then 'nplurals=; plural=;').
-    # if Gem::Version.new(GetText::VERSION) >= Gem::Version.new('3.3.9')
-    #   en_plural_forms = 'nplurals=; plural=;'
-    # else
-      en_plural_forms = 'nplurals=2; plural=n != 1;'
-    # end
+    en_plural_forms = 'nplurals=2; plural=n != 1;'
 
     pot_data = <<-EOS
 msgid ""
