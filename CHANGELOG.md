@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.34](https://github.com/translation/rails/releases/tag/v1.34) (2022-11-16)
+
+#### Fixes (bugs & defects):
+
+ * Fix plural rule in source PO file by manually adding it (for GetText >= 3.3.9)
+
 ## [v1.33](https://github.com/translation/rails/releases/tag/v1.33) (2022-11-07)
 
 #### New features:
