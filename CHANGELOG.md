@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.35](https://github.com/translation/rails/releases/tag/v1.35) (2023-01-12)
+
+#### Fixes (bugs & defects):
+
+ * Compatibility with Ruby 3.2 (Fix `File.exists?` to `File.exist?`)
+
 ## [v1.34](https://github.com/translation/rails/releases/tag/v1.34) (2022-11-16)
 
 #### Fixes (bugs & defects):

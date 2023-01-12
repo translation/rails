@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
-  s.name             = 'translation'
-  s.summary          = 'Localize your app with YAML or GetText. Synchronize with your translators on Translation.io.'
-  s.description      = 'Localize your app using either t(".keys") or _("source text") and type "rake translation:sync" to synchronize with your translators on Translation.io.'
-  s.homepage         = 'https://translation.io'
-  s.email            = 'contact@translation.io'
-  s.version          = '1.34'
-  s.authors          = ['Michael Hoste', 'Aurelien Malisart']
-  s.license          = "MIT"
-  s.require_paths    = ["lib"]
-  s.files            = Dir["lib/**/*"] + ['README.md']
+  s.name          = 'translation'
+  s.summary       = 'Localize your app with YAML or GetText. Synchronize with your translators on Translation.io.'
+  s.description   = 'Localize your app using either t(".keys") or _("source text") and type "rake translation:sync" to synchronize with your translators on Translation.io.'
+  s.homepage      = 'https://translation.io'
+  s.email         = 'contact@translation.io'
+  s.version       = '1.35'
+  s.authors       = ['Michael Hoste', 'Aurelien Malisart']
+  s.license       = "MIT"
+  s.require_paths = ["lib"]
+  s.files         = Dir["lib/**/*"] + ['README.md']
 
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/translation/rails/issues",
