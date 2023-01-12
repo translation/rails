@@ -103,7 +103,7 @@ module TranslationIO
           # Source yaml file like config/locales/en.yml
           yaml_file_path = File.expand_path(File.join(TranslationIO.config.yaml_locales_path, "#{@source_locale}.yml"))
 
-          if File.exists?(yaml_file_path)
+          if File.exist?(yaml_file_path)
             # Complete existing hash if YAML file already exists
             existing_yaml_source = @yaml_sources.detect { |y_s| normalize_path(y_s[:yaml_file_path]) == normalize_path(yaml_file_path) }
             yaml_flat_hash       = existing_yaml_source[:yaml_flat_hash]

@@ -30,6 +30,8 @@ jobs:
             gemfile: lowest
           - ruby: '3.1'
             gemfile: lowest
+          - ruby: '3.2'
+            gemfile: lowest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
       CC_TEST_REPORTER_ID: 945dfb58a832d233a3caeb84e3e6d3be212e8c7abcb48117fce63b9adcb43647
