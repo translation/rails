@@ -1,4 +1,4 @@
-# [Translation.io](https://translation.io) client for Ruby on Rails
+# [Translation.io](https://translation.io/rails) client for Ruby on Rails
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://github.com/translation/rails/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/translation/rails/actions/workflows/test.yml)
@@ -10,7 +10,7 @@ Add this gem to localize your **Ruby on Rails** application.
 
 Use the official Rails syntax (with [YAML](#i18n-yaml) files) or use the [GetText](#gettext) syntax.
 
-Write only the source text, and keep it synchronized with your translators on [Translation.io](https://translation.io).
+Write only the source text, and keep it synchronized with your translators on [Translation.io](https://translation.io/rails).
 
 <a href="https://translation.io/rails">
   <img width="720px" alt="Translation.io interface" src="https://translation.io/gifs/translation.gif">
@@ -128,7 +128,7 @@ More information about GetText syntax [here](https://github.com/ruby-gettext/get
 gem 'translation'
 ~~~
 
- 2. Create a new translation project [from the UI](https://translation.io).
+ 2. Create a new translation project [from the UI](https://translation.io/rails).
  3. Copy the initializer into your Rails app (`config/initializers/translation.rb`)
 
 The initializer looks like this:
