@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/translation/rails/issues",
     "changelog_uri"     => "https://github.com/translation/rails/blob/master/CHANGELOG.md",
-    "documentation_uri" => "https://translation.io/usage",
+    "documentation_uri" => "https://translation.io/rails/usage",
     "homepage_uri"      => "https://translation.io",
     "source_code_uri"   => "https://github.com/translation/rails"
   }

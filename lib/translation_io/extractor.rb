@@ -1,7 +1,7 @@
 module TranslationIO
   module Extractor
     # visual:                          https://www.debuggex.com/r/fYSQ-jwQfTjhhE6T
-    # .*? is non-greedy (lazy) match : http://stackoverflow.com/a/1919995/1243212
+    # .*? is non-greedy (lazy) match : https://stackoverflow.com/a/1919995/1243212
     REGEXP_INSIDE_1  = '\s*(?:\[?(?:(?:(?:".*?")|(?:\'.*?\'))\s*?,?\s*?){1}\]?)\s*?'
     REGEXP_INSIDE_2  = '\s*(?:\[?(?:(?:(?:".*?")|(?:\'.*?\'))\s*?,?\s*?){2}\]?),?\s*?.*?\s*'
     REGEXP_INSIDE_2B = '\s*(?:\[?(?:(?:(?:".*?")|(?:\'.*?\'))\s*?,?\s*?){2}\]?)\s*?'

@@ -65,7 +65,7 @@ Need help? [contact@translation.io](mailto:contact@translation.io)
 
 ### I18n (YAML)
 
-The default [Rails Internationalization API](http://guides.rubyonrails.org/i18n.html).
+The default [Rails Internationalization API](https://guides.rubyonrails.org/i18n.html).
 
 ~~~ruby
 # Regular
@@ -274,7 +274,7 @@ The `set_locale` code is [here](https://github.com/translation/rails/blob/master
 feel free to override it with your own locale management.
 
 Don't forget to define your available locales with
-[I18n.available_locales](http://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
+[I18n.available_locales](https://guides.rubyonrails.org/i18n.html#setup-the-rails-application-for-internationalization).
 
 More examples here: https://translation.io/blog/set-current-locale-in-your-rails-app
 
@@ -461,8 +461,8 @@ If you are using GetText and you want to manage other file formats than:
 
  * `rb`, `ruby` and `rabl` for Ruby.
  * `erb` and `inky` for Ruby templating.
- * `haml` and `mjmlhaml` for [HAML](http://haml.info/).
- * `slim` and `mjmlslim` for [SLIM](http://slim-lang.com/).
+ * `haml` and `mjmlhaml` for [HAML](https://haml.info/).
+ * `slim` and `mjmlslim` for [SLIM](https://github.com/slim-template/slim).
 
 Just add them in your configuration file like this:
 
@@ -656,6 +656,6 @@ if you need some help or if you want to share your library.
 ## License
 
 The [translation gem](https://rubygems.org/gems/translation) in released under MIT license by
-[Aurélien Malisart](http://aurelien.malisart.be) and [Michaël Hoste](https://80limit.com) (see [LICENSE](LICENSE) file).
+[Aurélien Malisart](https://aurelien.malisart.be) and [Michaël Hoste](https://80limit.com) (see [LICENSE](LICENSE) file).
 
 (c) [https://translation.io](https://translation.io) / [contact@translation.io](mailto:contact@translation.io)

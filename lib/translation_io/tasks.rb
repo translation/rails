@@ -50,7 +50,7 @@ namespace :translation do
       true
     else
       TranslationIO.info("[Error] Can't configure client. Did you set up the initializer?\n"\
-                         "Read usage instructions here : http://translation.io/usage")
+                         "Read usage instructions here : https://translation.io/rails/usage")
       false
     end
   end
