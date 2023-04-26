@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TranslationIO::Client::InitOperation::CleanupYamlFilesStep do
 
-  it 'removes bad target files' do
+  it 'removes files and keys from initialized target locale codes (and ignore not-initialized target locales)' do
     yaml_locales_path = 'tmp/config/locales'
     FileUtils.mkdir_p(yaml_locales_path)
 
@@ -24,6 +24,15 @@ fr:
 EOS
     end
 
+    File.open("#{yaml_locales_path}/nl.yml", 'wb') do |file|
+      file.write <<-EOS
+---
+nl:
+  main:
+    hello: Hallo wereld
+EOS
+    end
+
     File.open("#{yaml_locales_path}/mixed.yml", 'wb') do |file|
       file.write <<-EOS
 ---
@@ -31,7 +40,9 @@ en:
   misc:
     yo: Yo folks
 fr:
-  home: "Accueil"
+  home: Accueil
+nl:
+  home: Receptie
 EOS
     end
 
@@ -44,6 +55,7 @@ EOS
 
     File.exist?("#{yaml_locales_path}/en.yml"   ).should be true
     File.exist?("#{yaml_locales_path}/fr.yml"   ).should be false
+    File.exist?("#{yaml_locales_path}/nl.yml"   ).should be true # not removed because no in target locales
     File.exist?("#{yaml_locales_path}/mixed.yml").should be true
 
     File.read("#{yaml_locales_path}/mixed.yml").should == <<-EOS
@@ -51,6 +63,8 @@ EOS
 en:
   misc:
     yo: Yo folks
+nl:
+  home: Receptie
 EOS
   end
 
