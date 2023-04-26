@@ -39,9 +39,7 @@ module TranslationIO
       end
 
       def localization_prefix?(key)
-        localization_key_prefixes.any? do |prefix|
-          key_without_locale(key).match(/^#{Regexp.escape(prefix)}\b/) != nil
-        end
+        localization_key_prefixes.any? { |prefix| key_without_locale(key).match(/^#{Regexp.escape(prefix)}\b/) != nil }
       end
 
       private
