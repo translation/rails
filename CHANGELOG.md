@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.36](https://github.com/translation/rails/releases/tag/v1.36) (2023-05-03)
+
+#### Fixes (bugs & defects):
+
+ * Keep YAML files and keys from locales that are not in the configuration file (#54)
+
 ## [v1.35](https://github.com/translation/rails/releases/tag/v1.35) (2023-01-12)
 
 #### Fixes (bugs & defects):
