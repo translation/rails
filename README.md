@@ -442,7 +442,7 @@ with percent signs or spaces) that he might break.
 We think localization is part of the configuration of the app and it should not reach the translator UI at all.
 That's why these localization keys are detected and separated on a dedicated YAML file with Translation.io.
 
-We automatically treat [known localization keys](lib/translation_io/yaml_entry.rb), but if you would like
+We automatically treat [known localization keys](https://github.com/translation/rails/blob/master/lib/translation_io/yaml_entry.rb), but if you would like
 to add some more, use the `localization_key_prefixes` option.
 
 For example:
