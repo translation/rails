@@ -144,7 +144,7 @@ end
  4. Initialize your project and push existing translations to Translation.io with:
 
 ~~~bash
-$ bundle exec rake translation:init
+bundle exec rake translation:init
 ~~~
 
 If you need to add or remove languages in the future, please read our
@@ -157,7 +157,7 @@ If you need to add or remove languages in the future, please read our
 To send new translatable keys/strings and get new translations from Translation.io, simply run:
 
 ~~~bash
-$ bundle exec rake translation:sync
+bundle exec rake translation:sync
 ~~~
 
 ### Sync and Show Purgeable
@@ -165,7 +165,7 @@ $ bundle exec rake translation:sync
 If you need to find out what are the unused keys/strings from Translation.io, using the current branch as reference:
 
 ~~~bash
-$ bundle exec rake translation:sync_and_show_purgeable
+bundle exec rake translation:sync_and_show_purgeable
 ~~~
 
 As the name says, this operation will also perform a sync at the same time.
@@ -175,7 +175,7 @@ As the name says, this operation will also perform a sync at the same time.
 If you need to remove unused keys/strings from Translation.io, using the current branch as reference:
 
 ~~~bash
-$ bundle exec rake translation:sync_and_purge
+bundle exec rake translation:sync_and_purge
 ~~~
 
 As the name says, this operation will also perform a sync at the same time.
@@ -368,7 +368,7 @@ a queue but it returns an error under heavy load), we implemented this
 threadsafe readonly task:
 
 ~~~bash
-$ bundle exec rake translation:sync_readonly
+bundle exec rake translation:sync_readonly
 ~~~
 
 This task will prevent your CI from failing and still provide new translations. But
@@ -587,7 +587,7 @@ This gem was created specifically for Rails, but you can also use it in a pure R
 To run the specs:
 
 ~~~bash
-$ bundle exec rspec
+bundle exec rspec
 ~~~
 
 ## Contributing
