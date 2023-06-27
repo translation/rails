@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.37](https://github.com/translation/rails/releases/tag/v1.37) (2023-06-27)
+
+#### Fixes (bugs & defects):
+
+ * Prepare compatibility with Ruby 3.3 by bumping GetText dependency
+ 
 ## [v1.36](https://github.com/translation/rails/releases/tag/v1.36) (2023-05-03)
 
 #### Fixes (bugs & defects):
