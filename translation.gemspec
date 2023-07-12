@@ -11,11 +11,11 @@ Gem::Specification.new do |s|
   s.files         = Dir["lib/**/*"] + ['README.md']
 
   s.metadata = {
+    "homepage_uri"      => "https://translation.io/rails",
+    "source_code_uri"   => "https://github.com/translation/rails",
     "bug_tracker_uri"   => "https://github.com/translation/rails/issues",
     "changelog_uri"     => "https://github.com/translation/rails/blob/master/CHANGELOG.md",
-    "documentation_uri" => "https://translation.io/rails/usage",
-    "homepage_uri"      => "https://translation.io",
-    "source_code_uri"   => "https://github.com/translation/rails"
+    "documentation_uri" => "https://translation.io/docs/guide-to-translate-your-rails-applications"
   }
 
   s.add_runtime_dependency 'gettext', '~> 3.2', '>= 3.2.5', '<= 3.4.4'
