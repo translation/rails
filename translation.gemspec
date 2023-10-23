@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     "documentation_uri" => "https://translation.io/docs/guide-to-translate-your-rails-applications"
   }
 
-  s.add_runtime_dependency 'gettext', '~> 3.2', '>= 3.2.5', '<= 3.4.4'
+  s.add_runtime_dependency 'gettext', '~> 3.2', '>= 3.2.5', '<= 3.4.9'
 
   s.add_development_dependency 'rake',      '~> 12.0'
   s.add_development_dependency 'simplecov', '~> 0.11'
