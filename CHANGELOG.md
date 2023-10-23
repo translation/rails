@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.38](https://github.com/translation/rails/releases/tag/v1.38) (2023-10-23)
+
+#### Fixes (bugs & defects):
+
+ * Bump GetText dependency to 3.4.9 (fix `\r` escape and other improvements)
+ 
 ## [v1.37](https://github.com/translation/rails/releases/tag/v1.37) (2023-06-27)
 
 #### Fixes (bugs & defects):
