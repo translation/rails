@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.40](https://github.com/translation/rails/releases/tag/v1.40) (2024-02-09)
+
+#### Fixes (bugs & defects):
+
+ * Fix *more* bugs when YAML file is commented and the language key is still present.
+
 ## [v1.39](https://github.com/translation/rails/releases/tag/v1.39) (2024-02-09)
 
 #### Fixes (bugs & defects):
