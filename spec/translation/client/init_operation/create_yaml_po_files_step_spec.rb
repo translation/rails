@@ -29,7 +29,14 @@ en:
 EOS
     end
 
-        File.open('tmp/config/locales/fr.yml', 'wb') do |file|
+    File.open("tmp/config/locales/empty.en.yml", 'wb') do |file|
+      file.write <<-EOS
+---
+en:
+EOS
+    end
+
+    File.open('tmp/config/locales/fr.yml', 'wb') do |file|
       file.write <<-EOS
 ---
 fr:

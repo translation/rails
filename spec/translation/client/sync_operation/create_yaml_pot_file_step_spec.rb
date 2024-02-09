@@ -24,6 +24,13 @@ en:
 EOS
     end
 
+    File.open("#{yaml_locales_path}/empty.en.yml", 'wb') do |file|
+      file.write <<-EOS
+---
+en:
+EOS
+    end
+
     source_locale   = 'en'
     yaml_file_paths = Dir["#{yaml_locales_path}/*.yml"]
 
