@@ -28,9 +28,9 @@ module TranslationIO
       def get_flat_translations_for_yaml_data(yaml_data)
         translations = TranslationIO.yaml_load(yaml_data)
 
-        if translations
+        if translations && translations.values.all? { |value| value.present? }
           return FlatHash.to_flat_hash(translations)
-        else # loading an empty file returns false
+        else # loading an empty file, or file with only the language, returns false
           return {}
         end
       end

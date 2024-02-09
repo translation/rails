@@ -117,6 +117,13 @@ EOS
 
       result.should == {}
     end
+
+    it 'returns an empty Hash if the YAML file is commented (bug fix)' do
+      yaml_path = 'spec/support/data/commented.en.yml'
+      result    = subject.get_flat_translations_for_yaml_file(yaml_path)
+
+      result.should == {}
+    end
   end
 
   describe '#get_yaml_data_from_flat_translations' do
