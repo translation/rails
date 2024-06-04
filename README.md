@@ -16,6 +16,8 @@ Write only the source text, and keep it synchronized with your translators on [T
   <img width="720px" alt="Translation.io interface" src="https://translation.io/gifs/translation.gif">
 </a>
 
+[Technical Demo](https://translation.io/videos/rails.mp4) (2.5min)
+
 Need help? [contact@translation.io](mailto:contact@translation.io)
 
 ## Table of contents
