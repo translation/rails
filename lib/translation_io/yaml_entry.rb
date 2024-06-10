@@ -31,7 +31,7 @@ module TranslationIO
       end
 
       def ignored?(key)
-        key.present? && ignored_key_prefixes.any? { |prefix| ignore_using_string(key, prefix) || ignore_using_regex(key, prefix) }
+        key.present? && ignored_key_prefixes.any? { |prefix| ignored_prefix?(key, prefix) || ignored_regex?(key, prefix) }
       end
 
       def localization?(key, value)
@@ -44,16 +44,21 @@ module TranslationIO
 
       private
 
-      def ignore_using_string(key, prefix)
-        return unless prefix.is_a?(String)
-
-        key_without_locale(key).match(/^#{Regexp.escape(prefix)}\b/) != nil
+      def ignored_prefix?(key, prefix)
+        if prefix.is_a?(String)
+          regex = /^#{Regexp.escape(prefix)}\b/
+          key_without_locale(key).match(regex) != nil
+        else
+          false
+        end
       end
 
-      def ignore_using_regex(key, prefix)
-        return unless prefix.is_a?(Regexp)
-
-        key_without_locale(key).scan(prefix).flatten.compact.uniq.count > 0
+      def ignored_regex?(key, regex)
+        if regex.is_a?(Regexp)
+          key_without_locale(key).match(regex) != nil
+        else
+          false
+        end
       end
 
       def localization_key_prefixes

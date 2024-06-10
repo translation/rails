@@ -408,9 +408,11 @@ end
 ### Ignored YAML keys
 
 Sometimes you would like to ignore some YAML keys coming from gems or so.
-You can use the `ignored_key_prefixes` for that.
 
-For example, this can be a mix of strings and regular expressions:
+You can use the `ignored_key_prefixes` array with a mix or strings and 
+regular expressions.
+
+For example:
 
 ~~~ruby
 TranslationIO.configure do |config|
