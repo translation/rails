@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.41](https://github.com/translation/rails/releases/tag/v1.41) (2024-06-10)
+
+#### New features:
+
+ * Ignore YAML keys using RegEx (cf. [#56](https://github.com/translation/rails/pull/56). Thanks @michael-harrison!
+
 ## [v1.40](https://github.com/translation/rails/releases/tag/v1.40) (2024-02-09)
 
 #### Fixes (bugs & defects):
