@@ -410,7 +410,7 @@ end
 Sometimes you would like to ignore some YAML keys coming from gems or so.
 You can use the `ignored_key_prefixes` for that.
 
-For example:
+For example, this can be a mix of strings and regular expressions:
 
 ~~~ruby
 TranslationIO.configure do |config|
@@ -423,7 +423,8 @@ TranslationIO.configure do |config|
     'will_paginate',
     'helpers.page_entries_info',
     'views.pagination',
-    'enumerize.visibility'
+    'enumerize.visibility',
+    /\.code$/
   ]
   ...
 end
