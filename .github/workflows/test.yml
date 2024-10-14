@@ -19,6 +19,7 @@ jobs:
           - '3.2'
           - '3.3'
           - 'jruby-9.1.17.0'
+          - 'jruby-9.2'
         gemfile:
           - lowest
           - latest
@@ -31,6 +32,8 @@ jobs:
           - ruby: '3.1'
             gemfile: lowest
           - ruby: '3.2'
+            gemfile: lowest
+          - ruby: '3.3'
             gemfile: lowest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
