@@ -37,7 +37,7 @@ jobs:
             gemfile: lowest
           - ruby: '3.3'
             gemfile: lowest
-          - ruby: '3.4.0-preview1'
+          - ruby: '3.4'
             gemfile: lowest
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
