@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'logger'
 require 'rails'
 require 'yaml'
 require 'translation'
