@@ -2,7 +2,7 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://github.com/translation/rails/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/translation/rails/actions/workflows/test.yml)
-[![Test Coverage](https://codeclimate.com/github/translation/rails/badges/coverage.svg)](https://codeclimate.com/github/translation/rails/test_coverage)
+![Test Coverage](misc/coverage-badge.svg)
 [![Gem Version](https://badgen.net/rubygems/v/translation)](https://rubygems.org/gems/translation)
 [![Downloads](https://img.shields.io/gem/dt/translation.svg)](https://rubygems.org/gems/translation)
 
@@ -591,6 +591,12 @@ To run the specs:
 
 ~~~bash
 bundle exec rspec
+~~~
+
+To generate the coverage badge:
+
+~~~bash
+ruby script/coverage-badge
 ~~~
 
 ## Contributing

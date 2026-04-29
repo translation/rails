@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+# Generate an SVG coverage badge from SimpleCov's .last_run.json
+# Usage: ruby script/coverage-badge
+# Output: misc/coverage-badge.svg
+
+require 'json'
+
+LAST_RUN_PATH  = 'coverage/.last_run.json'
+OUTPUT_PATH    = 'misc/coverage-badge.svg'
+
+# --- Read coverage percentage ---
+
+unless File.exist?(LAST_RUN_PATH)
+  abort "Error: #{LAST_RUN_PATH} not found. Run `bundle exec rspec` first to generate coverage data."
+end
+
+data     = JSON.parse(File.read(LAST_RUN_PATH))
+coverage = data.dig('result', 'line')
+
+unless coverage
+  abort "Error: Could not read coverage percentage from #{LAST_RUN_PATH}."
+end
+
+percentage = coverage.round(1)
+value_text = "#{percentage}%"
+
+# --- Color based on coverage level ---
+
+color = if percentage >= 90
+          '#4c1'     # bright green
+        elsif percentage >= 75
+          '#a3c51c'  # yellow-green
+        elsif percentage >= 60
+          '#dfb317'  # yellow
+        elsif percentage >= 40
+          '#fe7d37'  # orange
+        else
+          '#e05d44'  # red
+        end
+
+# --- SVG badge generation ---
+
+label_text  = 'coverage'
+label_width = label_text.length * 6.5 + 10
+value_width = value_text.length * 6.5 + 10
+total_width = label_width + value_width
+
+svg = <<~SVG
+  <svg xmlns="http://www.w3.org/2000/svg" width="#{total_width.to_i}" height="20">
+    <linearGradient id="b" x2="0" y2="100%">
+      <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+      <stop offset="1" stop-opacity=".1"/>
+    </linearGradient>
+    <mask id="a">
+      <rect width="#{total_width.to_i}" height="20" rx="3" fill="#fff"/>
+    </mask>
+    <g mask="url(#a)">
+      <path fill="#555" d="M0 0h#{label_width.to_i}v20H0z"/>
+      <path fill="#{color}" d="M#{label_width.to_i} 0h#{value_width.to_i}v20H#{label_width.to_i}z"/>
+      <path fill="url(#b)" d="M0 0h#{total_width.to_i}v20H0z"/>
+    </g>
+    <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+      <text x="#{(label_width / 2).round(1)}" y="15" fill="#010101" fill-opacity=".3">#{label_text}</text>
+      <text x="#{(label_width / 2).round(1)}" y="14">#{label_text}</text>
+      <text x="#{(label_width + value_width / 2).round(1)}" y="15" fill="#010101" fill-opacity=".3">#{value_text}</text>
+      <text x="#{(label_width + value_width / 2).round(1)}" y="14">#{value_text}</text>
+    </g>
+  </svg>
+SVG
+
+# --- Write output ---
+
+File.write(OUTPUT_PATH, svg)
+puts "Coverage badge generated: #{OUTPUT_PATH} (#{value_text})"
